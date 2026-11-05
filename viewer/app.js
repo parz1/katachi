@@ -55,6 +55,7 @@
     const height = Number(bench.dataset.height) || 800;
     for (const box of bench.querySelectorAll('.frame-box')) {
       const frame = box.querySelector('iframe');
+      box.style.maxWidth = `${width}px`;
       const scale = Math.min(1, box.clientWidth / width);
       frame.style.width = `${width}px`;
       frame.style.height = `${height}px`;
