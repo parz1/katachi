@@ -1,0 +1,23 @@
+/* 由 scripts/build-tokens.mjs 从 tokens/katachi.tokens.json 生成，不要手改。 */
+:root {
+  /* 普通文字与背景的最低对比度。 [standard] */
+  --constraint-contrast-text: 4.5;
+  /* 大号文字（按 WCAG 定义）与背景的最低对比度。 [standard] */
+  --constraint-contrast-text-large: 3;
+  /* 控件边界、图标、焦点指示等与相邻颜色的最低对比度。 [standard] */
+  --constraint-contrast-non-text: 3;
+  /* Web 点击目标的最小尺寸。 [standard] */
+  --constraint-target-web-min: 24px;
+  /* iOS、iPadOS 控件的默认尺寸，单位 pt。 [standard] */
+  --constraint-target-ios-default: 44;
+  /* iOS、iPadOS 控件的最小尺寸，单位 pt。 [standard] */
+  --constraint-target-ios-min: 28;
+  /* macOS 控件的默认尺寸，单位 pt。 [standard] */
+  --constraint-target-macos-default: 28;
+  /* macOS 控件的最小尺寸，单位 pt。 [standard] */
+  --constraint-target-macos-min: 20;
+  /* Android 触摸目标的最小尺寸，单位 dp。 [standard] */
+  --constraint-target-android-min: 48;
+  /* 内容重排检查的视口宽度，此宽度下不应需要同时横向和纵向滚动。 [standard] */
+  --constraint-reflow-width: 320px;
+}

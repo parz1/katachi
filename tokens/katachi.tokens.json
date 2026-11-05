@@ -1,0 +1,70 @@
+{
+  "$description": "katachi 设计数值的唯一来源，格式为 DTCG Format Module 2025.10。目前只有来自标准和平台规范的下限，没有任何审美选择。",
+  "constraint": {
+    "$description": "外部标准或平台规范给出的下限，用于检查，不代表审美偏好。",
+    "contrast": {
+      "$type": "number",
+      "text": {
+        "$value": 4.5,
+        "$description": "普通文字与背景的最低对比度。",
+        "$extensions": { "local.katachi": { "status": "standard", "source": "WCAG 2.2 SC 1.4.3 (AA)" } }
+      },
+      "text-large": {
+        "$value": 3,
+        "$description": "大号文字（按 WCAG 定义）与背景的最低对比度。",
+        "$extensions": { "local.katachi": { "status": "standard", "source": "WCAG 2.2 SC 1.4.3 (AA)" } }
+      },
+      "non-text": {
+        "$value": 3,
+        "$description": "控件边界、图标、焦点指示等与相邻颜色的最低对比度。",
+        "$extensions": { "local.katachi": { "status": "standard", "source": "WCAG 2.2 SC 1.4.11 (AA)" } }
+      }
+    },
+    "target": {
+      "web-min": {
+        "$type": "dimension",
+        "$value": { "value": 24, "unit": "px" },
+        "$description": "Web 点击目标的最小尺寸。",
+        "$extensions": { "local.katachi": { "status": "standard", "source": "WCAG 2.2 SC 2.5.8 (AA)" } }
+      },
+      "ios-default": {
+        "$type": "number",
+        "$value": 44,
+        "$description": "iOS、iPadOS 控件的默认尺寸，单位 pt。",
+        "$extensions": { "local.katachi": { "status": "standard", "source": "Apple HIG, Accessibility: Mobility" } }
+      },
+      "ios-min": {
+        "$type": "number",
+        "$value": 28,
+        "$description": "iOS、iPadOS 控件的最小尺寸，单位 pt。",
+        "$extensions": { "local.katachi": { "status": "standard", "source": "Apple HIG, Accessibility: Mobility" } }
+      },
+      "macos-default": {
+        "$type": "number",
+        "$value": 28,
+        "$description": "macOS 控件的默认尺寸，单位 pt。",
+        "$extensions": { "local.katachi": { "status": "standard", "source": "Apple HIG, Accessibility: Mobility" } }
+      },
+      "macos-min": {
+        "$type": "number",
+        "$value": 20,
+        "$description": "macOS 控件的最小尺寸，单位 pt。",
+        "$extensions": { "local.katachi": { "status": "standard", "source": "Apple HIG, Accessibility: Mobility" } }
+      },
+      "android-min": {
+        "$type": "number",
+        "$value": 48,
+        "$description": "Android 触摸目标的最小尺寸，单位 dp。",
+        "$extensions": { "local.katachi": { "status": "standard", "source": "Android Developers, Make apps more accessible" } }
+      }
+    },
+    "reflow": {
+      "width": {
+        "$type": "dimension",
+        "$value": { "value": 320, "unit": "px" },
+        "$description": "内容重排检查的视口宽度，此宽度下不应需要同时横向和纵向滚动。",
+        "$extensions": { "local.katachi": { "status": "standard", "source": "WCAG 2.2 SC 1.4.10 (AA)" } }
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "description": "界面内容压力测试集。优先使用产品的真实内容，这里补充真实内容不容易碰到的情况。用法见 workflows/review.md。",
+  "text": {
+    "label-zh": "设置",
+    "label-en": "Settings",
+    "label-zh-long": "仅在连接到受信任的无线网络时自动同步附件",
+    "label-en-long": "Automatically sync attachments only when connected to a trusted wireless network",
+    "title-mixed": "用 Claude 和 Codex 在 3 个 iOS 项目里复用 Design Tokens",
+    "title-zh-long": "关于调整第四季度跨部门协作流程以及相关审批权限的补充说明（第二次修订）",
+    "title-en-long": "Supplementary Notes on Revising the Cross-Department Collaboration Process and Related Approval Permissions for Q4",
+    "paragraph-zh": "这个版本把原本分散在三个页面的同步设置合并到了一处。旧数据会在首次启动时自动迁移，迁移期间可以继续浏览，但暂时不能编辑。如果迁移失败，应用会保留原始数据并提示你重试，不会覆盖任何内容。",
+    "paragraph-en": "This release consolidates sync settings that used to live on three separate screens. Existing data migrates automatically on first launch; you can keep browsing during migration, but editing is paused until it finishes. If migration fails, the app keeps the original data and prompts you to retry, so nothing gets overwritten.",
+    "paragraph-mixed": "升级到 v2.4.0 后，API 的默认超时从 30 秒改为 10 秒。如果你在 CI 中调用 /v1/sync，请检查 retry 配置；请求过多时会返回 HTTP 429，并在 Retry-After 中给出等待时间（单位：秒）。",
+    "punctuation-zh": "他问：「这份《设计规范》（第 2 版）能用吗？」我说——先看看……再决定！",
+    "unbroken-url": "https://example.com/projects/2026/design-assets/exports/final/review-round-3/representative-page-1440x900.png?download=true&version=12",
+    "unbroken-filename": "2026年11月产品评审_最终版_final_v3_修订_不要再改了.pdf",
+    "unbroken-word": "Donaudampfschifffahrtsgesellschaft",
+    "unbroken-id": "a3f9c2e87b1d4f60a3f9c2e87b1d4f60",
+    "name-zh-short": "李雷",
+    "name-zh-long": "阿依古丽·买买提艾力",
+    "name-en-long": "Alexandria Montgomery-Featherstonehaugh",
+    "number": "1,234,567.89",
+    "currency": "¥1,234,567.89",
+    "percentage": "-12.5%",
+    "date-zh": "2026 年 11 月 5 日 14:30",
+    "date-en": "Nov 5, 2026, 2:30 PM",
+    "time-relative-zh": "3 分钟前",
+    "time-relative-en": "3 minutes ago",
+    "error-zh": "无法保存：网络连接已断开。你的修改仍保留在本页，恢复连接后可以重试。",
+    "error-en": "Couldn't save: your network connection was lost. Your changes are still on this page, so you can retry once you're back online.",
+    "emoji": "发布成功 🎉 共 12 项 ✅"
+  },
+  "counts": {
+    "list-items": [0, 1, 2, 7, 50, 1000],
+    "badge": [0, 1, 9, 10, 99, 100, 1000, 1234567]
+  }
+}
