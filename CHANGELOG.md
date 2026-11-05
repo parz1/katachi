@@ -9,9 +9,9 @@
 ### 包含
 
 - Agent 入口和共享指南：`AGENTS.md`、`CLAUDE.md`、`AGENT_GUIDE.md`。
-- 审美账本：11 条明确偏好（都来自文字需求，不是视觉结论）、3 条推测、12 个待验证项。
+- 审美账本：12 条明确偏好（都来自文字需求，不是视觉结论）、3 条推测、12 个待验证项。
 - 通用层：8 条通用基线、内容压力测试集、交互状态清单。
-- 平台层：web、desktop、mobile、adaptive、terminal 五个平台文件，以及基线表格。POS 属于特殊场景，暂缓，已查到的资料留在 `platforms/later/pos.md`。
+- 平台层：web、desktop、mobile、adaptive、terminal 五个平台文件，以及基线表格。首批验证响应式 Web 和终端。POS 属于特殊场景，暂缓，已查到的资料留在 `platforms/later/pos.md`。
 - 19 个来自标准和平台规范的 tokens，其中 5 个输出到 Web CSS。
 - 参考和素材的登记规则；探索、审阅、产品接入三个流程；4 条决策记录。
 - 校验脚本 `scripts/check.mjs` 及其测试。
