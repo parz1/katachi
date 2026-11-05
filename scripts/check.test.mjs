@@ -25,6 +25,19 @@ const build = (dir) => spawnSync(process.execPath, ['scripts/build-tokens.mjs'],
 const GOOD_RECORD = '## 验证记录\n- 功能正确：通过\n- 视觉一致：未检查\n- 交互可用：未检查\n- 未覆盖：全部\n';
 const NOTE = (extra = '') => `---\ntitle: T\nsource: https://example.com\nretrieved: 2026-11-05\nfound_by: user\nlicense: unknown-study-only\n${extra}---\n\n## 用户的判断\n\n具体内容\n`;
 const ASSET = (fields) => JSON.stringify({ assets: [{ path: 'logo.svg', title: 'L', source: 'self-made', license: 'owned', allowed_use: 'all', added: '2026-11-05', ...fields }] });
+const WATCH = '# watch 手表\n\n## 能力\n\n- 单位：pt\n- 显示：很小\n- 输入：触摸\n- 场景：一瞥\n\n## 平台要求\n\n暂无。\n\n## 必查\n\n- 小屏\n\n## 验证\n\n- 先用什么查：模拟器\n- 最终验证：真机\n';
+const addColumn = (text, firstCell, header, value) => {
+  const lines = text.split('\n');
+  const start = lines.findIndex((line) => line.startsWith(`| ${firstCell} |`));
+  lines[start] += ` ${header} |`;
+  lines[start + 1] += '---|';
+  for (let index = start + 2; lines[index]?.startsWith('|'); index += 1) lines[index] += ` ${value} |`;
+  return lines.join('\n');
+};
+const addWatchFile = (dir) => {
+  put(dir, 'platforms/watch.md', WATCH);
+  edit(dir, 'platforms/README.md', (text) => text.replace('| pos | POS 机 | [pos.md](pos.md) |', '| pos | POS 机 | [pos.md](pos.md) |\n| watch | 手表 | [watch.md](watch.md) |'));
+};
 
 // [名称, 修改方法, 预期：'pass' 或错误信息片段]
 const cases = [
@@ -81,6 +94,38 @@ const cases = [
   ['open item without comparison', (d) => edit(d, 'foundations/taste.md', (t) => t.replace(/- 比较方式：.*\n/, '')), '缺少「比较方式」'],
   ['unknown section', (d) => edit(d, 'foundations/taste.md', (t) => t.replace('## 推测', '## 猜测')), '未知章节'],
   ['example heading in a fence is ignored', (d) => edit(d, 'foundations/taste.md', (t) => t.replace('## 明确偏好', '```\n### S-999 fake\n```\n\n## 明确偏好')), 'pass'],
+
+  ['token for an unknown platform', (d) => tokens(d, (t) => { t.constraint.reflow.width.$extensions['local.katachi'].platforms = ['tv']; }), '未知平台 tv'],
+  ['token platforms is not an array', (d) => tokens(d, (t) => { t.constraint.reflow.width.$extensions['local.katachi'].platforms = 'web'; }), 'platforms 应为'],
+  ['web token aliases a non-web token', (d) => tokens(d, (t) => { t.a = { $value: '{constraint.terminal.columns-default}', $description: 'x', $extensions: META }; }), 'Web 输出'],
+  ['platform file without final verification', (d) => edit(d, 'platforms/terminal.md', (t) => t.replace('- 最终验证：', '- 最后：')), '缺少「最终验证」'],
+  ['platform file with an empty field', (d) => edit(d, 'platforms/pos.md', (t) => t.replace(/- 单位：.*/, '- 单位：')), '缺少「单位」'],
+  ['platform file without a section', (d) => edit(d, 'platforms/web.md', (t) => t.replace('## 必查', '## 检查')), '缺少「必查」'],
+  ['platform file with a wrong title', (d) => edit(d, 'platforms/pos.md', (t) => t.replace('# pos POS 机', '# 收银机')), '标题要以'],
+  ['missing web platform', (d) => {
+    rmSync(join(d, 'platforms/web.md'));
+    edit(d, 'platforms/README.md', (t) => t.replace('[web.md](web.md)', 'web.md'));
+  }, '缺少 platforms/web.md'],
+  ['new platform without a list entry', (d) => put(d, 'platforms/watch.md', WATCH), '平台列表缺少 watch'],
+  ['new platform without a matrix column', (d) => addWatchFile(d), '基线表格缺少 watch 列'],
+  ['platform file cites a token of another platform', (d) => edit(d, 'platforms/pos.md', (t) => t.replace('## 必查', '参考 `constraint.target.web-min`。\n\n## 必查')), 'platforms 不含 pos'],
+  ['new platform without a pattern column', (d) => {
+    addWatchFile(d);
+    edit(d, 'platforms/README.md', (t) => addColumn(t, '规则', 'watch', '直接'));
+  }, 'patterns/README.md 的应用面表格缺少 watch 列'],
+  ['complete new platform passes', (d) => {
+    addWatchFile(d);
+    edit(d, 'platforms/README.md', (t) => addColumn(t, '规则', 'watch', '直接'));
+    edit(d, 'patterns/README.md', (t) => addColumn(t, '模式', 'watch', '未做'));
+  }, 'pass'],
+  ['matrix column without a platform file', (d) => edit(d, 'platforms/README.md', (t) => addColumn(t, '规则', 'tv', '直接')), '未知的平台列 tv'],
+  ['new baseline rule without a matrix row', (d) => appendFileSync(join(d, 'foundations/baseline.md'), '\n### BASE-9 新规则\n'), '缺少 BASE-9'],
+  ['matrix refines a rule the platform file omits', (d) => edit(d, 'platforms/pos.md', (t) => t.replace('- BASE-8：', '- 内容：')), '没有说明'],
+  ['platform file details a rule marked direct', (d) => edit(d, 'platforms/web.md', (t) => t.replace('## 必查', '- BASE-1：额外说明。\n\n## 必查')), '标为「直接」'],
+  ['BASE-1 is not matched by BASE-10', (d) => edit(d, 'platforms/pos.md', (t) => t.replace('- BASE-1：', '- BASE-10：')), '没有说明'],
+  ['invalid matrix value', (d) => edit(d, 'platforms/README.md', (t) => t.replace('| BASE-1 文字对比度 | 直接', '| BASE-1 文字对比度 | 也许')), '只能是'],
+  ['invalid pattern coverage value', (d) => edit(d, 'patterns/README.md', (t) => t.replace('| 导航 | 未做', '| 导航 | 差不多')), '只能是'],
+  ['malformed content stress file', (d) => put(d, 'foundations/content-stress.json', '{ nope'), '检查时出错'],
 
   ['valid reference with image', (d) => {
     put(d, 'references/good.md', NOTE('image: images/good.png\n'));
@@ -194,7 +239,23 @@ for (const line of expectedCss) {
   }
 }
 
+// Web CSS 只包含适用于 Web 的 token。
+const webCss = readFileSync(join(REPO, 'tokens/build/tokens.css'), 'utf8');
+const webExpectations = [
+  ['--constraint-target-web-min', true],
+  ['--constraint-contrast-text', true],
+  ['--constraint-target-ios-default', false],
+  ['--constraint-window-width-medium-min', false],
+  ['--constraint-terminal-columns-default', false],
+];
+for (const [name, shouldExist] of webExpectations) {
+  if (webCss.includes(name) !== shouldExist) {
+    failures += 1;
+    console.log(`未通过：Web CSS ${shouldExist ? '应包含' : '不应包含'} ${name}`);
+  }
+}
+
 rmSync(base, { recursive: true, force: true });
-const total = cases.length + expectedCss.length;
+const total = cases.length + expectedCss.length + webExpectations.length;
 console.log(`${total - failures}/${total} 项通过`);
 process.exitCode = failures ? 1 : 0;

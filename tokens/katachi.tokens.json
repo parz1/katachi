@@ -1,23 +1,23 @@
 {
-  "$description": "katachi 设计数值的唯一来源，格式为 DTCG Format Module 2025.10。目前只有来自标准和平台规范的下限，没有任何审美选择。",
+  "$description": "katachi 设计数值的唯一来源，格式为 DTCG Format Module 2025.10。目前只有来自标准和平台规范的数值，没有任何审美选择。",
   "constraint": {
-    "$description": "外部标准或平台规范给出的下限，用于检查，不代表审美偏好。",
+    "$description": "外部标准或平台规范给出的数值，用于检查和判断，不代表审美偏好。",
     "contrast": {
       "$type": "number",
       "text": {
         "$value": 4.5,
         "$description": "普通文字与背景的最低对比度。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "WCAG 2.2 SC 1.4.3 (AA)" } }
+        "$extensions": { "local.katachi": { "status": "standard", "source": "WCAG 2.2 SC 1.4.3 (AA)", "platforms": ["web", "desktop", "mobile", "adaptive", "pos"] } }
       },
       "text-large": {
         "$value": 3,
         "$description": "大号文字（按 WCAG 定义）与背景的最低对比度。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "WCAG 2.2 SC 1.4.3 (AA)" } }
+        "$extensions": { "local.katachi": { "status": "standard", "source": "WCAG 2.2 SC 1.4.3 (AA)", "platforms": ["web", "desktop", "mobile", "adaptive", "pos"] } }
       },
       "non-text": {
         "$value": 3,
         "$description": "控件边界、图标、焦点指示等与相邻颜色的最低对比度。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "WCAG 2.2 SC 1.4.11 (AA)" } }
+        "$extensions": { "local.katachi": { "status": "standard", "source": "WCAG 2.2 SC 1.4.11 (AA)", "platforms": ["web", "desktop", "mobile", "adaptive", "pos"] } }
       }
     },
     "target": {
@@ -25,37 +25,43 @@
         "$type": "dimension",
         "$value": { "value": 24, "unit": "px" },
         "$description": "Web 点击目标的最小尺寸。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "WCAG 2.2 SC 2.5.8 (AA)" } }
+        "$extensions": { "local.katachi": { "status": "standard", "source": "WCAG 2.2 SC 2.5.8 (AA)", "platforms": ["web"] } }
       },
       "ios-default": {
         "$type": "number",
         "$value": 44,
         "$description": "iOS、iPadOS 控件的默认尺寸，单位 pt。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "Apple HIG, Accessibility: Mobility" } }
+        "$extensions": { "local.katachi": { "status": "standard", "source": "Apple HIG, Accessibility: Mobility", "platforms": ["mobile", "adaptive"] } }
       },
       "ios-min": {
         "$type": "number",
         "$value": 28,
         "$description": "iOS、iPadOS 控件的最小尺寸，单位 pt。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "Apple HIG, Accessibility: Mobility" } }
+        "$extensions": { "local.katachi": { "status": "standard", "source": "Apple HIG, Accessibility: Mobility", "platforms": ["mobile", "adaptive"] } }
       },
       "macos-default": {
         "$type": "number",
         "$value": 28,
         "$description": "macOS 控件的默认尺寸，单位 pt。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "Apple HIG, Accessibility: Mobility" } }
+        "$extensions": { "local.katachi": { "status": "standard", "source": "Apple HIG, Accessibility: Mobility", "platforms": ["desktop"] } }
       },
       "macos-min": {
         "$type": "number",
         "$value": 20,
         "$description": "macOS 控件的最小尺寸，单位 pt。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "Apple HIG, Accessibility: Mobility" } }
+        "$extensions": { "local.katachi": { "status": "standard", "source": "Apple HIG, Accessibility: Mobility", "platforms": ["desktop"] } }
+      },
+      "windows-touch": {
+        "$type": "number",
+        "$value": 40,
+        "$description": "Windows 触摸目标的建议尺寸，单位 epx，约 7.5 mm。",
+        "$extensions": { "local.katachi": { "status": "standard", "source": "Microsoft, Targeting - Windows apps", "platforms": ["desktop"] } }
       },
       "android-min": {
         "$type": "number",
         "$value": 48,
         "$description": "Android 触摸目标的最小尺寸，单位 dp。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "Android Developers, Make apps more accessible" } }
+        "$extensions": { "local.katachi": { "status": "standard", "source": "Android Developers, Make apps more accessible", "platforms": ["mobile", "adaptive", "pos"] } }
       }
     },
     "reflow": {
@@ -63,7 +69,53 @@
         "$type": "dimension",
         "$value": { "value": 320, "unit": "px" },
         "$description": "内容重排检查的视口宽度，此宽度下不应需要同时横向和纵向滚动。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "WCAG 2.2 SC 1.4.10 (AA)" } }
+        "$extensions": { "local.katachi": { "status": "standard", "source": "WCAG 2.2 SC 1.4.10 (AA)", "platforms": ["web"] } }
+      }
+    },
+    "window": {
+      "$type": "number",
+      "width-medium-min": {
+        "$value": 600,
+        "$description": "窗口宽度进入 medium 的分界，单位 dp。",
+        "$extensions": { "local.katachi": { "status": "standard", "source": "Android Developers, Use window size classes", "platforms": ["adaptive"] } }
+      },
+      "width-expanded-min": {
+        "$value": 840,
+        "$description": "窗口宽度进入 expanded 的分界，单位 dp。",
+        "$extensions": { "local.katachi": { "status": "standard", "source": "Android Developers, Use window size classes", "platforms": ["adaptive"] } }
+      },
+      "width-large-min": {
+        "$value": 1200,
+        "$description": "窗口宽度进入 large 的分界，单位 dp。",
+        "$extensions": { "local.katachi": { "status": "standard", "source": "Android Developers, Use window size classes", "platforms": ["adaptive"] } }
+      },
+      "width-extra-large-min": {
+        "$value": 1600,
+        "$description": "窗口宽度进入 extra-large 的分界，单位 dp。",
+        "$extensions": { "local.katachi": { "status": "standard", "source": "Android Developers, Use window size classes", "platforms": ["adaptive"] } }
+      },
+      "height-medium-min": {
+        "$value": 480,
+        "$description": "窗口高度进入 medium 的分界，单位 dp。",
+        "$extensions": { "local.katachi": { "status": "standard", "source": "Android Developers, Use window size classes", "platforms": ["adaptive"] } }
+      },
+      "height-expanded-min": {
+        "$value": 900,
+        "$description": "窗口高度进入 expanded 的分界，单位 dp。",
+        "$extensions": { "local.katachi": { "status": "standard", "source": "Android Developers, Use window size classes", "platforms": ["adaptive"] } }
+      }
+    },
+    "terminal": {
+      "$type": "number",
+      "columns-default": {
+        "$value": 80,
+        "$description": "终端常见的默认列数。用户可以改变，这只是检查的起点。",
+        "$extensions": { "local.katachi": { "status": "standard", "source": "VT100 的默认尺寸，许多终端沿用（事实标准）", "platforms": ["terminal"] } }
+      },
+      "rows-default": {
+        "$value": 24,
+        "$description": "终端常见的默认行数。用户可以改变，这只是检查的起点。",
+        "$extensions": { "local.katachi": { "status": "standard", "source": "VT100 的默认尺寸，许多终端沿用（事实标准）", "platforms": ["terminal"] } }
       }
     }
   }

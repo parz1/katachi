@@ -8,16 +8,6 @@
   --constraint-contrast-non-text: 3;
   /* Web 点击目标的最小尺寸。 [standard] */
   --constraint-target-web-min: 24px;
-  /* iOS、iPadOS 控件的默认尺寸，单位 pt。 [standard] */
-  --constraint-target-ios-default: 44;
-  /* iOS、iPadOS 控件的最小尺寸，单位 pt。 [standard] */
-  --constraint-target-ios-min: 28;
-  /* macOS 控件的默认尺寸，单位 pt。 [standard] */
-  --constraint-target-macos-default: 28;
-  /* macOS 控件的最小尺寸，单位 pt。 [standard] */
-  --constraint-target-macos-min: 20;
-  /* Android 触摸目标的最小尺寸，单位 dp。 [standard] */
-  --constraint-target-android-min: 48;
   /* 内容重排检查的视口宽度，此宽度下不应需要同时横向和纵向滚动。 [standard] */
   --constraint-reflow-width: 320px;
 }

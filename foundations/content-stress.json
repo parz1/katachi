@@ -28,7 +28,16 @@
     "time-relative-en": "3 minutes ago",
     "error-zh": "无法保存：网络连接已断开。你的修改仍保留在本页，恢复连接后可以重试。",
     "error-en": "Couldn't save: your network connection was lost. Your changes are still on this page, so you can retry once you're back online.",
-    "emoji": "发布成功 🎉 共 12 项 ✅"
+    "emoji": "发布成功 🎉 共 12 项 ✅",
+    "emoji-sequence": "👩‍💻 👨‍👩‍👧‍👦 🇨🇳",
+    "ambiguous-width": "价格 ±5% § 3.2 → 详见 ①",
+    "combining": "Café 和 Café",
+    "table-row-mixed": "苹果 Apple\t3\t¥12.50",
+    "pos-item-long": "有机冷榨特级初榨橄榄油（意大利产）750ml 买二送一限时特惠装",
+    "pos-amount": "¥12,345.60",
+    "pos-discount": "-¥1,234.50（会员 8.8 折）",
+    "pos-barcode": "6901234567892",
+    "pos-receipt-line": "合计 Total                ¥12,345.60"
   },
   "counts": {
     "list-items": [0, 1, 2, 7, 50, 1000],

@@ -28,6 +28,8 @@ const CSS_COLOR_SPACES = new Set([
 const aliasTarget = (value) =>
   typeof value === 'string' ? value.match(/^\{([^{}]+)\}$/)?.[1] : undefined;
 const cssName = (dottedPath) => `--${dottedPath.replaceAll('.', '-')}`;
+// 没写 platforms 表示适用于所有平台。
+const inWebCss = (token) => !Array.isArray(token.platforms) || token.platforms.includes('web');
 
 function colorToCss(value) {
   const { colorSpace, components, alpha } = value ?? {};
@@ -131,9 +133,14 @@ export function collectTokens(tree) {
       problems.push(`${name}：${EXTENSION_KEY}.status 应为 ${[...STATUSES].join('、')} 之一`);
     }
     if (!meta?.source) problems.push(`${name}：缺少 ${EXTENSION_KEY}.source`);
+    if (meta?.platforms !== undefined && (!Array.isArray(meta.platforms) || !meta.platforms.length
+      || meta.platforms.some((id) => typeof id !== 'string' || !id))) {
+      problems.push(`${name}：${EXTENSION_KEY}.platforms 应为非空字符串数组`);
+    }
 
     token.description = node.$description ?? '';
     token.status = meta?.status;
+    token.platforms = meta?.platforms;
     token.cssName = cssName(name);
     try {
       const target = aliasTarget(node.$value);
@@ -152,6 +159,13 @@ export function collectTokens(tree) {
     }
     cssNames.set(token.cssName, name);
   }
+
+  for (const [name, token] of tokens) {
+    const target = aliasTarget(token.node.$value);
+    if (target && tokens.has(target) && inWebCss(token) && !inWebCss(tokens.get(target))) {
+      problems.push(`${name}：Web 输出会引用不存在的变量，${target} 不适用于 web`);
+    }
+  }
   return { tokens, problems };
 }
 
@@ -162,6 +176,7 @@ export function loadTokens() {
 export function renderCss(tokens) {
   const lines = ['/* 由 scripts/build-tokens.mjs 从 tokens/katachi.tokens.json 生成，不要手改。 */', ':root {'];
   for (const token of tokens.values()) {
+    if (!inWebCss(token)) continue;
     lines.push(`  /* ${token.description.replaceAll('*/', '* /')} [${token.status}] */`);
     lines.push(`  ${token.cssName}: ${token.css};`);
   }
@@ -191,6 +206,7 @@ if (process.argv[1] && realpathSync(process.argv[1]) === realpathSync(THIS_FILE)
   } else {
     mkdirSync(dirname(OUTPUT), { recursive: true });
     writeFileSync(OUTPUT, css);
-    console.log(`已生成 tokens/build/tokens.css（${tokens.size} 个 token）。`);
+    const webCount = [...tokens.values()].filter(inWebCss).length;
+    console.log(`已生成 tokens/build/tokens.css（共 ${tokens.size} 个 token，其中 ${webCount} 个适用于 Web）。`);
   }
 }

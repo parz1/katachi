@@ -55,7 +55,7 @@ Codex 不会自动加载启动目录以下的 `AGENTS.md`，所以要在产品�
 
 ## 约束
 
-- 平台和最低系统版本：
+- 目标平台（`design/katachi/platforms/` 里的 ID）和最低系统版本：
 - 界面语言：
 - 技术限制、品牌或法规要求：
 
@@ -84,7 +84,7 @@ Codex 不会自动加载启动目录以下的 `AGENTS.md`，所以要在产品�
 
 - **Web，构建环境能取到子模块**：直接引用 `design/katachi/tokens/build/tokens.css`。
 - **Web，取不到子模块**（例如公开仓库的 CI）：把这个文件复制进产品仓库，不要手改，并在 `DESIGN.md` 记录版本。
-- **原生**：还没有生成器，第一个原生项目接入时再加。
+- **其他平台（原生、终端、POS）**：读 `design/katachi/tokens/katachi.tokens.json`，按 `platforms` 筛选。还没有生成器，第一个项目接入时再加。
 
 ## 升级版本
 

@@ -15,6 +15,10 @@ const REFERENCE_FIELDS = ['title', 'source', 'retrieved', 'found_by', 'license']
 const ASSET_FIELDS = ['path', 'title', 'source', 'license', 'allowed_use', 'added'];
 const ASSET_INFRA = new Set(['assets/README.md', 'assets/manifest.json']);
 const RECORD_ITEMS = ['验证记录', '功能正确', '视觉一致', '交互可用', '未覆盖'];
+const PLATFORM_SECTIONS = ['能力', '平台要求', '必查', '验证'];
+const PLATFORM_FIELDS = ['单位', '显示', '输入', '场景', '先用什么查', '最终验证'];
+const MATRIX_VALUES = new Set(['直接', '细化', '不适用']);
+const PATTERN_VALUES = new Set(['已验证', '已映射', '不适用', '未做']);
 const CODE_EXTENSIONS = new Set([
   '.html', '.css', '.js', '.mjs', '.ts', '.tsx', '.jsx', '.vue', '.svelte', '.svg', '.json', '.swift', '.kt',
 ]);
@@ -154,6 +158,117 @@ function checkTaste() {
   };
 }
 
+function findTable(text, firstCell) {
+  const lines = stripFences(text).split('\n');
+  const start = lines.findIndex((line) => line.startsWith(`| ${firstCell} |`));
+  if (start < 0) return null;
+  const cells = (line) => line.trim().replace(/^\||\|$/g, '').split('|').map((cell) => cell.trim());
+  const rows = [];
+  for (let index = start + 2; lines[index]?.startsWith('|'); index += 1) rows.push(cells(lines[index]));
+  return { header: cells(lines[start]), rows };
+}
+
+function checkTableColumns(errors, label, table, ids) {
+  const columns = table.header.slice(1);
+  for (const id of ids) {
+    if (!columns.includes(id)) errors.push(`${label}缺少 ${id} 列`);
+  }
+  for (const column of columns) {
+    if (!ids.includes(column)) errors.push(`${label}有未知的平台列 ${column}`);
+  }
+  return columns;
+}
+
+function checkPlatforms() {
+  const errors = [];
+  const ids = files
+    .filter((file) => /^platforms\/[^/]+\.md$/.test(file) && file !== 'platforms/README.md')
+    .map((file) => file.slice('platforms/'.length, -'.md'.length));
+  if (!ids.includes('web')) errors.push('缺少 platforms/web.md，Web CSS 的输出依赖这个 ID');
+
+  const requirements = new Map();
+  for (const id of ids) {
+    const file = `platforms/${id}.md`;
+    const text = stripFences(read(file));
+    if (!text.startsWith(`# ${id} `)) errors.push(`${file}：标题要以「# ${id} 」开头`);
+    for (const section of PLATFORM_SECTIONS) {
+      if (!new RegExp(`^## ${section}[ \\t]*$`, 'm').test(text)) errors.push(`${file}：缺少「${section}」`);
+    }
+    for (const field of PLATFORM_FIELDS) {
+      if (!new RegExp(`^- ${field}：[ \\t]*\\S`, 'm').test(text)) errors.push(`${file}：缺少「${field}」`);
+    }
+    requirements.set(id, text.split(/^## 平台要求[ \t]*$/m)[1]?.split(/^## /m)[0] ?? '');
+  }
+
+  const { tokens } = loadTokens();
+  for (const [name, token] of tokens) {
+    for (const id of token.platforms ?? []) {
+      if (!ids.includes(id)) errors.push(`${name}：未知平台 ${id}，先新建 platforms/${id}.md`);
+    }
+  }
+  for (const id of ids) {
+    for (const [, reference] of stripFences(read(`platforms/${id}.md`)).matchAll(/`([A-Za-z][\w-]*(?:\.[\w-]+)+)`/g)) {
+      const platforms = tokens.get(reference)?.platforms;
+      if (platforms && !platforms.includes(id)) {
+        errors.push(`platforms/${id}.md 引用了 ${reference}，但它的 platforms 不含 ${id}`);
+      }
+    }
+  }
+
+  const index = read('platforms/README.md');
+  const listed = findTable(index, 'ID');
+  for (const id of ids) {
+    if (!listed?.rows.some((row) => row[0] === id)) errors.push(`platforms/README.md 的平台列表缺少 ${id}`);
+  }
+
+  const matrix = findTable(index, '规则');
+  if (!matrix) {
+    errors.push('platforms/README.md 缺少基线表格');
+  } else {
+    const columns = checkTableColumns(errors, 'platforms/README.md 的基线表格', matrix, ids);
+    const rules = [...read('foundations/baseline.md').matchAll(/^### (BASE-\d+)/gm)].map((match) => match[1]);
+    for (const rule of rules) {
+      const row = matrix.rows.find((cells) => cells[0].split(/\s+/)[0] === rule);
+      if (!row) {
+        errors.push(`platforms/README.md 的基线表格缺少 ${rule}`);
+        continue;
+      }
+      columns.forEach((id, position) => {
+        const value = row[position + 1];
+        if (!MATRIX_VALUES.has(value)) {
+          errors.push(`基线表格里 ${rule} 的 ${id} 只能是 ${[...MATRIX_VALUES].join('、')}`);
+          return;
+        }
+        const mentioned = new RegExp(`${rule}(?!\\d)`).test(requirements.get(id) ?? '');
+        if (value === '直接' && mentioned) errors.push(`platforms/${id}.md 写了 ${rule}，但基线表格标为「直接」`);
+        if (value !== '直接' && !mentioned) errors.push(`基线表格把 ${id} 的 ${rule} 标为「${value}」，但 platforms/${id}.md 的平台要求里没有说明`);
+      });
+    }
+  }
+
+  const patterns = findTable(read('patterns/README.md'), '模式');
+  if (!patterns) {
+    errors.push('patterns/README.md 缺少应用面表格');
+  } else {
+    const columns = checkTableColumns(errors, 'patterns/README.md 的应用面表格', patterns, ids);
+    for (const row of patterns.rows) {
+      columns.forEach((id, position) => {
+        if (!PATTERN_VALUES.has(row[position + 1])) {
+          errors.push(`patterns/README.md：${row[0]} 的 ${id} 只能是 ${[...PATTERN_VALUES].join('、')}`);
+        }
+      });
+    }
+  }
+  return { errors, note: `${ids.length} 个平台` };
+}
+
+function checkContentStress() {
+  const { text, counts } = JSON.parse(read('foundations/content-stress.json'));
+  const errors = [];
+  if (!text || !counts) errors.push('foundations/content-stress.json 应包含 text 和 counts');
+  return { errors, note: `${Object.keys(text ?? {}).length} 条文本` };
+}
+
 function checkReferences() {
   const errors = [];
   const notes = files.filter((file) => /^references\/[^/]+\.md$/.test(file) && file !== 'references/README.md');
@@ -258,6 +373,8 @@ const checks = [
   ['Markdown 链接', checkLinks],
   ['agent 入口', checkEntries],
   ['审美账本', checkTaste],
+  ['平台', checkPlatforms],
+  ['内容压力测试集', checkContentStress],
   ['参考', checkReferences],
   ['正式素材', checkAssets],
   ['参考与产品隔离', checkIsolation],

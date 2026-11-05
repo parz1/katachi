@@ -13,6 +13,7 @@ source: <URL，或产品名、版本和页面>
 retrieved: 2026-11-05
 found_by: user
 license: unknown-study-only
+platform: web
 image: images/<slug>.png
 ---
 
@@ -33,6 +34,7 @@ image: images/<slug>.png
 |---|---|
 | `found_by` | `user` 表示用户提供；`agent` 表示 AI 找的，用户未必认可 |
 | `license` | 具体授权；不清楚就写 `unknown-study-only` |
+| `platform` | 可选，这条参考属于哪个平台，写 `platforms/` 里的 ID |
 | `image` | 可选 |
 
 ## 规则
