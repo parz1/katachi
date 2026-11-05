@@ -62,6 +62,7 @@
 | 新增参考 | `references/README.md` | — |
 | 新增正式素材 | `assets/README.md` | — |
 | 接入或升级产品 | `workflows/adopt.md` | `CHANGELOG.md` |
+| 查看设计库、比较方案 | `viewer/README.md` | — |
 | 记录重要取舍 | `decisions/README.md` | — |
 
 `workflows/implement.md` 和可复用提示词在第三阶段从真实页面中提炼，现在还没有。
@@ -88,6 +89,7 @@
 | 设计数值 | 只改 `tokens/katachi.tokens.json`，再运行生成脚本；不要手改 `tokens/build/`；文档只写 token 名，不复制数值 |
 | 参考和素材 | 产品默认只用 `assets/` 中已登记授权的素材，`references/` 里的内容不进入产品。用户决定破例时按第 2 节处理 |
 | 产品项目里的本库 | 子模块只读，不要改，也不要自行升级版本。用户要求改本库时，到本库自己的仓库里改 |
+| 查看器 | 内容只从仓库生成，不在里面写规范。它的外观不是设计规范，不能从中推断审美 |
 | 远程操作 | 没有要求时，不要推送或发布 |
 
 修改后运行 `node scripts/check.mjs`。

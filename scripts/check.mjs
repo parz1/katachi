@@ -1,8 +1,10 @@
 // katachi 仓库一致性检查。零依赖，只读。用法：node scripts/check.mjs
 // 有错误时退出码为 1，警告不影响退出码。
-import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, statSync } from 'node:fs';
 import { dirname, extname, join, normalize } from 'node:path';
+import { renderPage } from '../viewer/build.mjs';
 import { OUTPUT, ROOT, loadTokens, renderCss } from './build-tokens.mjs';
+import { exists, findTable, read, stripFences, stripInlineCode, subdirectories, walk } from './library.mjs';
 
 const MB = 1024 * 1024;
 const LIMITS = { agentsLines: 30, claudeLines: 12, guideLines: 150, warnBytes: 1 * MB, errorBytes: 10 * MB };
@@ -23,29 +25,8 @@ const CODE_EXTENSIONS = new Set([
   '.html', '.css', '.js', '.mjs', '.ts', '.tsx', '.jsx', '.vue', '.svelte', '.svg', '.json', '.swift', '.kt',
 ]);
 
-const read = (rel) => readFileSync(join(ROOT, rel), 'utf8');
-const exists = (rel) => existsSync(join(ROOT, rel));
-const stripFences = (text) => text.replace(/^(`{3,}|~{3,})[^\n]*\n[\s\S]*?^\1[`~]*[ \t]*$/gm, '');
-const stripInlineCode = (text) => text.replace(/`[^`\n]*`/g, '');
-
-function walk(rel = '') {
-  const found = [];
-  for (const entry of readdirSync(join(ROOT, rel), { withFileTypes: true })) {
-    if (['.git', 'node_modules', '.DS_Store'].includes(entry.name)) continue;
-    const path = rel ? `${rel}/${entry.name}` : entry.name;
-    if (entry.isDirectory()) found.push(...walk(path));
-    else found.push(path);
-  }
-  return found;
-}
-
 const files = walk();
 const markdownFiles = files.filter((file) => file.endsWith('.md'));
-const subdirectories = (rel) => (exists(rel)
-  ? readdirSync(join(ROOT, rel), { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => `${rel}/${entry.name}`)
-  : []);
 
 function checkTokens() {
   const { tokens, problems } = loadTokens();
@@ -156,16 +137,6 @@ function checkTaste() {
     errors,
     note: Object.keys(TASTE_SECTIONS).map((title) => `${title} ${counts[title] ?? 0}`).join('，'),
   };
-}
-
-function findTable(text, firstCell) {
-  const lines = stripFences(text).split('\n');
-  const start = lines.findIndex((line) => line.startsWith(`| ${firstCell} |`));
-  if (start < 0) return null;
-  const cells = (line) => line.trim().replace(/^\||\|$/g, '').split('|').map((cell) => cell.trim());
-  const rows = [];
-  for (let index = start + 2; lines[index]?.startsWith('|'); index += 1) rows.push(cells(lines[index]));
-  return { header: cells(lines[start]), rows };
 }
 
 function checkTableColumns(errors, label, table, ids) {
@@ -355,6 +326,18 @@ function checkExplorationsAndExamples() {
   return { errors, note: `探索 ${explorations.length}，示例 ${examples.length}` };
 }
 
+function checkViewer() {
+  const page = renderPage();
+  const platformFiles = files.filter((file) => /^platforms\/[^/]+\.md$/.test(file) && file !== 'platforms/README.md');
+  const expected = [
+    ...[...stripFences(read('foundations/taste.md')).matchAll(/^### ([A-Z]+-\d{3})/gm)].map((match) => match[1]),
+    ...loadTokens().tokens.keys(),
+    ...platformFiles.map((file) => file.slice('platforms/'.length, -'.md'.length)),
+  ];
+  const errors = expected.filter((item) => !page.includes(item)).map((item) => `查看器页面缺少 ${item}`);
+  return { errors, note: `页面 ${Math.round(page.length / 1024)} KB` };
+}
+
 function checkSizes() {
   const errors = [];
   const warnings = [];
@@ -379,6 +362,7 @@ const checks = [
   ['正式素材', checkAssets],
   ['参考与产品隔离', checkIsolation],
   ['探索与示例', checkExplorationsAndExamples],
+  ['查看器', checkViewer],
   ['文件体积', checkSizes],
 ];
 

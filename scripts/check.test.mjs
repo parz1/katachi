@@ -128,6 +128,7 @@ const cases = [
   ['invalid matrix value', (d) => edit(d, 'platforms/README.md', (t) => t.replace('| BASE-1 文字对比度 | 直接', '| BASE-1 文字对比度 | 也许')), '只能是'],
   ['invalid pattern coverage value', (d) => edit(d, 'patterns/README.md', (t) => t.replace('| 导航 | 未做', '| 导航 | 差不多')), '只能是'],
   ['malformed content stress file', (d) => put(d, 'foundations/content-stress.json', '{ nope'), '检查时出错'],
+  ['viewer that cannot render fails the check', (d) => rmSync(join(d, 'viewer/app.css')), '检查时出错'],
 
   ['valid reference with image', (d) => {
     put(d, 'references/good.md', NOTE('image: images/good.png\n'));
@@ -257,7 +258,36 @@ for (const [name, shouldExist] of webExpectations) {
   }
 }
 
+// 查看器要显示探索、示例和参考，把方案写进 srcdoc，并转义仓库内容。
+const viewerDir = join(base, 'viewer-page');
+copyRepo(viewerDir);
+put(viewerDir, 'explorations/2026-11-x/README.md', '# 第一轮结构比较\n\n选了 A。\n');
+put(viewerDir, 'explorations/2026-11-x/a.html', '<!doctype html><html><head><title>A</title></head><body>方案A</body></html>');
+put(viewerDir, 'explorations/2026-11-x/b.txt', '终端方案 B\n');
+put(viewerDir, 'examples/page/README.md', `# 认可的界面\n\n${GOOD_RECORD}`);
+put(viewerDir, 'references/good.md', NOTE());
+edit(viewerDir, 'foundations/taste.md', (t) => t.replace('### S-001 不用现成的流行风格代替校准', '### S-001 <img src=x onerror=alert(1)>'));
+const viewerRun = spawnSync(process.execPath, ['--input-type=module', '-e', "const { renderPage } = await import('./viewer/build.mjs'); process.stdout.write(renderPage());"], { cwd: viewerDir, encoding: 'utf8', maxBuffer: 1 << 26 });
+const viewerExpectations = [
+  ['第一轮结构比较', true],
+  ['a.html', true],
+  ['srcdoc="', true],
+  ['&lt;base href=&quot;/explorations/2026-11-x/&quot;&gt;', true],
+  ['终端方案 B', true],
+  ['认可的界面', true],
+  ['验证记录', true],
+  ['https://example.com', true],
+  ['&lt;img src=x onerror', true],
+  ['<img src=x onerror', false],
+];
+for (const [text, shouldExist] of viewerExpectations) {
+  if (viewerRun.stdout.includes(text) !== shouldExist) {
+    failures += 1;
+    console.log(`未通过：查看器页面${shouldExist ? '应包含' : '不应包含'} ${text}\n${viewerRun.stderr}`);
+  }
+}
+
 rmSync(base, { recursive: true, force: true });
-const total = cases.length + expectedCss.length + webExpectations.length;
+const total = cases.length + expectedCss.length + webExpectations.length + viewerExpectations.length;
 console.log(`${total - failures}/${total} 项通过`);
 process.exitCode = failures ? 1 : 0;
