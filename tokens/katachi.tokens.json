@@ -7,17 +7,17 @@
       "text": {
         "$value": 4.5,
         "$description": "普通文字与背景的最低对比度。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "WCAG 2.2 SC 1.4.3 (AA)", "platforms": ["web", "desktop", "mobile", "adaptive", "pos"] } }
+        "$extensions": { "local.katachi": { "status": "standard", "source": "WCAG 2.2 SC 1.4.3 (AA)", "platforms": ["web", "desktop", "mobile", "adaptive"] } }
       },
       "text-large": {
         "$value": 3,
         "$description": "大号文字（按 WCAG 定义）与背景的最低对比度。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "WCAG 2.2 SC 1.4.3 (AA)", "platforms": ["web", "desktop", "mobile", "adaptive", "pos"] } }
+        "$extensions": { "local.katachi": { "status": "standard", "source": "WCAG 2.2 SC 1.4.3 (AA)", "platforms": ["web", "desktop", "mobile", "adaptive"] } }
       },
       "non-text": {
         "$value": 3,
         "$description": "控件边界、图标、焦点指示等与相邻颜色的最低对比度。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "WCAG 2.2 SC 1.4.11 (AA)", "platforms": ["web", "desktop", "mobile", "adaptive", "pos"] } }
+        "$extensions": { "local.katachi": { "status": "standard", "source": "WCAG 2.2 SC 1.4.11 (AA)", "platforms": ["web", "desktop", "mobile", "adaptive"] } }
       }
     },
     "target": {
@@ -61,7 +61,7 @@
         "$type": "number",
         "$value": 48,
         "$description": "Android 触摸目标的最小尺寸，单位 dp。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "Android Developers, Make apps more accessible", "platforms": ["mobile", "adaptive", "pos"] } }
+        "$extensions": { "local.katachi": { "status": "standard", "source": "Android Developers, Make apps more accessible", "platforms": ["mobile", "adaptive"] } }
       }
     },
     "reflow": {

@@ -36,7 +36,7 @@ const addColumn = (text, firstCell, header, value) => {
 };
 const addWatchFile = (dir) => {
   put(dir, 'platforms/watch.md', WATCH);
-  edit(dir, 'platforms/README.md', (text) => text.replace('| pos | POS 机 | [pos.md](pos.md) |', '| pos | POS 机 | [pos.md](pos.md) |\n| watch | 手表 | [watch.md](watch.md) |'));
+  edit(dir, 'platforms/README.md', (text) => text.replace('| terminal | 终端 | [terminal.md](terminal.md) |', '| terminal | 终端 | [terminal.md](terminal.md) |\n| watch | 手表 | [watch.md](watch.md) |'));
 };
 
 // [名称, 修改方法, 预期：'pass' 或错误信息片段]
@@ -99,16 +99,18 @@ const cases = [
   ['token platforms is not an array', (d) => tokens(d, (t) => { t.constraint.reflow.width.$extensions['local.katachi'].platforms = 'web'; }), 'platforms 应为'],
   ['web token aliases a non-web token', (d) => tokens(d, (t) => { t.a = { $value: '{constraint.terminal.columns-default}', $description: 'x', $extensions: META }; }), 'Web 输出'],
   ['platform file without final verification', (d) => edit(d, 'platforms/terminal.md', (t) => t.replace('- 最终验证：', '- 最后：')), '缺少「最终验证」'],
-  ['platform file with an empty field', (d) => edit(d, 'platforms/pos.md', (t) => t.replace(/- 单位：.*/, '- 单位：')), '缺少「单位」'],
+  ['platform file with an empty field', (d) => edit(d, 'platforms/mobile.md', (t) => t.replace(/- 单位：.*/, '- 单位：')), '缺少「单位」'],
   ['platform file without a section', (d) => edit(d, 'platforms/web.md', (t) => t.replace('## 必查', '## 检查')), '缺少「必查」'],
-  ['platform file with a wrong title', (d) => edit(d, 'platforms/pos.md', (t) => t.replace('# pos POS 机', '# 收银机')), '标题要以'],
+  ['platform file with a wrong title', (d) => edit(d, 'platforms/terminal.md', (t) => t.replace('# terminal 终端', '# 命令行')), '标题要以'],
+  ['notes in platforms/later are not a platform', (d) => put(d, 'platforms/later/kiosk.md', '# 自助终端\n'), 'pass'],
+  ['links in platforms/later are still checked', (d) => put(d, 'platforms/later/kiosk.md', '[x](nope.md)\n'), '链接失效'],
   ['missing web platform', (d) => {
     rmSync(join(d, 'platforms/web.md'));
     edit(d, 'platforms/README.md', (t) => t.replace('[web.md](web.md)', 'web.md'));
   }, '缺少 platforms/web.md'],
   ['new platform without a list entry', (d) => put(d, 'platforms/watch.md', WATCH), '平台列表缺少 watch'],
   ['new platform without a matrix column', (d) => addWatchFile(d), '基线表格缺少 watch 列'],
-  ['platform file cites a token of another platform', (d) => edit(d, 'platforms/pos.md', (t) => t.replace('## 必查', '参考 `constraint.target.web-min`。\n\n## 必查')), 'platforms 不含 pos'],
+  ['platform file cites a token of another platform', (d) => edit(d, 'platforms/terminal.md', (t) => t.replace('## 必查', '参考 `constraint.target.web-min`。\n\n## 必查')), 'platforms 不含 terminal'],
   ['new platform without a pattern column', (d) => {
     addWatchFile(d);
     edit(d, 'platforms/README.md', (t) => addColumn(t, '规则', 'watch', '直接'));
@@ -120,9 +122,9 @@ const cases = [
   }, 'pass'],
   ['matrix column without a platform file', (d) => edit(d, 'platforms/README.md', (t) => addColumn(t, '规则', 'tv', '直接')), '未知的平台列 tv'],
   ['new baseline rule without a matrix row', (d) => appendFileSync(join(d, 'foundations/baseline.md'), '\n### BASE-9 新规则\n'), '缺少 BASE-9'],
-  ['matrix refines a rule the platform file omits', (d) => edit(d, 'platforms/pos.md', (t) => t.replace('- BASE-8：', '- 内容：')), '没有说明'],
+  ['matrix refines a rule the platform file omits', (d) => edit(d, 'platforms/terminal.md', (t) => t.replace('- BASE-8：', '- 内容：')), '没有说明'],
   ['platform file details a rule marked direct', (d) => edit(d, 'platforms/web.md', (t) => t.replace('## 必查', '- BASE-1：额外说明。\n\n## 必查')), '标为「直接」'],
-  ['BASE-1 is not matched by BASE-10', (d) => edit(d, 'platforms/pos.md', (t) => t.replace('- BASE-1：', '- BASE-10：')), '没有说明'],
+  ['BASE-4 is not matched by BASE-40', (d) => edit(d, 'platforms/web.md', (t) => t.replace('- BASE-4：', '- BASE-40：')), '没有说明'],
   ['invalid matrix value', (d) => edit(d, 'platforms/README.md', (t) => t.replace('| BASE-1 文字对比度 | 直接', '| BASE-1 文字对比度 | 也许')), '只能是'],
   ['invalid pattern coverage value', (d) => edit(d, 'patterns/README.md', (t) => t.replace('| 导航 | 未做', '| 导航 | 差不多')), '只能是'],
   ['malformed content stress file', (d) => put(d, 'foundations/content-stress.json', '{ nope'), '检查时出错'],

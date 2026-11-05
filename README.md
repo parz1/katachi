@@ -1,6 +1,6 @@
 # katachi
 
-我的 UI 设计资产库，名字取自日语「形」（かたち）。这里沉淀审美判断、设计规范、tokens、界面模式、参考和正式素材，供我本人、Claude 和 Codex 在多个产品项目中使用。范围是全平台：Web、桌面、手机、折叠屏与自适应、终端、POS 等。
+我的 UI 设计资产库，名字取自日语「形」（かたち）。这里沉淀审美判断、设计规范、tokens、界面模式、参考和正式素材，供我本人、Claude 和 Codex 在多个产品项目中使用。范围是全平台：Web、桌面、手机、折叠屏与自适应、终端等。POS 这类特殊场景以后再考虑。
 
 它不是组件库，也不是一套现成的风格。这里的每条审美规则，都要能追溯到我对具体方案的真实反应。
 
@@ -29,7 +29,7 @@
 |---|---|---|
 | 审美账本 [foundations/taste.md](foundations/taste.md) | 只有文字需求里的要求和少量推测，没有任何视觉比较结论 | 工作方式可以，视觉判断不行 |
 | 通用基线 [foundations/baseline.md](foundations/baseline.md) | 来自 WCAG 和平台规范，视觉示例待补 | 可以 |
-| 平台文件 [platforms/](platforms/README.md) | 各平台的能力、要求和检查项，都没在真实界面上用过；POS 没有查到通用的官方规范 | 可以当检查清单 |
+| 平台文件 [platforms/](platforms/README.md) | 各平台的能力、要求和检查项，都没在真实界面上用过 | 可以当检查清单 |
 | Tokens [tokens/](tokens/README.md) | 只有标准和平台规范给出的数值，没有颜色、字体、间距 | 只能用于检查和判断 |
 | 内容压力测试集 [foundations/content-stress.json](foundations/content-stress.json) | 已有，还没在真实界面上用过 | 可以试用 |
 | 界面模式 [patterns/](patterns/README.md) | 0 个模式，只有格式和状态清单 | 只能当检查清单 |
