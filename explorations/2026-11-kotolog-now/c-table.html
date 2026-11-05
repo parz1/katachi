@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C 一张表，一屏看完</title>
+<style>
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:#fff;color:#111;font:14px/1.5 system-ui,-apple-system,"PingFang SC","Noto Sans CJK SC","Microsoft YaHei",sans-serif;overflow-wrap:anywhere}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:left}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid #111;outline-offset:2px}
+h1,h2,h3,p{margin:0}ul{margin:0;padding:0;list-style:none}
+.muted{color:#595959}
+.check{flex:none;display:grid;place-items:center;width:28px;height:28px}
+.check i{display:block;width:16px;height:16px;border:1.5px solid #595959;border-radius:50%}
+.mark{flex:none;display:grid;place-items:center;width:28px;height:28px;color:#595959}
+.is-done .check i{background:#111;border-color:#111}
+.is-done .title{text-decoration:line-through;color:#595959}
+.btn{display:inline-flex;align-items:center;min-height:32px;padding:2px 12px;border:1px solid #8a8a8a;border-radius:6px;background:#fff;white-space:nowrap}
+.btn.solid{background:#111;border-color:#111;color:#fff}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.detail h2{font-size:18px;font-weight:600}
+.detail h3{margin:16px 0 4px;font-size:13px;color:#595959;font-weight:500}
+.field{display:flex;align-items:center;min-height:36px;padding:4px 12px;border:1px solid #8a8a8a;border-radius:8px;color:#595959;background:#fff}
+
+.bar{display:flex;align-items:center;gap:16px;min-height:44px;padding:4px 16px;border-bottom:1px solid #8a8a8a}
+.bar strong{font-size:15px}
+.tabs{display:flex;gap:2px}
+.tabs a{display:flex;align-items:center;min-height:32px;padding:2px 8px;border-radius:6px}
+.tabs a.on{background:#333;color:#fff}
+.bar .field{flex:1;min-height:30px;max-width:420px;margin-left:auto;border-radius:6px}
+.bar .btn{min-height:30px}
+.sub{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px;padding:8px 16px;border-bottom:1px solid #d9d9d9}
+h1{font-size:16px;font-weight:600}
+.week{display:flex;gap:2px;font-size:13px;color:#595959}
+.day{display:flex;gap:2px;padding:0 6px;border-radius:4px}
+.day b{font-weight:400;color:#111}
+.day.on{background:#111;color:#fff}.day.on b{color:#fff}
+.workspace{display:grid;grid-template-columns:minmax(0,1fr) 340px;align-items:start;padding-bottom:44px}
+.table{min-width:0;border-right:1px solid #d9d9d9;font-size:13px}
+.thead,.open{display:grid;grid-template-columns:minmax(0,1fr) 72px 96px 176px;gap:8px;align-items:center}
+.thead{position:sticky;top:0;z-index:1;padding:4px 16px 4px 44px;background:#fff;border-bottom:1px solid #8a8a8a;color:#595959;font-size:12px}
+section h2{display:flex;gap:8px;padding:6px 16px 4px;background:#f0f0f0;font-size:12px;font-weight:600}
+section h2 span{font-weight:400;color:#595959}
+.row{display:flex;align-items:center;gap:0;min-height:32px;padding:0 16px 0 12px;border-bottom:1px solid #ececec}
+.row:focus{outline:none}
+.row.is-cursor{box-shadow:inset 3px 0 0 #111;background:#f7f7f7}
+.row.is-selected{background:#e6e6e6;box-shadow:inset 3px 0 0 #111}
+.row .check,.row .mark{width:28px;height:28px}
+.open{flex:1;min-width:0;min-height:30px}
+.title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.col{min-width:0;overflow:hidden;color:#595959;text-overflow:ellipsis;white-space:nowrap}
+.more{padding:4px 16px 4px 40px;color:#595959}
+.preview{position:sticky;top:0;max-height:calc(100vh - 44px);padding:16px;overflow:auto}
+.keys{position:fixed;right:0;bottom:0;left:0;z-index:2;display:flex;align-items:center;gap:16px;min-height:44px;padding:4px 16px;background:#fff;border-top:1px solid #8a8a8a;font-size:12px;color:#595959}
+.keys .field{flex:1;max-width:360px;min-height:30px;margin-left:auto;border-radius:6px;font-size:13px}
+.keys kbd{padding:0 4px;border:1px solid #8a8a8a;border-radius:3px;font:inherit;color:#111}
+.narrow-actions{display:none}
+@media (max-width:1199px){
+  .workspace{grid-template-columns:minmax(0,1fr)}
+  .table{border-right:0}
+  .preview{display:none}
+  .has-detail .preview{position:fixed;inset:auto 0 44px;z-index:3;display:block;max-height:70vh;background:#fff;border-top:2px solid #111}
+}
+@media (max-width:839px){
+  .bar .field{display:none}
+  .tabs{margin-left:auto}
+  .thead,.open{grid-template-columns:minmax(0,1fr) 72px 148px}
+  .col.plan,.thead .plan{display:none}
+  .keys span{display:none}
+}
+@media (max-width:599px){
+  .bar{gap:8px;padding:4px 12px}
+  .tabs{display:none}
+  .narrow-actions{display:flex;gap:8px;margin-left:auto}
+  .sub{padding:8px 12px}
+  .thead{display:none}
+  .row{padding:4px 12px 4px 8px}
+  .open{grid-template-columns:minmax(0,1fr) auto;gap:0 8px;padding:2px 0}
+  .title{grid-column:1 / -1;white-space:normal}
+  .col.status:empty{display:none}
+  section h2{padding:6px 12px 4px}
+  .more{padding-left:36px}
+}
+</style>
+</head>
+<body>
+<header class="bar"><strong>Kotolog</strong><nav class="tabs" aria-label="导航"><a href="#" class="on">现在</a><a href="#" class="">Routine</a><a href="#" class="">助手对话</a><a href="#" class="">日历</a><a href="#" class="">资料库</a></nav><div class="field">/ 搜索或快速前往…</div><div class="narrow-actions"><button type="button" class="btn" aria-label="打开导航">≡</button><button type="button" class="btn">搜索</button></div><button type="button" class="btn solid">+ 新建</button></header>
+<div class="sub"><h1>11月6日 星期五</h1><div class="week"><div class="day "><span>一</span><b>2</b></div><div class="day "><span>二</span><b>3</b></div><div class="day "><span>三</span><b>4</b></div><div class="day "><span>四</span><b>5</b></div><div class="day on"><span>五</span><b>6</b></div><div class="day "><span>六</span><b>7</b></div><div class="day "><span>日</span><b>8</b></div></div><p class="muted">今天 6 项，3 项待处理</p></div>
+<div class="workspace">
+  <main class="table">
+    <div class="thead"><span>标题</span><span class="space">项目</span><span class="plan">计划</span><span>状态</span></div>
+    <section><h2>待处理<span>3</span></h2><article class="row" data-id="a41" tabindex="-1"><button type="button" class="check" aria-pressed="false" aria-label="完成 交水电费"><i></i></button><button type="button" class="open"><span class="title">交水电费</span><span class="col space">日常</span><span class="col plan">—</span><span class="col status">逾期 3 天</span></button></article><article class="row" data-id="b07" tabindex="-1"><button type="button" class="check" aria-pressed="false" aria-label="完成 整理访谈编码表"><i></i></button><button type="button" class="open"><span class="title">整理访谈编码表</span><span class="col space">研究</span><span class="col plan">周三</span><span class="col status">没做完</span></button></article><article class="row" data-id="c19" tabindex="-1"><button type="button" class="check" aria-pressed="false" aria-label="完成 写组会周报"><i></i></button><button type="button" class="open"><span class="title">写组会周报</span><span class="col space">研究</span><span class="col plan">周四</span><span class="col status">没做完，后天 18:00 截止</span></button></article></section><section><h2>现在<span>6</span></h2><article class="row" data-id="e01" tabindex="-1"><span class="mark" aria-hidden="true">◇</span><button type="button" class="open"><span class="title">周会</span><span class="col space">研究</span><span class="col plan">15:00–16:00</span><span class="col status"></span></button></article><article class="row" data-id="e02" tabindex="-1"><span class="mark" aria-hidden="true">◇</span><button type="button" class="open"><span class="title">牙医复诊</span><span class="col space">日常</span><span class="col plan">17:30</span><span class="col status"></span></button></article><article class="row" data-id="d22" tabindex="-1"><button type="button" class="check" aria-pressed="false" aria-label="完成 回复 TestFlight 的反馈"><i></i></button><button type="button" class="open"><span class="title">回复 TestFlight 的反馈</span><span class="col space">Kotolog</span><span class="col plan">今天</span><span class="col status"></span></button></article><article class="row" data-id="d31" tabindex="-1"><button type="button" class="check" aria-pressed="false" aria-label="完成 看 expo-file-system 57 的迁移说明"><i></i></button><button type="button" class="open"><span class="title">看 expo-file-system 57 的迁移说明</span><span class="col space">Kotolog</span><span class="col plan">今天</span><span class="col status"></span></button></article><article class="row" data-id="d48" tabindex="-1"><button type="button" class="check" aria-pressed="false" aria-label="完成 读《Thinking in Systems》第 3 章"><i></i></button><button type="button" class="open"><span class="title">读《Thinking in Systems》第 3 章</span><span class="col space">阅读</span><span class="col plan">今天</span><span class="col status"></span></button></article><article class="row" data-id="d55" tabindex="-1"><button type="button" class="check" aria-pressed="false" aria-label="完成 关于调整第四季度跨部门协作流程以及相关审批权限的补充说明（第二次修订）"><i></i></button><button type="button" class="open"><span class="title">关于调整第四季度跨部门协作流程以及相关审批权限的补充说明（第二次修订）</span><span class="col space">研究</span><span class="col plan">今天</span><span class="col status">今天截止</span></button></article></section><section><h2>接下来<span>3</span></h2><article class="row" data-id="n61" tabindex="-1"><button type="button" class="check" aria-pressed="false" aria-label="完成 发 0.6.2"><i></i></button><button type="button" class="open"><span class="title">发 0.6.2</span><span class="col space">Kotolog</span><span class="col plan">周一</span><span class="col status"></span></button></article><article class="row" data-id="n74" tabindex="-1"><button type="button" class="check" aria-pressed="false" aria-label="完成 准备读书会的问题"><i></i></button><button type="button" class="open"><span class="title">准备读书会的问题</span><span class="col space">阅读</span><span class="col plan">周二</span><span class="col status"></span></button></article><article class="row" data-id="n83" tabindex="-1"><button type="button" class="check" aria-pressed="false" aria-label="完成 交房租"><i></i></button><button type="button" class="open"><span class="title">交房租</span><span class="col space">日常</span><span class="col plan">周三</span><span class="col status">周三截止</span></button></article></section><section><h2>未安排<span>9</span></h2><article class="row" data-id="u12" tabindex="-1"><button type="button" class="check" aria-pressed="false" aria-label="完成 给爸妈订元旦回家的火车票"><i></i></button><button type="button" class="open"><span class="title">给爸妈订元旦回家的火车票</span><span class="col space">日常</span><span class="col plan">—</span><span class="col status">今天记下</span></button></article><article class="row" data-id="u25" tabindex="-1"><button type="button" class="check" aria-pressed="false" aria-label="完成 换掉卧室的灯泡"><i></i></button><button type="button" class="open"><span class="title">换掉卧室的灯泡</span><span class="col space">日常</span><span class="col plan">—</span><span class="col status">前天记下</span></button></article><article class="row" data-id="u36" tabindex="-1"><button type="button" class="check" aria-pressed="false" aria-label="完成 把「任务」视图的想法写成 issue"><i></i></button><button type="button" class="open"><span class="title">把「任务」视图的想法写成 issue</span><span class="col space">Kotolog</span><span class="col plan">—</span><span class="col status">周三记下</span></button></article><article class="row" data-id="u47" tabindex="-1"><button type="button" class="check" aria-pressed="false" aria-label="完成 查一下 Fly 东京机房的价格"><i></i></button><button type="button" class="open"><span class="title">查一下 Fly 东京机房的价格</span><span class="col space">Kotolog</span><span class="col plan">—</span><span class="col status">上周二记下</span></button></article><article class="row" data-id="u58" tabindex="-1"><button type="button" class="check" aria-pressed="false" aria-label="完成 问房东续租的事"><i></i></button><button type="button" class="open"><span class="title">问房东续租的事</span><span class="col space">日常</span><span class="col plan">—</span><span class="col status">上周五记下</span></button></article><p class="more">查看全部 9 项</p></section><section><h2>最近活动<span>2</span></h2><article class="row" data-id="l91" tabindex="-1"><span class="mark" aria-hidden="true">✎</span><button type="button" class="open"><span class="title">周末读书笔记</span><span class="col space">阅读</span><span class="col plan">—</span><span class="col status">今天 09:40</span></button></article><article class="row is-done" data-id="l92" tabindex="-1"><button type="button" class="check" aria-pressed="true" aria-label="完成 回复 Kim 的邮件"><i></i></button><button type="button" class="open"><span class="title">回复 Kim 的邮件</span><span class="col space">研究</span><span class="col plan">—</span><span class="col status">今天 10:12 完成</span></button></article></section>
+  </main>
+  <aside class="preview" id="detail" aria-label="详情"><p class="muted">选一行看详情。也可以用方向键移动，按 x 完成，回车打开。</p></aside>
+</div>
+<footer class="keys"><span><kbd>↑</kbd> <kbd>↓</kbd> 移动</span><span><kbd>x</kbd> 完成</span><span><kbd>回车</kbd> 打开</span><span><kbd>/</kbd> 搜索</span><div class="field">问コトちゃん…</div></footer>
+<script>
+const DETAILS={"a41":"\u003cdiv class=\"detail\">\u003ch2>交水电费\u003c/h2>\u003cp class=\"muted\">日常 · 逾期 3 天\u003c/p>\u003cdiv class=\"actions\">\u003cbutton type=\"button\" class=\"btn\">今天做\u003c/button>\u003cbutton type=\"button\" class=\"btn\">改期\u003c/button>\u003cbutton type=\"button\" class=\"btn\">完成\u003c/button>\u003cbutton type=\"button\" class=\"btn\" data-close>关闭\u003c/button>\u003c/div>\u003cp class=\"muted\">还没有正文。\u003c/p>\u003c/div>","b07":"\u003cdiv class=\"detail\">\u003ch2>整理访谈编码表\u003c/h2>\u003cp class=\"muted\">研究 · 周三计划，没做完\u003c/p>\u003cdiv class=\"actions\">\u003cbutton type=\"button\" class=\"btn\">今天做\u003c/button>\u003cbutton type=\"button\" class=\"btn\">改期\u003c/button>\u003cbutton type=\"button\" class=\"btn\">完成\u003c/button>\u003cbutton type=\"button\" class=\"btn\" data-close>关闭\u003c/button>\u003c/div>\u003cp class=\"muted\">还没有正文。\u003c/p>\u003c/div>","c19":"\u003cdiv class=\"detail\">\u003ch2>写组会周报\u003c/h2>\u003cp class=\"muted\">研究 · 周四计划，没做完 · 后天 18:00 截止\u003c/p>\u003cdiv class=\"actions\">\u003cbutton type=\"button\" class=\"btn\">今天做\u003c/button>\u003cbutton type=\"button\" class=\"btn\">改期\u003c/button>\u003cbutton type=\"button\" class=\"btn\">完成\u003c/button>\u003cbutton type=\"button\" class=\"btn\" data-close>关闭\u003c/button>\u003c/div>\u003ch3>子任务\u003c/h3>\u003cul class=\"plain\">\u003cli>已完成：汇总本周实验结果\u003c/li>\u003cli>未完成：写下周计划\u003c/li>\u003c/ul>\u003ch3>关联记录\u003c/h3>\u003cp>编码会：主题合并成 5 类，前天 15:10\u003c/p>\u003c/div>","e01":"\u003cdiv class=\"detail\">\u003ch2>周会\u003c/h2>\u003cp class=\"muted\">研究 · 15:00–16:00\u003c/p>\u003cdiv class=\"actions\">\u003cbutton type=\"button\" class=\"btn\" data-close>关闭\u003c/button>\u003c/div>\u003cp class=\"muted\">还没有正文。\u003c/p>\u003c/div>","e02":"\u003cdiv class=\"detail\">\u003ch2>牙医复诊\u003c/h2>\u003cp class=\"muted\">日常 · 17:30\u003c/p>\u003cdiv class=\"actions\">\u003cbutton type=\"button\" class=\"btn\" data-close>关闭\u003c/button>\u003c/div>\u003cp class=\"muted\">还没有正文。\u003c/p>\u003c/div>","d22":"\u003cdiv class=\"detail\">\u003ch2>回复 TestFlight 的反馈\u003c/h2>\u003cp class=\"muted\">Kotolog · 今天做\u003c/p>\u003cdiv class=\"actions\">\u003cbutton type=\"button\" class=\"btn\">今天做\u003c/button>\u003cbutton type=\"button\" class=\"btn\">改期\u003c/button>\u003cbutton type=\"button\" class=\"btn\">完成\u003c/button>\u003cbutton type=\"button\" class=\"btn\" data-close>关闭\u003c/button>\u003c/div>\u003cp class=\"muted\">还没有正文。\u003c/p>\u003c/div>","d31":"\u003cdiv class=\"detail\">\u003ch2>看 expo-file-system 57 的迁移说明\u003c/h2>\u003cp class=\"muted\">Kotolog · 今天做\u003c/p>\u003cdiv class=\"actions\">\u003cbutton type=\"button\" class=\"btn\">今天做\u003c/button>\u003cbutton type=\"button\" class=\"btn\">改期\u003c/button>\u003cbutton type=\"button\" class=\"btn\">完成\u003c/button>\u003cbutton type=\"button\" class=\"btn\" data-close>关闭\u003c/button>\u003c/div>\u003cp class=\"muted\">还没有正文。\u003c/p>\u003c/div>","d48":"\u003cdiv class=\"detail\">\u003ch2>读《Thinking in Systems》第 3 章\u003c/h2>\u003cp class=\"muted\">阅读 · 今天做\u003c/p>\u003cdiv class=\"actions\">\u003cbutton type=\"button\" class=\"btn\">今天做\u003c/button>\u003cbutton type=\"button\" class=\"btn\">改期\u003c/button>\u003cbutton type=\"button\" class=\"btn\">完成\u003c/button>\u003cbutton type=\"button\" class=\"btn\" data-close>关闭\u003c/button>\u003c/div>\u003cp class=\"muted\">还没有正文。\u003c/p>\u003c/div>","d55":"\u003cdiv class=\"detail\">\u003ch2>关于调整第四季度跨部门协作流程以及相关审批权限的补充说明（第二次修订）\u003c/h2>\u003cp class=\"muted\">研究 · 今天截止\u003c/p>\u003cdiv class=\"actions\">\u003cbutton type=\"button\" class=\"btn\">今天做\u003c/button>\u003cbutton type=\"button\" class=\"btn\">改期\u003c/button>\u003cbutton type=\"button\" class=\"btn\">完成\u003c/button>\u003cbutton type=\"button\" class=\"btn\" data-close>关闭\u003c/button>\u003c/div>\u003cp class=\"muted\">还没有正文。\u003c/p>\u003c/div>","n61":"\u003cdiv class=\"detail\">\u003ch2>发 0.6.2\u003c/h2>\u003cp class=\"muted\">Kotolog · 周一\u003c/p>\u003cdiv class=\"actions\">\u003cbutton type=\"button\" class=\"btn\">今天做\u003c/button>\u003cbutton type=\"button\" class=\"btn\">改期\u003c/button>\u003cbutton type=\"button\" class=\"btn\">完成\u003c/button>\u003cbutton type=\"button\" class=\"btn\" data-close>关闭\u003c/button>\u003c/div>\u003cp class=\"muted\">还没有正文。\u003c/p>\u003c/div>","n74":"\u003cdiv class=\"detail\">\u003ch2>准备读书会的问题\u003c/h2>\u003cp class=\"muted\">阅读 · 周二\u003c/p>\u003cdiv class=\"actions\">\u003cbutton type=\"button\" class=\"btn\">今天做\u003c/button>\u003cbutton type=\"button\" class=\"btn\">改期\u003c/button>\u003cbutton type=\"button\" class=\"btn\">完成\u003c/button>\u003cbutton type=\"button\" class=\"btn\" data-close>关闭\u003c/button>\u003c/div>\u003cp class=\"muted\">还没有正文。\u003c/p>\u003c/div>","n83":"\u003cdiv class=\"detail\">\u003ch2>交房租\u003c/h2>\u003cp class=\"muted\">日常 · 周三截止\u003c/p>\u003cdiv class=\"actions\">\u003cbutton type=\"button\" class=\"btn\">今天做\u003c/button>\u003cbutton type=\"button\" class=\"btn\">改期\u003c/button>\u003cbutton type=\"button\" class=\"btn\">完成\u003c/button>\u003cbutton type=\"button\" class=\"btn\" data-close>关闭\u003c/button>\u003c/div>\u003cp class=\"muted\">还没有正文。\u003c/p>\u003c/div>","u12":"\u003cdiv class=\"detail\">\u003ch2>给爸妈订元旦回家的火车票\u003c/h2>\u003cp class=\"muted\">日常 · 今天记下\u003c/p>\u003cdiv class=\"actions\">\u003cbutton type=\"button\" class=\"btn\">今天做\u003c/button>\u003cbutton type=\"button\" class=\"btn\">改期\u003c/button>\u003cbutton type=\"button\" class=\"btn\">完成\u003c/button>\u003cbutton type=\"button\" class=\"btn\" data-close>关闭\u003c/button>\u003c/div>\u003cp class=\"muted\">还没有正文。\u003c/p>\u003c/div>","u25":"\u003cdiv class=\"detail\">\u003ch2>换掉卧室的灯泡\u003c/h2>\u003cp class=\"muted\">日常 · 前天记下\u003c/p>\u003cdiv class=\"actions\">\u003cbutton type=\"button\" class=\"btn\">今天做\u003c/button>\u003cbutton type=\"button\" class=\"btn\">改期\u003c/button>\u003cbutton type=\"button\" class=\"btn\">完成\u003c/button>\u003cbutton type=\"button\" class=\"btn\" data-close>关闭\u003c/button>\u003c/div>\u003cp class=\"muted\">还没有正文。\u003c/p>\u003c/div>","u36":"\u003cdiv class=\"detail\">\u003ch2>把「任务」视图的想法写成 issue\u003c/h2>\u003cp class=\"muted\">Kotolog · 周三记下\u003c/p>\u003cdiv class=\"actions\">\u003cbutton type=\"button\" class=\"btn\">今天做\u003c/button>\u003cbutton type=\"button\" class=\"btn\">改期\u003c/button>\u003cbutton type=\"button\" class=\"btn\">完成\u003c/button>\u003cbutton type=\"button\" class=\"btn\" data-close>关闭\u003c/button>\u003c/div>\u003cp class=\"muted\">还没有正文。\u003c/p>\u003c/div>","u47":"\u003cdiv class=\"detail\">\u003ch2>查一下 Fly 东京机房的价格\u003c/h2>\u003cp class=\"muted\">Kotolog · 上周二记下\u003c/p>\u003cdiv class=\"actions\">\u003cbutton type=\"button\" class=\"btn\">今天做\u003c/button>\u003cbutton type=\"button\" class=\"btn\">改期\u003c/button>\u003cbutton type=\"button\" class=\"btn\">完成\u003c/button>\u003cbutton type=\"button\" class=\"btn\" data-close>关闭\u003c/button>\u003c/div>\u003cp class=\"muted\">还没有正文。\u003c/p>\u003c/div>","u58":"\u003cdiv class=\"detail\">\u003ch2>问房东续租的事\u003c/h2>\u003cp class=\"muted\">日常 · 上周五记下\u003c/p>\u003cdiv class=\"actions\">\u003cbutton type=\"button\" class=\"btn\">今天做\u003c/button>\u003cbutton type=\"button\" class=\"btn\">改期\u003c/button>\u003cbutton type=\"button\" class=\"btn\">完成\u003c/button>\u003cbutton type=\"button\" class=\"btn\" data-close>关闭\u003c/button>\u003c/div>\u003cp class=\"muted\">还没有正文。\u003c/p>\u003c/div>","l91":"\u003cdiv class=\"detail\">\u003ch2>周末读书笔记\u003c/h2>\u003cp class=\"muted\">阅读 · 今天 09:40\u003c/p>\u003cdiv class=\"actions\">\u003cbutton type=\"button\" class=\"btn\" data-close>关闭\u003c/button>\u003c/div>\u003cp class=\"muted\">还没有正文。\u003c/p>\u003c/div>","l92":"\u003cdiv class=\"detail\">\u003ch2>回复 Kim 的邮件\u003c/h2>\u003cp class=\"muted\">研究 · 今天 10:12 完成\u003c/p>\u003cdiv class=\"actions\">\u003cbutton type=\"button\" class=\"btn\" data-close>关闭\u003c/button>\u003c/div>\u003cp class=\"muted\">还没有正文。\u003c/p>\u003c/div>"};
+const slot=document.getElementById('detail');
+const initial=slot?slot.innerHTML:'';
+function closeDetail(){
+  document.querySelectorAll('.is-selected').forEach((n)=>n.classList.remove('is-selected'));
+  document.querySelectorAll('.inline-detail').forEach((n)=>n.remove());
+  document.body.classList.remove('has-detail');
+  if(slot)slot.innerHTML=initial;
+}
+function openDetail(row){
+  const was=row.classList.contains('is-selected');
+  closeDetail();
+  if(was&&'panel'==='inline')return;
+  row.classList.add('is-selected');
+  if('panel'==='inline'){
+    const box=document.createElement('div');box.className='inline-detail';box.innerHTML=DETAILS[row.dataset.id];row.after(box);
+  }else{
+    slot.innerHTML=DETAILS[row.dataset.id];document.body.classList.add('has-detail');
+  }
+}
+document.addEventListener('click',(event)=>{
+  const check=event.target.closest('.check');
+  if(check){const row=check.closest('[data-id]');const on=row.classList.toggle('is-done');check.setAttribute('aria-pressed',String(on));return;}
+  if(event.target.closest('[data-close]')){closeDetail();return;}
+  const open=event.target.closest('.open');
+  if(open)openDetail(open.closest('[data-id]'));
+});
+
+const rows=[...document.querySelectorAll('.row')];
+let cursor=-1;
+function moveCursor(next){
+  rows[cursor]?.classList.remove('is-cursor');
+  cursor=Math.max(0,Math.min(rows.length-1,next));
+  rows[cursor].classList.add('is-cursor');
+  rows[cursor].scrollIntoView({block:'nearest'});
+}
+document.addEventListener('keydown',(event)=>{
+  if(event.key==='ArrowDown'||event.key==='j'){event.preventDefault();moveCursor(cursor+1);}
+  else if(event.key==='ArrowUp'||event.key==='k'){event.preventDefault();moveCursor(cursor-1);}
+  else if(event.key==='x'&&cursor>=0){rows[cursor].querySelector('.check')?.click();}
+  else if(event.key==='Enter'&&cursor>=0&&!event.target.closest('button')){openDetail(rows[cursor]);}
+  else if(event.key==='Escape'){closeDetail();}
+});
+</script>
+</body>
+</html>

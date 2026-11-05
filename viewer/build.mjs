@@ -72,17 +72,17 @@ function overview(lib) {
 
 function benchWidths(lib) {
   const web = lib.platforms.active.find((platform) => platform.id === 'web');
-  const sizes = [...(web?.checks ?? '').matchAll(/(\d{3,4})×\d{3,4}/g)].map((match) => Number(match[1]));
+  const sizes = [...(web?.checks ?? '').matchAll(/(\d{3,4})×(\d{3,4})/g)].map((match) => ({ width: Number(match[1]), height: Number(match[2]) }));
   const tokenWidth = (name) => parseFloat(lib.tokens.find((token) => token.name === name)?.value);
   const widths = [
-    ...sizes.map((width) => ({ width, label: `${width}` })),
-    { width: tokenWidth('constraint.window.width-expanded-min'), label: 'expanded' },
-    { width: tokenWidth('constraint.window.width-medium-min'), label: 'medium' },
-    { width: tokenWidth('constraint.reflow.width'), label: '重排' },
+    ...sizes.map(({ width, height }) => ({ width, height, label: `${width}` })),
+    { width: tokenWidth('constraint.window.width-expanded-min'), height: 800, label: 'expanded' },
+    { width: tokenWidth('constraint.window.width-medium-min'), height: 800, label: 'medium' },
+    { width: tokenWidth('constraint.reflow.width'), height: 640, label: '重排' },
   ].filter(({ width }) => Number.isFinite(width));
   return widths
     .sort((a, b) => b.width - a.width)
-    .map(({ width, label }) => ({ width, label: label === `${width}` ? label : `${width} ${label}` }));
+    .map(({ width, height, label }) => ({ width, height, label: label === `${width}` ? label : `${width} ${label}` }));
 }
 
 // 把方案内容写进 srcdoc，不让 iframe 再发请求：有些内嵌浏览器（比如 Claude 桌面应用的面板）会拦截子框架的网络加载。
@@ -100,32 +100,37 @@ function withBase(html, directory) {
 function variant(file) {
   const name = basename(file.path);
   const url = `/${h(encodeURI(file.path))}`;
+  const label = file.type === '.html' ? file.text.match(/<title>([^<]*)<\/title>/i)?.[1] : '';
   let content;
   if (file.type === '.html') {
-    content = `<div class="frame-box"><iframe srcdoc="${h(withBase(file.text, dirname(file.path)))}" title="${h(name)}" sandbox="allow-scripts allow-forms allow-same-origin"></iframe></div>`;
+    content = `<div class="frame-box"><iframe srcdoc="${h(withBase(file.text, dirname(file.path)))}" title="${h(label || name)}" sandbox="allow-scripts allow-forms allow-same-origin"></iframe></div>`;
   } else if (file.type === '.txt') {
-    content = `<div class="table-wrap" tabindex="0" role="region" aria-label="${h(name)}"><pre class="plain-output">${h(file.text)}</pre></div>`;
+    // 按字符单元排版，中文才能和英文对齐。纯文本留给读屏和复制。
+    const lines = file.text.replace(/\n$/, '').split('\n');
+    const columns = Math.max(1, ...lines.map((line) => graphemes(line).reduce((sum, item) => sum + item.width, 0)));
+    content = `${terminalGrid(lines, columns, lines.length, `${name}，${columns} 列的文本示意`)}<pre class="visually-hidden">${h(file.text)}</pre>`;
   } else {
     content = `<img class="variant-image" src="${url}" alt="${h(name)}">`;
   }
-  return `<figure class="variant"><figcaption><code>${h(name)}</code> <a href="${url}" target="_blank" rel="noopener">单独打开</a></figcaption>${content}</figure>`;
+  return `<figure class="variant"><figcaption>${label ? `<strong>${h(label)}</strong> ` : ''}<code>${h(name)}</code> <a href="${url}" target="_blank" rel="noopener">单独打开</a></figcaption>${content}</figure>`;
 }
 
-function bench(item, widths) {
+function bench(item, widths, { notesOpen = false } = {}) {
   const hasPages = item.variants.some((file) => file.type === '.html');
-  const widthButtons = hasPages ? widths.map(({ width, label }, index) => `<button type="button" class="btn" data-width="${width}" aria-pressed="${index === 0}">${h(label)}</button>`).join('') : '';
+  const widthButtons = hasPages ? widths.map(({ width, height, label }, index) => `<button type="button" class="btn" data-width="${width}" data-height="${height}" aria-pressed="${index === 0}">${h(label)}</button>`).join('') : '';
+  const stack = item.variants.length > 1 ? '<button type="button" class="btn" data-stack aria-pressed="false">单列放大</button>' : '';
   const controls = item.variants.length
-    ? `<div class="controls" role="group" aria-label="比较方式">${widthButtons}<button type="button" class="btn" data-gray aria-pressed="false">灰阶</button></div>`
+    ? `<div class="controls" role="group" aria-label="比较方式">${widthButtons}<button type="button" class="btn" data-gray aria-pressed="false">灰阶</button>${stack}</div>`
     : '';
   const grid = item.variants.length ? `<div class="bench-grid">${item.variants.map(variant).join('')}</div>` : '';
-  const notes = item.readme.trim() ? `<details class="notes"><summary>记录</summary>${markdown(item.readme, { base: item.dir })}</details>` : '';
-  return `<article class="bench" data-bench data-width="${widths[0]?.width ?? 1280}"><h4>${inline(item.title, item.dir)}</h4><p class="meta">${source(item.dir)}</p>${controls}${grid}${notes}</article>`;
+  const notes = item.readme.trim() ? `<details class="notes"${notesOpen ? ' open' : ''}><summary>记录</summary>${markdown(item.readme, { base: item.dir })}</details>` : '';
+  return `<article class="bench" data-bench data-width="${widths[0]?.width ?? 1280}" data-height="${widths[0]?.height ?? 800}"><h4>${inline(item.title, item.dir)}</h4><p class="meta">${source(item.dir)}</p>${controls}${grid}${notes}</article>`;
 }
 
 function work(lib) {
   const widths = benchWidths(lib);
   const explorations = lib.explorations.length
-    ? lib.explorations.map((item) => bench(item, widths)).join('')
+    ? lib.explorations.map((item) => bench(item, widths, { notesOpen: true })).join('')
     : empty('还没有探索方案。第一轮比较开始后，方案会显示在这里，可以切换窗口宽度，也可以打开灰阶。');
   const examples = lib.examples.length
     ? lib.examples.map((item) => bench(item, widths)).join('')

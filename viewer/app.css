@@ -192,9 +192,20 @@ summary {
 .frame-box { overflow: hidden; border: 1px solid var(--line-strong); background: #ffffff; }
 .frame-box iframe { display: block; border: 0; transform-origin: 0 0; background: #ffffff; }
 .variant-image { display: block; max-width: 100%; height: auto; border: 1px solid var(--line-strong); }
-.plain-output { margin: 0; white-space: pre; }
+.bench.is-stacked .bench-grid { grid-template-columns: minmax(0, 1fr); }
+.variant:has(.term) { grid-column: 1 / -1; }
 .bench.is-gray .frame-box iframe,
 .bench.is-gray .variant-image { filter: grayscale(1); }
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: pre;
+}
 
 .contrast { display: grid; gap: 16px; }
 .contrast-item p:not(.meta) { margin: 0; }

@@ -52,10 +52,10 @@
   // 比较方案：把页面按选定宽度渲染，再缩放到可用空间。
   function layoutBench(bench) {
     const width = Number(bench.dataset.width);
+    const height = Number(bench.dataset.height) || 800;
     for (const box of bench.querySelectorAll('.frame-box')) {
       const frame = box.querySelector('iframe');
       const scale = Math.min(1, box.clientWidth / width);
-      const height = 800;
       frame.style.width = `${width}px`;
       frame.style.height = `${height}px`;
       frame.style.transform = `scale(${scale})`;
@@ -68,7 +68,17 @@
     for (const button of widthButtons) {
       button.addEventListener('click', () => {
         bench.dataset.width = button.dataset.width;
+        bench.dataset.height = button.dataset.height;
         press(widthButtons, button);
+        layoutBench(bench);
+      });
+    }
+    const stack = bench.querySelector('[data-stack]');
+    if (stack) {
+      stack.addEventListener('click', () => {
+        const on = stack.getAttribute('aria-pressed') !== 'true';
+        stack.setAttribute('aria-pressed', String(on));
+        bench.classList.toggle('is-stacked', on);
         layoutBench(bench);
       });
     }
