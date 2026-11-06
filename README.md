@@ -21,7 +21,7 @@
 
 通用规则从平台中提炼：在两类差异大的平台上都成立，才算通用，并标明它在每个平台上的应用面。见[决策 0004](decisions/0004-platform-layering.md)。
 
-流程在 [workflows/](workflows/README.md)，重要取舍在 [decisions/](decisions/README.md)。`explorations/` 和 `examples/` 等到有第一份真实内容时才创建。
+流程在 [workflows/](workflows/README.md)，重要取舍在 [decisions/](decisions/README.md)，探索方案在 `explorations/`。`examples/` 等到有第一个认可的界面时才创建。
 
 ## 成熟度
 
@@ -30,9 +30,9 @@
 | 审美账本 [foundations/taste.md](foundations/taste.md) | 只有文字需求里的要求和少量推测，没有任何视觉比较结论 | 工作方式可以，视觉判断不行 |
 | 通用基线 [foundations/baseline.md](foundations/baseline.md) | 来自 WCAG 和平台规范，视觉示例待补 | 可以 |
 | 平台文件 [platforms/](platforms/README.md) | 各平台的能力、要求和检查项，都没在真实界面上用过 | 可以当检查清单 |
-| Tokens [tokens/](tokens/README.md) | 只有标准和平台规范给出的数值，没有颜色、字体、间距 | 只能用于检查和判断 |
+| Tokens [tokens/](tokens/README.md) | 标准和平台规范给出的数值，加上条卡页窗的 draft 数值；没有颜色、字体、间距 | 只能用于检查和判断 |
 | 内容压力测试集 [foundations/content-stress.json](foundations/content-stress.json) | 已有，还没在真实界面上用过 | 可以试用 |
-| 界面模式 [patterns/](patterns/README.md) | 0 个模式，只有格式和状态清单 | 只能当检查清单 |
+| 界面模式 [patterns/](patterns/README.md) | 1 个样章：[条卡页窗](patterns/object-forms.md)，draft，来自 Kotolog；另有状态清单 | 可以参考，还在等用户判断厚度和哪些算通用 |
 | 查看器 [viewer/](viewer/README.md) | 能显示仓库现有内容；比较功能只用临时数据试过 | 可以用，外观不是设计规范 |
 | 认可的示例 | 0 个 | — |
 | 已接入的产品 | 0 个 | — |

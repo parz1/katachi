@@ -10,4 +10,72 @@
   --constraint-target-web-min: 24px;
   /* 内容重排检查的视口宽度，此宽度下不应需要同时横向和纵向滚动。 [standard] */
   --constraint-reflow-width: 320px;
+  /* 条的高度（桌面）。 [draft] */
+  --object-bar-height: 40px;
+  /* 条的圆角。 [draft] */
+  --object-radius-bar: 12px;
+  /* 卡的圆角。 [draft] */
+  --object-radius-card: 12px;
+  /* 页的圆角。 [draft] */
+  --object-radius-page: 16px;
+  /* 窗的圆角。 [draft] */
+  --object-radius-window: 14px;
+  /* 列表里原地卡的最大高度。 [draft] */
+  --object-size-card-max-height: 440px;
+  /* 搜索和回答里卡的最大高度。 [draft] */
+  --object-size-card-max-height-embedded: 320px;
+  /* 页相对工作区内缩的距离。 [draft] */
+  --object-size-page-inset: 12px;
+  /* 窗的最小宽度。 [draft] */
+  --object-size-window-min-width: 340px;
+  /* 窗的最大宽度。 [draft] */
+  --object-size-window-max-width: 540px;
+  /* 窗的最小高度。 [draft] */
+  --object-size-window-min-height: 280px;
+  /* 窗的最大高度。 [draft] */
+  --object-size-window-max-height: 620px;
+  /* 桌面工作台里列表的最小宽度，和手机差不多宽。 [draft] */
+  --object-size-list-min-width: 360px;
+  /* 条在原地长成卡，或收回。 [draft] */
+  --object-motion-inline: 400ms;
+  /* 新东西飞到落点。 [draft] */
+  --object-motion-land: 480ms;
+  /* 移到旁边栏。 [draft] */
+  --object-motion-side: 480ms;
+  /* 长成整页。也是形态变换时长的上限。 [draft] */
+  --object-motion-page: 540ms;
+  /* 变成窗。 [draft] */
+  --object-motion-window: 480ms;
+  /* 窗收到架子上。 [draft] */
+  --object-motion-shelf: 460ms;
+  /* 收回，飞回列表里的家。 [draft] */
+  --object-motion-close: 460ms;
+  /* 列表变化后，各行滑到新位置。 [draft] */
+  --object-motion-slide: 560ms;
+  /* 勾掉任务后，先停这么久再滑走。 [draft] */
+  --object-motion-done-pause: 450ms;
+  /* 形态变换所用弹簧的阻尼比。 [draft] */
+  --object-motion-damping: 0.8;
+  /* 浏览器不支持 linear() 时用的缓动。 [draft] */
+  --object-motion-easing-fallback: cubic-bezier(0.2, 0.85, 0.2, 1);
+  /* 旧内容淡出占总时长的比例。 [draft] */
+  --object-motion-fade-out: 0.42;
+  /* 新内容开始淡入的时刻占总时长的比例。 [draft] */
+  --object-motion-fade-in-delay: 0.08;
+  /* 新内容淡入占总时长的比例。 [draft] */
+  --object-motion-fade-in: 0.55;
+  /* 标题新旧交叉淡化占总时长的比例。 [draft] */
+  --object-motion-title-fade: 0.6;
+  /* 东西落到位，或被带到眼前时，闪一下的时长。 [draft] */
+  --object-motion-landed: 900ms;
+  /* 方向键换选中项时，选中停稳这么久才挂编辑器。 [draft] */
+  --object-motion-editor-settle: 220ms;
+  /* 按下后移动超过这个距离才算拖动。 [draft] */
+  --object-drag-threshold: 4px;
+  /* 列表里有原地卡时，其他条的不透明度。悬停或聚焦时恢复。 [draft] */
+  --object-behind-others-opacity: 0.55;
+  /* 页打开时，原页面的不透明度。 [draft] */
+  --object-behind-page-opacity: 0.3;
+  /* 页打开时，原页面的模糊半径。 [draft] */
+  --object-behind-page-blur: 1.5px;
 }

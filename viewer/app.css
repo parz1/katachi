@@ -94,6 +94,7 @@ section { margin-top: 56px; scroll-margin-top: 16px; }
 h2 { margin: 0 0 8px; font-size: 24px; line-height: 1.3; }
 h3 { margin: 32px 0 8px; font-size: 17px; line-height: 1.4; }
 h4 { margin: 20px 0 6px; font-size: 15px; line-height: 1.5; }
+h5 { margin: 16px 0 4px; font-size: 14px; line-height: 1.5; }
 
 .intro { margin: 0 0 16px; color: var(--muted); }
 .meta { margin: 4px 0 8px; color: var(--muted); font-size: 13px; }
@@ -246,6 +247,25 @@ summary {
 .term-row { display: grid; grid-template-columns: repeat(var(--cols), 1ch); height: 1.5em; }
 .term-row span { white-space: pre; text-align: center; overflow: hidden; }
 .term-row .w2 { grid-column: span 2; font-size: 1.15em; line-height: 1.3; }
+
+.pattern > h3 { margin-top: 16px; font-size: 22px; line-height: 1.3; }
+.pattern > h4 { margin-top: 40px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 17px; line-height: 1.4; }
+.pattern > h5 { margin-top: 24px; font-size: 15px; }
+.pattern > p, .pattern > ul, .pattern > ol { max-width: 46em; }
+.pattern > .meta { margin-top: 24px; }
+.pattern .bench { margin-top: 12px; padding-bottom: 8px; border-top: 0; }
+.pattern td:first-child { min-width: 6em; }
+.token-value { color: var(--muted); font-size: 0.85em; white-space: nowrap; }
+
+.figures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+  gap: 16px;
+  margin: 12px 0;
+}
+.figure { margin: 0; min-width: 0; }
+.figure img { display: block; width: auto; max-width: 100%; height: auto; max-height: 720px; border: 1px solid var(--line); }
+.figure figcaption { margin-top: 6px; color: var(--muted); font-size: 13px; }
 
 .stress { max-width: 100%; border-top: 1px solid var(--line); }
 .stress-row { padding: 8px 0; border-bottom: 1px solid var(--line); }

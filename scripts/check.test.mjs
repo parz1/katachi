@@ -129,6 +129,13 @@ const cases = [
   ['invalid pattern coverage value', (d) => edit(d, 'patterns/README.md', (t) => t.replace('| 导航 | 未做', '| 导航 | 差不多')), '只能是'],
   ['malformed content stress file', (d) => put(d, 'foundations/content-stress.json', '{ nope'), '检查时出错'],
   ['viewer that cannot render fails the check', (d) => rmSync(join(d, 'viewer/app.css')), '检查时出错'],
+  ['pattern with an unknown status fails', (d) => edit(d, 'patterns/object-forms.md', (t) => t.replace('- 状态：draft', '- 状态：done')), '状态只能是'],
+  ['pattern without a source fails', (d) => edit(d, 'patterns/object-forms.md', (t) => t.replace(/^- 来源：.*$/m, '- 来源：')), '缺少「来源」'],
+  ['pattern must answer every state', (d) => edit(d, 'patterns/object-forms.md', (t) => t.replace('| 禁用 |', '| 停用 |')), '没有回答「禁用」'],
+  ['pattern without a state section fails', (d) => edit(d, 'patterns/object-forms.md', (t) => t.replace('## 状态\n', '## 情况\n')), '缺少「状态」一节'],
+  ['pattern must be in the coverage table', (d) => edit(d, 'patterns/README.md', (t) => t.replace('[对象形态](object-forms.md)', '对象形态')), '没有链接 patterns/object-forms.md'],
+  ['pattern page citing a missing token fails', (d) => appendFileSync(join(d, 'patterns/object-forms.md'), '\n`object.radius.nope`\n'), 'token 不存在：object.radius.nope'],
+  ['pattern page with a broken image fails', (d) => appendFileSync(join(d, 'patterns/object-forms.md'), '\n![x](object-forms/nope.png)\n'), '链接失效'],
 
   ['valid reference with image', (d) => {
     put(d, 'references/good.md', NOTE('image: images/good.png\n'));
@@ -267,6 +274,7 @@ put(viewerDir, 'explorations/2026-11-x/b.txt', '终端方案 B\n');
 put(viewerDir, 'examples/page/README.md', `# 认可的界面\n\n${GOOD_RECORD}`);
 put(viewerDir, 'references/good.md', NOTE());
 edit(viewerDir, 'foundations/taste.md', (t) => t.replace('### S-001 不用现成的流行风格代替校准', '### S-001 <img src=x onerror=alert(1)>'));
+put(viewerDir, 'patterns/probe.md', '# 探针\n\n![外部](https://evil.example/x.png)\n\n![跳出](../../../secret.png)\n\n![引号"><script>](probe/a.png)\n\n[跳出的例子](../../../secret.html)\n');
 const viewerRun = spawnSync(process.execPath, ['--input-type=module', '-e', "const { renderPage } = await import('./viewer/build.mjs'); process.stdout.write(renderPage());"], { cwd: viewerDir, encoding: 'utf8', maxBuffer: 1 << 26 });
 const viewerExpectations = [
   ['第一轮结构比较', true],
@@ -279,6 +287,13 @@ const viewerExpectations = [
   ['https://example.com', true],
   ['&lt;img src=x onerror', true],
   ['<img src=x onerror', false],
+  ['<img src="/patterns/object-forms/bar.png"', true],
+  ['<span class="token-value">40px</span>', true],
+  ['条卡页窗：最小参考实现', true],
+  ['evil.example/x.png"', false],
+  ['secret.png', false],
+  ['secret.html"', false],
+  ['引号"><script>', false],
 ];
 for (const [text, shouldExist] of viewerExpectations) {
   if (viewerRun.stdout.includes(text) !== shouldExist) {

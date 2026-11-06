@@ -58,7 +58,7 @@
 | 新增或修改通用规则 | `foundations/README.md` | `platforms/README.md`、相关的 `foundations/*.md` |
 | 新增平台或修改平台文件 | `platforms/README.md` | `decisions/0004-platform-layering.md` |
 | 修改设计数值 | `tokens/README.md` | — |
-| 新增界面模式 | `patterns/README.md` | 来源页面 |
+| 新增界面模式 | `patterns/README.md`、`patterns/object-forms.md`（样板） | 来源页面 |
 | 新增参考 | `references/README.md` | — |
 | 新增正式素材 | `assets/README.md` | — |
 | 接入或升级产品 | `workflows/adopt.md` | `CHANGELOG.md` |

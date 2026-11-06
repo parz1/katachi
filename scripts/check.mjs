@@ -21,6 +21,7 @@ const PLATFORM_SECTIONS = ['能力', '平台要求', '必查', '验证'];
 const PLATFORM_FIELDS = ['单位', '显示', '输入', '场景', '先用什么查', '最终验证'];
 const MATRIX_VALUES = new Set(['直接', '细化', '不适用']);
 const PATTERN_VALUES = new Set(['已验证', '已映射', '不适用', '未做']);
+const PATTERN_STATUS = new Set(['draft', 'adopted', 'validated']);
 const CODE_EXTENSIONS = new Set([
   '.html', '.css', '.js', '.mjs', '.ts', '.tsx', '.jsx', '.vue', '.svelte', '.svg', '.json', '.swift', '.kt',
 ]);
@@ -233,6 +234,30 @@ function checkPlatforms() {
   return { errors, note: `${ids.length} 个平台` };
 }
 
+function checkPatterns() {
+  const errors = [];
+  const pages = files.filter((file) => /^patterns\/[^/]+\.md$/.test(file) && file !== 'patterns/README.md');
+  const index = read('patterns/README.md');
+  const states = findTable(index, '状态')?.rows.map((row) => row[0]) ?? [];
+  const coverage = findTable(index, '模式')?.rows.map((row) => row[0]) ?? [];
+  for (const file of pages) {
+    const text = stripFences(read(file));
+    const status = text.match(/^- 状态：[ \t]*(\S*)/m)?.[1];
+    if (!PATTERN_STATUS.has(status)) errors.push(`${file}：状态只能是 ${[...PATTERN_STATUS].join('、')}`);
+    if (!/^- 来源：[ \t]*\S/m.test(text)) errors.push(`${file}：缺少「来源」`);
+    const answers = text.split(/^## 状态[ \t]*$/m)[1]?.split(/^## /m)[0];
+    if (answers === undefined) {
+      errors.push(`${file}：缺少「状态」一节`);
+    } else {
+      for (const state of states) {
+        if (!new RegExp(`^\\|\\s*${state}\\s*\\|`, 'm').test(answers)) errors.push(`${file}：状态一节没有回答「${state}」，没定义也要写明`);
+      }
+    }
+    if (!coverage.some((cell) => cell.includes(`(${file.slice('patterns/'.length)})`))) errors.push(`patterns/README.md 的应用面表格没有链接 ${file}`);
+  }
+  return { errors, note: `${pages.length} 个模式` };
+}
+
 function checkContentStress() {
   const { text, counts } = JSON.parse(read('foundations/content-stress.json'));
   const errors = [];
@@ -329,7 +354,9 @@ function checkExplorationsAndExamples() {
 function checkViewer() {
   const page = renderPage();
   const platformFiles = files.filter((file) => /^platforms\/[^/]+\.md$/.test(file) && file !== 'platforms/README.md');
+  const patternFiles = files.filter((file) => /^patterns\/[^/]+\.md$/.test(file) && file !== 'patterns/README.md');
   const expected = [
+    ...patternFiles.map((file) => read(file).match(/^# (.+)$/m)?.[1] ?? file),
     ...[...stripFences(read('foundations/taste.md')).matchAll(/^### ([A-Z]+-\d{3})/gm)].map((match) => match[1]),
     ...loadTokens().tokens.keys(),
     ...platformFiles.map((file) => file.slice('platforms/'.length, -'.md'.length)),
@@ -357,6 +384,7 @@ const checks = [
   ['agent 入口', checkEntries],
   ['审美账本', checkTaste],
   ['平台', checkPlatforms],
+  ['模式', checkPatterns],
   ['内容压力测试集', checkContentStress],
   ['参考', checkReferences],
   ['正式素材', checkAssets],

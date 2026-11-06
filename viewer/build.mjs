@@ -1,21 +1,22 @@
 // 从仓库内容生成查看器页面。零依赖。
 // 页面内容全部来自仓库文件，这里只负责排版，不写任何规范内容。
 import { existsSync, readFileSync } from 'node:fs';
-import { basename, dirname, join } from 'node:path';
+import { basename, dirname, join, posix } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { OUTPUT } from '../scripts/build-tokens.mjs';
+import { exists, read } from '../scripts/library.mjs';
 import { readLibrary } from './data.mjs';
 import { escapeHtml as h, inline, markdown } from './markdown.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const SECTIONS = [
   ['overview', '总览'],
-  ['work', '探索与示例'],
+  ['patterns', '模式与状态'],
   ['taste', '审美账本'],
   ['platforms', '平台'],
   ['tokens', 'Tokens'],
-  ['patterns', '模式与状态'],
   ['content', '内容压力'],
+  ['work', '探索与示例'],
   ['sources', '参考与素材'],
   ['decisions', '决策'],
 ];
@@ -115,16 +116,17 @@ function variant(file) {
   return `<figure class="variant"><figcaption>${label ? `<strong>${h(label)}</strong> ` : ''}<code>${h(name)}</code> <a href="${url}" target="_blank" rel="noopener">单独打开</a></figcaption>${content}</figure>`;
 }
 
-function bench(item, widths, { notesOpen = false } = {}) {
+function bench(item, widths, { notesOpen = false, showDir = true, startWidth } = {}) {
   const hasPages = item.variants.some((file) => file.type === '.html');
-  const widthButtons = hasPages ? widths.map(({ width, height, label }, index) => `<button type="button" class="btn" data-width="${width}" data-height="${height}" aria-pressed="${index === 0}">${h(label)}</button>`).join('') : '';
+  const start = Math.max(0, widths.findIndex(({ width }) => width === startWidth));
+  const widthButtons = hasPages ? widths.map(({ width, height, label }, index) => `<button type="button" class="btn" data-width="${width}" data-height="${height}" aria-pressed="${index === start}">${h(label)}</button>`).join('') : '';
   const stack = item.variants.length > 1 ? '<button type="button" class="btn" data-stack aria-pressed="false">单列放大</button>' : '';
   const controls = item.variants.length
     ? `<div class="controls" role="group" aria-label="比较方式">${widthButtons}<button type="button" class="btn" data-gray aria-pressed="false">灰阶</button>${stack}</div>`
     : '';
   const grid = item.variants.length ? `<div class="bench-grid">${item.variants.map(variant).join('')}</div>` : '';
   const notes = item.readme.trim() ? `<details class="notes"${notesOpen ? ' open' : ''}><summary>记录</summary>${markdown(item.readme, { base: item.dir })}</details>` : '';
-  return `<article class="bench" data-bench data-width="${widths[0]?.width ?? 1280}" data-height="${widths[0]?.height ?? 800}"><h4>${inline(item.title, item.dir)}</h4><p class="meta">${source(item.dir)}</p>${controls}${grid}${notes}</article>`;
+  return `<article class="bench" data-bench data-width="${widths[start]?.width ?? 1280}" data-height="${widths[start]?.height ?? 800}"><h4>${inline(item.title, item.dir)}</h4>${showDir ? `<p class="meta">${source(item.dir)}</p>` : ''}${controls}${grid}${notes}</article>`;
 }
 
 function work(lib) {
@@ -294,19 +296,32 @@ function tokenSpecimens(lib) {
 
 function tokens(lib) {
   const rows = lib.tokens.map((item) => `<tr><th scope="row"><code>${h(item.name)}</code></th><td>${h(item.value)}</td><td>${h(item.description)}</td><td>${h(item.platforms.join('、') || '所有')}</td><td>${h(item.status)}</td><td>${h(item.source)}</td></tr>`).join('');
-  return section('tokens', `这些数值来自标准和平台规范，不是审美选择。颜色、字体和间距要等校准后才有。来源：${source('tokens/katachi.tokens.json')}。`,
+  return section('tokens', `constraint 来自标准和平台规范。object 来自 Kotolog 的原型，状态是 draft，不代表用户的偏好。颜色、字体和间距要等校准后才有。来源：${source('tokens/katachi.tokens.json')}。`,
     `${tokenSpecimens(lib)}<h3>全部 Tokens</h3>
     <div class="table-wrap" tabindex="0" role="region" aria-label="全部 Tokens"><table class="tokens-table"><thead><tr><th scope="col">名称</th><th scope="col">值</th><th scope="col">说明</th><th scope="col">平台</th><th scope="col">状态</th><th scope="col">来源</th></tr></thead><tbody>${rows}</tbody></table></div>`);
 }
 
 // 模式与状态
 
+function patternPage(file, lib, widths) {
+  const base = dirname(file);
+  const tokens = new Map(lib.tokens.map((item) => [item.name, item.value]));
+  // 一段话只有一个指向 .html 的链接时，就地放一个能运行、能切换宽度的例子。
+  const embed = (target, label) => {
+    const path = posix.normalize(posix.join(base, target));
+    if (path.startsWith('..') || !exists(path)) return null;
+    return bench({ dir: dirname(path), title: label, readme: '', variants: [{ path, type: '.html', text: read(path) }] }, widths, { showDir: false, startWidth: 1024 });
+  };
+  return `<article class="pattern">${markdown(read(file), { base, tokens, embed })}<p class="meta">${source(file)}</p></article>`;
+}
+
 function patterns(lib) {
-  const files = lib.patterns.files.length
-    ? `<ul>${lib.patterns.files.map((file) => `<li>${source(file)}</li>`).join('')}</ul>`
+  const widths = benchWidths(lib);
+  const pages = lib.patterns.files.length
+    ? lib.patterns.files.map((file) => patternPage(file, lib, widths)).join('')
     : empty('还没有模式。模式要从真实界面中提炼。');
   return section('patterns', `来源：${source('patterns/README.md')}。`,
-    `<h3>模式文件</h3>${files}<h3>应用面</h3>${table(lib.patterns.coverage, '模式的应用面')}
+    `${pages}<h3>应用面</h3>${table(lib.patterns.coverage, '模式的应用面', { base: 'patterns' })}
     <h3>状态清单</h3><p class="meta">每个交互模式都要回答这些问题。</p>${table(lib.patterns.states, '状态清单')}`);
 }
 
@@ -360,7 +375,7 @@ export function renderPage() {
   const version = lib.git
     ? `分支 ${h(lib.git.branch || '（游离）')}，提交 ${h(lib.git.commit)}${lib.git.dirty ? '，有未提交的改动' : ''}`
     : '不在 Git 仓库中';
-  const body = [overview, work, taste, platforms, tokens, patterns, content, sources, decisions].map((render) => render(lib)).join('\n');
+  const body = [overview, patterns, taste, platforms, tokens, content, work, sources, decisions].map((render) => render(lib)).join('\n');
   return `<!doctype html>
 <html lang="zh-CN">
 <head>
