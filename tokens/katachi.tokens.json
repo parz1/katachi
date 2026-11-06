@@ -1,5 +1,5 @@
 {
-  "$description": "katachi 设计数值的唯一来源，格式为 DTCG Format Module 2025.10。constraint 来自标准和平台规范；type 和 color 是提案，用户还没确认。dark 写在 local.katachi 里，生成 CSS 时变成 light-dark()。",
+  "$description": "katachi 设计数值的唯一来源，格式为 DTCG Format Module 2025.10。constraint 来自标准和平台规范；type 是提案；color 的色阶是用户选定的 Radix Colors 原值，角色是提案。dark 写在 local.katachi 里，生成 CSS 时变成 light-dark()。",
   "constraint": {
     "$description": "外部标准或平台规范给出的数值，用于检查和判断，不代表审美偏好。",
     "contrast": {
@@ -748,2202 +748,1826 @@
     }
   },
   "color": {
-    "$description": "颜色的提案，规则见 standards/color.md。每条色阶 12 级，每级用途固定，浅色和深色各一个值。角色指向某一级，样式里只写角色。",
+    "$description": "颜色，规则见 standards/color.md。色阶的数值来自 Radix Colors（MIT，全文见 standards/color/LICENSE-radix-colors.txt），每条 12 级，浅色和深色各一个值。角色指向某一级，样式里只写角色。",
     "gray": {
       "1": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            1,
-            0,
-            0
+            0.9882,
+            0.9882,
+            0.9882
           ],
-          "hex": "#ffffff"
+          "hex": "#fcfcfc"
         },
         "$description": "页面背景。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.2,
-                0,
-                0
+                0.0667,
+                0.0667,
+                0.0667
               ],
-              "hex": "#161616"
+              "hex": "#111111"
             }
           }
         }
       },
       "2": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.975,
-            0,
-            0
+            0.9765,
+            0.9765,
+            0.9765
           ],
-          "hex": "#f7f7f7"
+          "hex": "#f9f9f9"
         },
         "$description": "区块背景：代码块、表头、侧栏。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.23,
-                0,
-                0
+                0.098,
+                0.098,
+                0.098
               ],
-              "hex": "#1d1d1d"
+              "hex": "#191919"
             }
           }
         }
       },
       "3": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.955,
-            0,
-            0
+            0.9412,
+            0.9412,
+            0.9412
           ],
           "hex": "#f0f0f0"
         },
-        "$description": "控件底色；透明控件的悬停。",
+        "$description": "控件底色。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.26,
-                0,
-                0
+                0.1333,
+                0.1333,
+                0.1333
               ],
-              "hex": "#242424"
+              "hex": "#222222"
             }
           }
         }
       },
       "4": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.93,
-            0,
-            0
+            0.9098,
+            0.9098,
+            0.9098
           ],
           "hex": "#e8e8e8"
         },
         "$description": "控件悬停。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.29,
-                0,
-                0
+                0.1647,
+                0.1647,
+                0.1647
               ],
-              "hex": "#2b2b2b"
+              "hex": "#2a2a2a"
             }
           }
         }
       },
       "5": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.91,
-            0,
-            0
+            0.8784,
+            0.8784,
+            0.8784
           ],
-          "hex": "#e1e1e1"
+          "hex": "#e0e0e0"
         },
         "$description": "控件按下或选中。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.32,
-                0,
-                0
+                0.1922,
+                0.1922,
+                0.1922
               ],
-              "hex": "#333333"
+              "hex": "#313131"
             }
           }
         }
       },
       "6": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.885,
-            0,
-            0
+            0.851,
+            0.851,
+            0.851
           ],
           "hex": "#d9d9d9"
         },
-        "$description": "分割线，只是装饰。",
+        "$description": "细边框和分割线。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.36,
-                0,
-                0
+                0.2275,
+                0.2275,
+                0.2275
               ],
-              "hex": "#3d3d3d"
+              "hex": "#3a3a3a"
             }
           }
         }
       },
       "7": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.61,
-            0,
-            0
+            0.8078,
+            0.8078,
+            0.8078
           ],
-          "hex": "#838383"
+          "hex": "#cecece"
         },
-        "$description": "控件边框。",
+        "$description": "Radix 用作控件边框和焦点环，这里对比度不够，不用。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.62,
-                0,
-                0
+                0.2824,
+                0.2824,
+                0.2824
               ],
-              "hex": "#868686"
+              "hex": "#484848"
             }
           }
         }
       },
       "8": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.565,
-            0,
-            0
+            0.7333,
+            0.7333,
+            0.7333
           ],
-          "hex": "#767676"
+          "hex": "#bbbbbb"
         },
-        "$description": "控件边框的悬停。",
+        "$description": "Radix 用作控件边框的悬停，这里对比度不够，不用。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.68,
-                0,
-                0
+                0.3765,
+                0.3765,
+                0.3765
               ],
-              "hex": "#989898"
+              "hex": "#606060"
             }
           }
         }
       },
       "9": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.52,
-            0,
-            0
+            0.5529,
+            0.5529,
+            0.5529
           ],
-          "hex": "#696969"
+          "hex": "#8d8d8d"
         },
-        "$description": "实心底色：主按钮。",
+        "$description": "Radix 用作实心底色。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.72,
-                0,
-                0
+                0.4314,
+                0.4314,
+                0.4314
               ],
-              "hex": "#a4a4a4"
+              "hex": "#6e6e6e"
             }
           }
         }
       },
       "10": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.48,
-            0,
-            0
+            0.5137,
+            0.5137,
+            0.5137
           ],
-          "hex": "#5d5d5d"
+          "hex": "#838383"
         },
-        "$description": "实心底色的悬停。",
+        "$description": "Radix 用作实心底色的悬停。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.76,
-                0,
-                0
+                0.4824,
+                0.4824,
+                0.4824
               ],
-              "hex": "#b1b1b1"
+              "hex": "#7b7b7b"
             }
           }
         }
       },
       "11": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.45,
-            0,
-            0
+            0.3922,
+            0.3922,
+            0.3922
           ],
-          "hex": "#555555"
+          "hex": "#646464"
         },
         "$description": "次要文字。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.8,
-                0,
-                0
+                0.7059,
+                0.7059,
+                0.7059
               ],
-              "hex": "#bebebe"
+              "hex": "#b4b4b4"
             }
           }
         }
       },
       "12": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.22,
-            0,
-            0
+            0.1255,
+            0.1255,
+            0.1255
           ],
-          "hex": "#1b1b1b"
+          "hex": "#202020"
         },
         "$description": "正文。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.94,
-                0,
-                0
+                0.9333,
+                0.9333,
+                0.9333
               ],
-              "hex": "#ebebeb"
+              "hex": "#eeeeee"
             }
           }
         }
       },
       "$type": "color",
-      "$description": "默认的灰，彩度是 0。"
+      "$description": "默认的灰，Radix 的 gray，完全中性。"
     },
     "red": {
       "1": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.995,
-            0.002,
-            27
+            1,
+            0.9882,
+            0.9882
           ],
-          "hex": "#fffdfd"
+          "hex": "#fffcfc"
         },
         "$description": "页面背景。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.2,
-                0.008,
-                27
+                0.098,
+                0.0667,
+                0.0667
               ],
-              "hex": "#1a1514"
+              "hex": "#191111"
             }
           }
         }
       },
       "2": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.975,
-            0.012,
-            27
+            1,
+            0.9686,
+            0.9686
           ],
-          "hex": "#fff4f2"
+          "hex": "#fff7f7"
         },
         "$description": "区块背景：代码块、表头、侧栏。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.23,
-                0.016,
-                27
+                0.1255,
+                0.0745,
+                0.0784
               ],
-              "hex": "#241a19"
+              "hex": "#201314"
             }
           }
         }
       },
       "3": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.955,
-            0.022,
-            27
+            0.9961,
+            0.9216,
+            0.9255
           ],
-          "hex": "#ffebe8"
+          "hex": "#feebec"
         },
-        "$description": "控件底色；透明控件的悬停。",
+        "$description": "控件底色。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.26,
-                0.031,
-                27
+                0.2314,
+                0.0706,
+                0.098
               ],
-              "hex": "#321e1c"
+              "hex": "#3b1219"
             }
           }
         }
       },
       "4": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.93,
-            0.035,
-            27
+            1,
+            0.8588,
+            0.8627
           ],
-          "hex": "#ffe0db"
+          "hex": "#ffdbdc"
         },
         "$description": "控件悬停。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.29,
-                0.044,
-                27
+                0.3137,
+                0.0588,
+                0.1098
               ],
-              "hex": "#3f221f"
+              "hex": "#500f1c"
             }
           }
         }
       },
       "5": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.91,
-            0.046,
-            27
+            1,
+            0.8039,
+            0.8078
           ],
-          "hex": "#ffd6d1"
+          "hex": "#ffcdce"
         },
         "$description": "控件按下或选中。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.32,
-                0.057,
-                27
+                0.3804,
+                0.0863,
+                0.1373
               ],
-              "hex": "#4c2723"
+              "hex": "#611623"
             }
           }
         }
       },
       "6": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.885,
-            0.06,
-            27
+            0.9922,
+            0.7412,
+            0.7451
           ],
-          "hex": "#ffcbc4"
+          "hex": "#fdbdbe"
         },
-        "$description": "分割线，只是装饰。",
+        "$description": "细边框和分割线。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.36,
-                0.078,
-                27
+                0.4471,
+                0.1373,
+                0.1765
               ],
-              "hex": "#602b26"
+              "hex": "#72232d"
             }
           }
         }
       },
       "7": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.61,
-            0.156,
-            27
+            0.9569,
+            0.6627,
+            0.6667
           ],
-          "hex": "#d0574d"
+          "hex": "#f4a9aa"
         },
-        "$description": "控件边框。",
+        "$description": "Radix 用作控件边框和焦点环，这里对比度不够，不用。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.62,
-                0.13,
-                27
+                0.549,
+                0.2,
+                0.2275
               ],
-              "hex": "#c8645a"
+              "hex": "#8c333a"
             }
           }
         }
       },
       "8": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.565,
-            0.169,
-            27
+            0.9216,
+            0.5569,
+            0.5647
           ],
-          "hex": "#c6423b"
+          "hex": "#eb8e90"
         },
-        "$description": "控件边框的悬停。",
+        "$description": "Radix 用作控件边框的悬停，这里对比度不够，不用。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.68,
-                0.143,
-                27
+                0.7098,
+                0.2706,
+                0.2824
               ],
-              "hex": "#e37267"
+              "hex": "#b54548"
             }
           }
         }
       },
       "9": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.52,
-            0.182,
-            27
+            0.898,
+            0.2824,
+            0.302
           ],
-          "hex": "#bb2a27"
+          "hex": "#e5484d"
         },
-        "$description": "实心底色：主按钮。",
+        "$description": "Radix 用作实心底色。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.72,
-                0.156,
-                27
+                0.898,
+                0.2824,
+                0.302
               ],
-              "hex": "#f7796e"
+              "hex": "#e5484d"
             }
           }
         }
       },
       "10": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.48,
-            0.182,
-            27
+            0.8627,
+            0.2431,
+            0.2588
           ],
-          "hex": "#ad181b"
+          "hex": "#dc3e42"
         },
-        "$description": "实心底色的悬停。",
+        "$description": "Radix 用作实心底色的悬停。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.76,
-                0.143,
-                27
+                0.9255,
+                0.3647,
+                0.3686
               ],
-              "hex": "#ff8b7f"
+              "hex": "#ec5d5e"
             }
           }
         }
       },
       "11": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.45,
-            0.169,
-            27
+            0.8078,
+            0.1725,
+            0.1922
           ],
-          "hex": "#9e1718"
+          "hex": "#ce2c31"
         },
         "$description": "次要文字。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.8,
-                0.114,
-                27
+                1,
+                0.5843,
+                0.5725
               ],
-              "hex": "#ffa196"
+              "hex": "#ff9592"
             }
           }
         }
       },
       "12": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.22,
-            0.091,
-            27
+            0.3922,
+            0.0902,
+            0.1373
           ],
-          "hex": "#3b0001"
+          "hex": "#641723"
         },
         "$description": "正文。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.94,
-                0.03,
-                27
+                1,
+                0.8196,
+                0.851
               ],
-              "hex": "#ffe4e0"
+              "hex": "#ffd1d9"
             }
           }
         }
       },
       "$type": "color",
-      "$description": "错误。"
+      "$description": "错误，Radix 的 red。"
     },
     "amber": {
       "1": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.995,
-            0.007,
-            92
+            0.9961,
+            0.9922,
+            0.9843
           ],
-          "hex": "#fffdf8"
+          "hex": "#fefdfb"
         },
         "$description": "页面背景。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.2,
-                0.007,
-                82
+                0.0863,
+                0.0706,
+                0.0471
               ],
-              "hex": "#181612"
+              "hex": "#16120c"
             }
           }
         }
       },
       "2": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.975,
-            0.025,
-            92
+            0.9961,
+            0.9843,
+            0.9137
           ],
-          "hex": "#fdf7e4"
+          "hex": "#fefbe9"
         },
         "$description": "区块背景：代码块、表头、侧栏。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.23,
-                0.013,
-                82
+                0.1137,
+                0.0941,
+                0.0588
               ],
-              "hex": "#201c16"
+              "hex": "#1d180f"
             }
           }
         }
       },
       "3": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.955,
-            0.05,
-            92
+            1,
+            0.9686,
+            0.7608
           ],
-          "hex": "#fcf0cb"
+          "hex": "#fff7c2"
         },
-        "$description": "控件底色；透明控件的悬停。",
+        "$description": "控件底色。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.26,
-                0.026,
-                82
+                0.1882,
+                0.1255,
+                0.0314
               ],
-              "hex": "#2a2315"
+              "hex": "#302008"
             }
           }
         }
       },
       "4": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.93,
-            0.07,
-            92
+            1,
+            0.9333,
+            0.6118
           ],
-          "hex": "#f9e7b3"
+          "hex": "#ffee9c"
         },
         "$description": "控件悬停。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.29,
-                0.037,
-                82
+                0.2471,
+                0.1529,
+                0
               ],
-              "hex": "#352a15"
+              "hex": "#3f2700"
             }
           }
         }
       },
       "5": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.91,
-            0.09,
-            92
+            0.9843,
+            0.898,
+            0.4667
           ],
-          "hex": "#f7e09c"
+          "hex": "#fbe577"
         },
         "$description": "控件按下或选中。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.32,
-                0.048,
-                82
+                0.302,
+                0.1882,
+                0
               ],
-              "hex": "#3f3014"
+              "hex": "#4d3000"
             }
           }
         }
       },
       "6": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.885,
-            0.11,
-            92
+            0.9529,
+            0.8392,
+            0.451
           ],
-          "hex": "#f3d782"
+          "hex": "#f3d673"
         },
-        "$description": "分割线，只是装饰。",
+        "$description": "细边框和分割线。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.36,
-                0.066,
-                82
+                0.3608,
+                0.2392,
+                0.0196
               ],
-              "hex": "#4e390c"
+              "hex": "#5c3d05"
             }
           }
         }
       },
       "7": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.61,
-            0.102,
-            72
+            0.9137,
+            0.7569,
+            0.3843
           ],
-          "hex": "#a97837"
+          "hex": "#e9c162"
         },
-        "$description": "控件边框。",
+        "$description": "Radix 用作控件边框和焦点环，这里对比度不够，不用。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.62,
-                0.085,
-                82
+                0.4431,
+                0.3098,
+                0.098
               ],
-              "hex": "#a08147"
+              "hex": "#714f19"
             }
           }
         }
       },
       "8": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.565,
-            0.111,
-            72
+            0.8863,
+            0.6392,
+            0.2118
           ],
-          "hex": "#9e6a1b"
+          "hex": "#e2a336"
         },
-        "$description": "控件边框的悬停。",
+        "$description": "Radix 用作控件边框的悬停，这里对比度不够，不用。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.68,
-                0.094,
-                82
+                0.5608,
+                0.3922,
+                0.1412
               ],
-              "hex": "#b59351"
+              "hex": "#8f6424"
             }
           }
         }
       },
       "9": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.52,
-            0.111,
-            72
+            1,
+            0.7725,
+            0.2392
           ],
-          "hex": "#905c01"
+          "hex": "#ffc53d"
         },
-        "$description": "实心底色：主按钮。",
+        "$description": "Radix 用作实心底色。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.72,
-                0.102,
-                82
+                1,
+                0.7725,
+                0.2392
               ],
-              "hex": "#c49e56"
+              "hex": "#ffc53d"
             }
           }
         }
       },
       "10": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.48,
-            0.103,
-            72
+            1,
+            0.7294,
+            0.0941
           ],
-          "hex": "#815200"
+          "hex": "#ffba18"
         },
-        "$description": "实心底色的悬停。",
+        "$description": "Radix 用作实心底色的悬停。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.76,
-                0.094,
-                82
+                1,
+                0.8392,
+                0.0392
               ],
-              "hex": "#cfab6a"
+              "hex": "#ffd60a"
             }
           }
         }
       },
       "11": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.45,
-            0.097,
-            72
+            0.6706,
+            0.3922,
+            0
           ],
-          "hex": "#764b00"
+          "hex": "#ab6400"
         },
         "$description": "次要文字。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.8,
-                0.085,
-                82
+                1,
+                0.7922,
+                0.0863
               ],
-              "hex": "#d9b97e"
+              "hex": "#ffca16"
             }
           }
         }
       },
       "12": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.22,
-            0.05,
-            72
+            0.3098,
+            0.2039,
+            0.1333
           ],
-          "hex": "#291600"
+          "hex": "#4f3422"
         },
         "$description": "正文。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.94,
-                0.026,
-                82
+                1,
+                0.9059,
+                0.702
               ],
-              "hex": "#f4ead8"
+              "hex": "#ffe7b3"
             }
           }
         }
       },
       "$type": "color",
-      "$description": "警告。浅的几级更偏黄，才认得出是警告。"
+      "$description": "警告，Radix 的 amber。"
     },
     "green": {
       "1": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.995,
-            0.004,
-            150
+            0.9843,
+            0.9961,
+            0.9882
           ],
-          "hex": "#fcfefc"
+          "hex": "#fbfefc"
         },
         "$description": "页面背景。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
+              "components": [
+                0.0549,
+                0.0824,
+                0.0706
+              ],
+              "hex": "#0e1512"
+            }
+          }
+        }
+      },
+      "2": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.9569,
+            0.9843,
+            0.9647
+          ],
+          "hex": "#f4fbf6"
+        },
+        "$description": "区块背景：代码块、表头、侧栏。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0706,
+                0.1059,
+                0.0902
+              ],
+              "hex": "#121b17"
+            }
+          }
+        }
+      },
+      "3": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.902,
+            0.9647,
+            0.9216
+          ],
+          "hex": "#e6f6eb"
+        },
+        "$description": "控件底色。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0745,
+                0.1765,
+                0.1294
+              ],
+              "hex": "#132d21"
+            }
+          }
+        }
+      },
+      "4": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.8392,
+            0.9451,
+            0.8745
+          ],
+          "hex": "#d6f1df"
+        },
+        "$description": "控件悬停。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0667,
+                0.2314,
+                0.1608
+              ],
+              "hex": "#113b29"
+            }
+          }
+        }
+      },
+      "5": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.7686,
+            0.9098,
+            0.8196
+          ],
+          "hex": "#c4e8d1"
+        },
+        "$description": "控件按下或选中。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0902,
+                0.2863,
+                0.2
+              ],
+              "hex": "#174933"
+            }
+          }
+        }
+      },
+      "6": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.6784,
+            0.8667,
+            0.7529
+          ],
+          "hex": "#adddc0"
+        },
+        "$description": "细边框和分割线。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.1255,
+                0.3412,
+                0.2431
+              ],
+              "hex": "#20573e"
+            }
+          }
+        }
+      },
+      "7": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.5569,
+            0.8078,
+            0.6667
+          ],
+          "hex": "#8eceaa"
+        },
+        "$description": "Radix 用作控件边框和焦点环，这里对比度不够，不用。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.1569,
+                0.4078,
+                0.2902
+              ],
+              "hex": "#28684a"
+            }
+          }
+        }
+      },
+      "8": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.3569,
+            0.7255,
+            0.5451
+          ],
+          "hex": "#5bb98b"
+        },
+        "$description": "Radix 用作控件边框的悬停，这里对比度不够，不用。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.1843,
+                0.4863,
+                0.3412
+              ],
+              "hex": "#2f7c57"
+            }
+          }
+        }
+      },
+      "9": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.1882,
+            0.6431,
+            0.4235
+          ],
+          "hex": "#30a46c"
+        },
+        "$description": "Radix 用作实心底色。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.1882,
+                0.6431,
+                0.4235
+              ],
+              "hex": "#30a46c"
+            }
+          }
+        }
+      },
+      "10": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.1686,
+            0.6039,
+            0.4
+          ],
+          "hex": "#2b9a66"
+        },
+        "$description": "Radix 用作实心底色的悬停。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "srgb",
               "components": [
                 0.2,
-                0.006,
-                150
+                0.6902,
+                0.4549
               ],
-              "hex": "#141715"
-            }
-          }
-        }
-      },
-      "2": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.975,
-            0.012,
-            150
-          ],
-          "hex": "#f1f9f3"
-        },
-        "$description": "区块背景：代码块、表头、侧栏。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "dark": {
-              "colorSpace": "oklch",
-              "components": [
-                0.23,
-                0.012,
-                150
-              ],
-              "hex": "#191f1a"
-            }
-          }
-        }
-      },
-      "3": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.955,
-            0.024,
-            150
-          ],
-          "hex": "#e5f5e8"
-        },
-        "$description": "控件底色；透明控件的悬停。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "dark": {
-              "colorSpace": "oklch",
-              "components": [
-                0.26,
-                0.024,
-                150
-              ],
-              "hex": "#1c271e"
-            }
-          }
-        }
-      },
-      "4": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.93,
-            0.038,
-            150
-          ],
-          "hex": "#d7f0db"
-        },
-        "$description": "控件悬停。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "dark": {
-              "colorSpace": "oklch",
-              "components": [
-                0.29,
-                0.034,
-                150
-              ],
-              "hex": "#1f3022"
-            }
-          }
-        }
-      },
-      "5": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.91,
-            0.05,
-            150
-          ],
-          "hex": "#cbebd0"
-        },
-        "$description": "控件按下或选中。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "dark": {
-              "colorSpace": "oklch",
-              "components": [
-                0.32,
-                0.044,
-                150
-              ],
-              "hex": "#223927"
-            }
-          }
-        }
-      },
-      "6": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.885,
-            0.07,
-            150
-          ],
-          "hex": "#b9e7c1"
-        },
-        "$description": "分割线，只是装饰。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "dark": {
-              "colorSpace": "oklch",
-              "components": [
-                0.36,
-                0.06,
-                150
-              ],
-              "hex": "#24462c"
-            }
-          }
-        }
-      },
-      "7": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.61,
-            0.12,
-            150
-          ],
-          "hex": "#46975b"
-        },
-        "$description": "控件边框。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "dark": {
-              "colorSpace": "oklch",
-              "components": [
-                0.62,
-                0.1,
-                150
-              ],
-              "hex": "#579766"
-            }
-          }
-        }
-      },
-      "8": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.565,
-            0.13,
-            150
-          ],
-          "hex": "#2f8b4b"
-        },
-        "$description": "控件边框的悬停。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "dark": {
-              "colorSpace": "oklch",
-              "components": [
-                0.68,
-                0.11,
-                150
-              ],
-              "hex": "#63ab74"
-            }
-          }
-        }
-      },
-      "9": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.52,
-            0.14,
-            150
-          ],
-          "hex": "#0a7e3a"
-        },
-        "$description": "实心底色：主按钮。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "dark": {
-              "colorSpace": "oklch",
-              "components": [
-                0.72,
-                0.12,
-                150
-              ],
-              "hex": "#69ba7c"
-            }
-          }
-        }
-      },
-      "10": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.48,
-            0.132,
-            150
-          ],
-          "hex": "#007132"
-        },
-        "$description": "实心底色的悬停。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "dark": {
-              "colorSpace": "oklch",
-              "components": [
-                0.76,
-                0.11,
-                150
-              ],
-              "hex": "#7cc58c"
+              "hex": "#33b074"
             }
           }
         }
       },
       "11": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.45,
-            0.124,
-            150
+            0.1294,
+            0.5137,
+            0.3451
           ],
-          "hex": "#00672d"
+          "hex": "#218358"
         },
         "$description": "次要文字。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.8,
-                0.1,
-                150
+                0.2392,
+                0.8392,
+                0.549
               ],
-              "hex": "#8ed09c"
+              "hex": "#3dd68c"
             }
           }
         }
       },
       "12": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.22,
-            0.063,
-            150
+            0.098,
+            0.2314,
+            0.1765
           ],
-          "hex": "#002209"
+          "hex": "#193b2d"
         },
         "$description": "正文。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.94,
-                0.03,
-                150
+                0.6941,
+                0.9451,
+                0.7961
               ],
-              "hex": "#def1e1"
+              "hex": "#b1f1cb"
             }
           }
         }
       },
       "$type": "color",
-      "$description": "成功。"
+      "$description": "成功，Radix 的 green。"
     },
-    "paper": {
+    "sand": {
       "1": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.972,
-            0.007,
-            85
+            0.9922,
+            0.9922,
+            0.9882
           ],
-          "hex": "#f8f5f1"
+          "hex": "#fdfdfc"
         },
         "$description": "页面背景。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.21,
-                0.006,
-                70
+                0.0667,
+                0.0667,
+                0.0627
               ],
-              "hex": "#1a1815"
+              "hex": "#111110"
             }
           }
         }
       },
       "2": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.955,
-            0.008,
-            85
+            0.9765,
+            0.9765,
+            0.9725
           ],
-          "hex": "#f3f0ea"
+          "hex": "#f9f9f8"
         },
         "$description": "区块背景：代码块、表头、侧栏。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.24,
-                0.007,
-                70
+                0.098,
+                0.098,
+                0.0941
               ],
-              "hex": "#211f1c"
+              "hex": "#191918"
             }
           }
         }
       },
       "3": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.94,
-            0.009,
-            85
+            0.9451,
+            0.9412,
+            0.9373
           ],
-          "hex": "#eeebe5"
+          "hex": "#f1f0ef"
         },
-        "$description": "控件底色；透明控件的悬停。",
+        "$description": "控件底色。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.27,
-                0.007,
-                70
+                0.1333,
+                0.1333,
+                0.1294
               ],
-              "hex": "#292623"
+              "hex": "#222221"
             }
           }
         }
       },
       "4": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.92,
-            0.01,
-            85
+            0.9137,
+            0.9098,
+            0.902
           ],
-          "hex": "#e8e4dd"
+          "hex": "#e9e8e6"
         },
         "$description": "控件悬停。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.3,
-                0.008,
-                70
+                0.1647,
+                0.1647,
+                0.1569
               ],
-              "hex": "#302d2a"
+              "hex": "#2a2a28"
             }
           }
         }
       },
       "5": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.9,
-            0.011,
-            85
+            0.8863,
+            0.8824,
+            0.8706
           ],
-          "hex": "#e1ded6"
+          "hex": "#e2e1de"
         },
         "$description": "控件按下或选中。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.33,
-                0.008,
-                70
+                0.1922,
+                0.1922,
+                0.1804
               ],
-              "hex": "#383531"
+              "hex": "#31312e"
             }
           }
         }
       },
       "6": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.875,
-            0.012,
-            85
+            0.8549,
+            0.851,
+            0.8392
           ],
-          "hex": "#d9d5cd"
+          "hex": "#dad9d6"
         },
-        "$description": "分割线，只是装饰。",
+        "$description": "细边框和分割线。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.37,
-                0.008,
-                70
+                0.2314,
+                0.2275,
+                0.2157
               ],
-              "hex": "#433f3b"
+              "hex": "#3b3a37"
             }
           }
         }
       },
       "7": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.6,
-            0.012,
-            70
+            0.8118,
+            0.8078,
+            0.7922
           ],
-          "hex": "#857f79"
+          "hex": "#cfceca"
         },
-        "$description": "控件边框。",
+        "$description": "Radix 用作控件边框和焦点环，这里对比度不够，不用。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.62,
-                0.01,
-                80
+                0.2863,
+                0.2824,
+                0.2667
               ],
-              "hex": "#898680"
+              "hex": "#494844"
             }
           }
         }
       },
       "8": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.555,
-            0.012,
-            70
+            0.7373,
+            0.7333,
+            0.7098
           ],
-          "hex": "#78726c"
+          "hex": "#bcbbb5"
         },
-        "$description": "控件边框的悬停。",
+        "$description": "Radix 用作控件边框的悬停，这里对比度不够，不用。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.68,
-                0.011,
-                80
+                0.3843,
+                0.3765,
+                0.3569
               ],
-              "hex": "#9c9891"
+              "hex": "#62605b"
             }
           }
         }
       },
       "9": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.52,
-            0.012,
-            65
+            0.5529,
+            0.5529,
+            0.5255
           ],
-          "hex": "#6e6862"
+          "hex": "#8d8d86"
         },
-        "$description": "实心底色：主按钮。",
+        "$description": "Radix 用作实心底色。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.72,
-                0.012,
-                85
+                0.4353,
+                0.4275,
+                0.4
               ],
-              "hex": "#a8a49c"
+              "hex": "#6f6d66"
             }
           }
         }
       },
       "10": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.48,
-            0.013,
-            60
+            0.5098,
+            0.5098,
+            0.4863
           ],
-          "hex": "#635c56"
+          "hex": "#82827c"
         },
-        "$description": "实心底色的悬停。",
+        "$description": "Radix 用作实心底色的悬停。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.76,
-                0.012,
-                85
+                0.4863,
+                0.4824,
+                0.4549
               ],
-              "hex": "#b4b1a9"
+              "hex": "#7c7b74"
             }
           }
         }
       },
       "11": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.45,
-            0.014,
-            60
+            0.3882,
+            0.3882,
+            0.3686
           ],
-          "hex": "#5b544e"
+          "hex": "#63635e"
         },
         "$description": "次要文字。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.8,
-                0.014,
-                85
+                0.7098,
+                0.702,
+                0.6784
               ],
-              "hex": "#c2bdb4"
+              "hex": "#b5b3ad"
             }
           }
         }
       },
       "12": {
         "$value": {
-          "colorSpace": "oklch",
+          "colorSpace": "srgb",
           "components": [
-            0.25,
-            0.012,
-            60
+            0.1294,
+            0.1255,
+            0.1098
           ],
-          "hex": "#26201c"
+          "hex": "#21201c"
         },
         "$description": "正文。",
         "$extensions": {
           "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "status": "adopted",
+            "source": "@radix-ui/colors 3.0.0（MIT），用户 2026-11-07 选定",
             "platforms": [
               "web"
             ],
             "dark": {
-              "colorSpace": "oklch",
+              "colorSpace": "srgb",
               "components": [
-                0.9,
-                0.012,
-                85
+                0.9333,
+                0.9333,
+                0.9255
               ],
-              "hex": "#e2ded5"
+              "hex": "#eeeeec"
             }
           }
         }
       },
       "$type": "color",
-      "$description": "纸和墨：带一点暖色调的灰。只在文字本身就是产品时用。"
-    },
-    "hue": {
-      "1": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.995,
-            0.004,
-            255
-          ],
-          "hex": "#fcfeff"
-        },
-        "$description": "页面背景。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "dark": {
-              "colorSpace": "oklch",
-              "components": [
-                0.2,
-                0.006,
-                255
-              ],
-              "hex": "#141619"
-            },
-            "hue": "--accent-hue"
-          }
-        }
-      },
-      "2": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.975,
-            0.012,
-            255
-          ],
-          "hex": "#f1f7ff"
-        },
-        "$description": "区块背景：代码块、表头、侧栏。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "dark": {
-              "colorSpace": "oklch",
-              "components": [
-                0.23,
-                0.012,
-                255
-              ],
-              "hex": "#191d23"
-            },
-            "hue": "--accent-hue"
-          }
-        }
-      },
-      "3": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.955,
-            0.024,
-            255
-          ],
-          "hex": "#e6f1ff"
-        },
-        "$description": "控件底色；透明控件的悬停。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "dark": {
-              "colorSpace": "oklch",
-              "components": [
-                0.26,
-                0.024,
-                255
-              ],
-              "hex": "#1c2530"
-            },
-            "hue": "--accent-hue"
-          }
-        }
-      },
-      "4": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.93,
-            0.038,
-            255
-          ],
-          "hex": "#d7eaff"
-        },
-        "$description": "控件悬停。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "dark": {
-              "colorSpace": "oklch",
-              "components": [
-                0.29,
-                0.034,
-                255
-              ],
-              "hex": "#202c3c"
-            },
-            "hue": "--accent-hue"
-          }
-        }
-      },
-      "5": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.91,
-            0.05,
-            255
-          ],
-          "hex": "#cce4ff"
-        },
-        "$description": "控件按下或选中。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "dark": {
-              "colorSpace": "oklch",
-              "components": [
-                0.32,
-                0.044,
-                255
-              ],
-              "hex": "#233449"
-            },
-            "hue": "--accent-hue"
-          }
-        }
-      },
-      "6": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.885,
-            0.07,
-            255
-          ],
-          "hex": "#bbdcff"
-        },
-        "$description": "分割线，只是装饰。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "dark": {
-              "colorSpace": "oklch",
-              "components": [
-                0.36,
-                0.06,
-                255
-              ],
-              "hex": "#273e5c"
-            },
-            "hue": "--accent-hue"
-          }
-        }
-      },
-      "7": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.61,
-            0.12,
-            255
-          ],
-          "hex": "#4e85ca"
-        },
-        "$description": "控件边框。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "dark": {
-              "colorSpace": "oklch",
-              "components": [
-                0.62,
-                0.1,
-                255
-              ],
-              "hex": "#5c88c1"
-            },
-            "hue": "--accent-hue"
-          }
-        }
-      },
-      "8": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.565,
-            0.13,
-            255
-          ],
-          "hex": "#3b77c0"
-        },
-        "$description": "控件边框的悬停。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "dark": {
-              "colorSpace": "oklch",
-              "components": [
-                0.68,
-                0.11,
-                255
-              ],
-              "hex": "#689bdb"
-            },
-            "hue": "--accent-hue"
-          }
-        }
-      },
-      "9": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.52,
-            0.14,
-            255
-          ],
-          "hex": "#2769b7"
-        },
-        "$description": "实心底色：主按钮。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "dark": {
-              "colorSpace": "oklch",
-              "components": [
-                0.72,
-                0.12,
-                255
-              ],
-              "hex": "#6fa7ee"
-            },
-            "hue": "--accent-hue"
-          }
-        }
-      },
-      "10": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.48,
-            0.14,
-            255
-          ],
-          "hex": "#195daa"
-        },
-        "$description": "实心底色的悬停。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "dark": {
-              "colorSpace": "oklch",
-              "components": [
-                0.76,
-                0.11,
-                255
-              ],
-              "hex": "#81b4f6"
-            },
-            "hue": "--accent-hue"
-          }
-        }
-      },
-      "11": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.45,
-            0.13,
-            255
-          ],
-          "hex": "#17559b"
-        },
-        "$description": "次要文字。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "dark": {
-              "colorSpace": "oklch",
-              "components": [
-                0.8,
-                0.1,
-                255
-              ],
-              "hex": "#92c1fd"
-            },
-            "hue": "--accent-hue"
-          }
-        }
-      },
-      "12": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.22,
-            0.07,
-            255
-          ],
-          "hex": "#011a3a"
-        },
-        "$description": "正文。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "dark": {
-              "colorSpace": "oklch",
-              "components": [
-                0.94,
-                0.03,
-                255
-              ],
-              "hex": "#deedff"
-            },
-            "hue": "--accent-hue"
-          }
-        }
-      },
-      "$type": "color",
-      "$description": "强调色。产品只选一个色相，写在 --accent-hue，明度和彩度不变。"
+      "$description": "纸和墨，Radix 的 sand，带一点暖色调的灰。只在文字本身就是产品时用。"
     },
     "surface": {
       "$value": "{color.gray.1}",
@@ -3013,7 +2637,7 @@
     },
     "fill-active": {
       "$value": "{color.gray.5}",
-      "$description": "控件按下。",
+      "$description": "控件按下。ink-muted 在这一级上只有 4.48，不要放次要文字。",
       "$extensions": {
         "local.katachi": {
           "status": "draft",
@@ -3038,8 +2662,8 @@
       }
     },
     "control": {
-      "$value": "{color.gray.7}",
-      "$description": "控件边框：输入框、次要按钮。",
+      "$value": "{color.gray.10}",
+      "$description": "控件边框：输入框、次要按钮。Radix 的第 7 级只有 1.53，到不了 3:1，所以用第 10 级。",
       "$extensions": {
         "local.katachi": {
           "status": "draft",
@@ -3062,7 +2686,7 @@
       }
     },
     "control-hover": {
-      "$value": "{color.gray.8}",
+      "$value": "{color.gray.11}",
       "$description": "控件边框的悬停。",
       "$extensions": {
         "local.katachi": {
@@ -3131,7 +2755,6 @@
                 "color.surface-raised",
                 "color.fill",
                 "color.fill-hover",
-                "color.fill-active",
                 "color.selected"
               ]
             }
@@ -3140,7 +2763,7 @@
       }
     },
     "ink-disabled": {
-      "$value": "{color.gray.7}",
+      "$value": "{color.gray.9}",
       "$description": "禁用的文字。WCAG 1.4.3 不要求对比度，但要读得出。",
       "$extensions": {
         "local.katachi": {
@@ -3154,7 +2777,7 @@
     },
     "accent": {
       "$value": "{color.gray.12}",
-      "$description": "文字里能点的东西：链接。默认等于 ink，选了色相后指向第 11 级。",
+      "$description": "文字里能点的东西：链接。默认等于 ink，选了强调色后指向第 11 级。",
       "$extensions": {
         "local.katachi": {
           "status": "draft",
@@ -3162,14 +2785,13 @@
           "platforms": [
             "web"
           ],
-          "accent": "{color.hue.11}",
+          "accent": 11,
           "contrast": [
             {
               "floor": "text",
               "against": [
                 "color.surface",
-                "color.surface-subtle",
-                "color.fill"
+                "color.surface-subtle"
               ]
             }
           ]
@@ -3178,7 +2800,7 @@
     },
     "accent-solid": {
       "$value": "{color.gray.12}",
-      "$description": "主按钮的底色。默认等于 ink，选了色相后指向第 9 级。",
+      "$description": "主按钮的底色。默认等于 ink，选了强调色后指向第 11 级。Radix 的第 9 级配白字大多不到 4.5。",
       "$extensions": {
         "local.katachi": {
           "status": "draft",
@@ -3186,7 +2808,7 @@
           "platforms": [
             "web"
           ],
-          "accent": "{color.hue.9}"
+          "accent": 11
         }
       }
     },
@@ -3200,7 +2822,7 @@
           "platforms": [
             "web"
           ],
-          "accent": "{color.hue.10}"
+          "accent": 12
         }
       }
     },
@@ -3214,13 +2836,13 @@
           "platforms": [
             "web"
           ],
-          "accent": "{color.hue.3}"
+          "accent": 3
         }
       }
     },
     "selected": {
-      "$value": "{color.gray.5}",
-      "$description": "选中项的底色。",
+      "$value": "{color.gray.4}",
+      "$description": "选中项的底色。不用第 5 级，ink-muted 在第 5 级上只有 4.48。",
       "$extensions": {
         "local.katachi": {
           "status": "draft",
@@ -3228,13 +2850,13 @@
           "platforms": [
             "web"
           ],
-          "accent": "{color.hue.4}"
+          "accent": 4
         }
       }
     },
     "focus": {
       "$value": "{color.gray.12}",
-      "$description": "焦点环。默认等于 ink，选了色相后指向第 9 级。",
+      "$description": "焦点环。默认等于 ink，选了强调色后指向第 11 级。",
       "$extensions": {
         "local.katachi": {
           "status": "draft",
@@ -3242,7 +2864,7 @@
           "platforms": [
             "web"
           ],
-          "accent": "{color.hue.9}",
+          "accent": 11,
           "contrast": [
             {
               "floor": "non-text",
@@ -3322,7 +2944,7 @@
       }
     },
     "error-line": {
-      "$value": "{color.red.7}",
+      "$value": "{color.red.11}",
       "$description": "错误的边框，比如出错的输入框。",
       "$extensions": {
         "local.katachi": {
@@ -3344,7 +2966,7 @@
       }
     },
     "error-solid": {
-      "$value": "{color.red.9}",
+      "$value": "{color.red.11}",
       "$description": "错误的实心底色，比如删除按钮。",
       "$extensions": {
         "local.katachi": {
@@ -3357,7 +2979,7 @@
       }
     },
     "error-solid-hover": {
-      "$value": "{color.red.10}",
+      "$value": "{color.red.12}",
       "$description": "错误实心底色的悬停。",
       "$extensions": {
         "local.katachi": {
@@ -3370,7 +2992,7 @@
       }
     },
     "warning": {
-      "$value": "{color.amber.11}",
+      "$value": "{color.amber.12}",
       "$description": "警告的文字和图标。要同时有文字或图标。",
       "$extensions": {
         "local.katachi": {
@@ -3406,7 +3028,7 @@
       }
     },
     "warning-line": {
-      "$value": "{color.amber.7}",
+      "$value": "{color.amber.11}",
       "$description": "警告的边框，比如出错的输入框。",
       "$extensions": {
         "local.katachi": {
@@ -3428,7 +3050,7 @@
       }
     },
     "warning-solid": {
-      "$value": "{color.amber.9}",
+      "$value": "{color.amber.12}",
       "$description": "警告的实心底色，比如删除按钮。",
       "$extensions": {
         "local.katachi": {
@@ -3441,7 +3063,7 @@
       }
     },
     "warning-solid-hover": {
-      "$value": "{color.amber.10}",
+      "$value": "{color.gray.12}",
       "$description": "警告实心底色的悬停。",
       "$extensions": {
         "local.katachi": {
@@ -3454,7 +3076,7 @@
       }
     },
     "success": {
-      "$value": "{color.green.11}",
+      "$value": "{color.green.12}",
       "$description": "成功的文字和图标。要同时有文字或图标。",
       "$extensions": {
         "local.katachi": {
@@ -3490,7 +3112,7 @@
       }
     },
     "success-line": {
-      "$value": "{color.green.7}",
+      "$value": "{color.green.11}",
       "$description": "成功的边框，比如出错的输入框。",
       "$extensions": {
         "local.katachi": {
@@ -3512,7 +3134,7 @@
       }
     },
     "success-solid": {
-      "$value": "{color.green.9}",
+      "$value": "{color.green.11}",
       "$description": "成功的实心底色，比如删除按钮。",
       "$extensions": {
         "local.katachi": {
@@ -3525,7 +3147,7 @@
       }
     },
     "success-solid-hover": {
-      "$value": "{color.green.10}",
+      "$value": "{color.green.12}",
       "$description": "成功实心底色的悬停。",
       "$extensions": {
         "local.katachi": {

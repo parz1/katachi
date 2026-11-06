@@ -193,13 +193,11 @@ button:disabled:hover {
   white-space: nowrap;
 }
 
-.ratio.fail {
-  color: var(--color-error);
+.can {
+  display: block;
+  min-block-size: 1lh;
+  color: var(--color-ink);
   font-weight: var(--type-weight-strong);
-}
-
-.tally {
-  margin-block-start: 0.75rem;
 }
 
 .legend {

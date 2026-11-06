@@ -1,4 +1,4 @@
-// 颜色样例的内容，3 种用色完全相同，不同的只有颜色角色的取值。文字大多取自 ../content-stress.json。
+// 颜色样例的内容，3 种用色完全相同，不同的只有角色指向哪条色阶。文字大多取自 ../content-stress.json。
 (() => {
   'use strict';
   const NAME = document.title;
@@ -81,7 +81,7 @@
   const root = document.documentElement;
   const bar = document.getElementById('bar');
   const status = document.getElementById('status');
-  window.addColorControls(bar, { values: root.dataset.color !== 'paper', hues: root.dataset.accent !== undefined });
+  window.addColorControls(bar, { accents: root.dataset.accent !== undefined });
 
   const needed = (document.body.dataset.fonts ?? '').split('|').filter(Boolean);
   if (needed.length && document.fonts) {

@@ -14,7 +14,7 @@
 |---|---|---|---|
 | `constraint` | 标准和平台规范给出的下限 | standard | 遵守 |
 | `type` | [排版](../standards/typography.md)的字体、字号、行高、字重和行长 | draft | 默认照用，说明这是提案 |
-| `color` | [颜色](../standards/color.md)的 12 级色阶和指向它们的角色，每一级都有浅色和深色两个值 | draft | 样式里只写角色，说明这是提案 |
+| `color` | [颜色](../standards/color.md)的 12 级色阶和指向它们的角色，每一级都有浅色和深色两个值 | 色阶 adopted，角色 draft | 样式里只写角色；角色还是提案，用到时说明 |
 
 间距还没有。需要时怎么办，见 [DESIGN.md](../DESIGN.md) 的「没定的」。
 

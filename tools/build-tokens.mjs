@@ -2,7 +2,7 @@
 //   node tools/build-tokens.mjs           校验并写入
 //   node tools/build-tokens.mjs --check   只比较，生成物过期时退出码为 1
 // 只支持基本类型。组合类型（typography、shadow 等）等到真正用到时再加。
-// 颜色可以在 local.katachi 里写 dark，生成 light-dark()；写 hue，色相变成 CSS 变量；写 accent，选了强调色时改指向它。
+// 颜色可以在 local.katachi 里写 dark，生成 light-dark()；写 accent（第几级），选了强调色时改指向 --color-hue 那一级。
 import { mkdirSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -32,23 +32,22 @@ const cssName = (dottedPath) => `--${dottedPath.replaceAll('.', '-')}`;
 // 没写 platforms 表示适用于所有平台。
 const inWebCss = (token) => !Array.isArray(token.platforms) || token.platforms.includes('web');
 
-function colorToCss(value, hueVariable) {
-  const { colorSpace, components, alpha } = value ?? {};
+function colorToCss(value) {
+  const { colorSpace, components, alpha, hex } = value ?? {};
   const isFunction = CSS_COLOR_FUNCTIONS.has(colorSpace);
   if ((!isFunction && !CSS_COLOR_SPACES.has(colorSpace)) || !Array.isArray(components)) {
     throw new Error('color 的 $value 需要合法的 colorSpace 和 components');
   }
-  const channels = hueVariable
-    ? `${components[0]} ${components[1]} var(${hueVariable}, ${components[2]})`
-    : components.join(' ');
+  // sRGB 有 hex 时直接写 hex，和来源一字不差。校验脚本确认 hex 和 components 一致。
+  if (colorSpace === 'srgb' && hex && (alpha === undefined || alpha === 1)) return hex;
+  const channels = components.join(' ');
   const suffix = alpha === undefined || alpha === 1 ? '' : ` / ${alpha}`;
-  // 规范里 hex 只是后备值，这里以 components 为准。
   return isFunction
     ? `${colorSpace}(${channels}${suffix})`
     : `color(${colorSpace} ${channels}${suffix})`;
 }
 
-function valueToCss(type, value, meta) {
+function valueToCss(type, value) {
   switch (type) {
     case 'number':
       if (typeof value !== 'number') throw new Error('number 的 $value 应为数字');
@@ -62,7 +61,7 @@ function valueToCss(type, value, meta) {
       return `${value.value}${value.unit}`;
     }
     case 'color':
-      return colorToCss(value, meta?.hue);
+      return colorToCss(value);
     case 'fontFamily': {
       const names = Array.isArray(value) ? value : [value];
       if (!names.length || names.some((name) => typeof name !== 'string' || !name)) {
@@ -151,13 +150,13 @@ export function collectTokens(tree) {
       const type = node.$type ?? inheritedType;
       const toCss = (value) => {
         const reference = aliasTarget(value);
-        if (!reference) return valueToCss(type, value, meta);
+        if (!reference) return valueToCss(type, value);
         if (!tokens.has(reference)) throw new Error(`引用的 token 不存在：${reference}`);
         return `var(${cssName(reference)})`;
       };
       const light = toCss(node.$value);
       token.css = meta?.dark === undefined ? light : `light-dark(${light}, ${toCss(meta.dark)})`;
-      if (meta?.accent !== undefined) token.accentCss = toCss(meta.accent);
+      if (meta?.accent !== undefined) token.accentCss = `var(--color-hue-${meta.accent})`;
     } catch (error) {
       problems.push(`${name}：${error.message}`);
     }
@@ -182,7 +181,12 @@ export function loadTokens() {
 }
 
 export function renderCss(tokens) {
-  const lines = ['/* 由 tools/build-tokens.mjs 从 tokens/katachi.tokens.json 生成，不要手改。 */', ':root {'];
+  const lines = [
+    '/* 由 tools/build-tokens.mjs 从 tokens/katachi.tokens.json 生成，不要手改。',
+    '   颜色色阶的数值来自 Radix Colors（MIT）。Copyright (c) 2021-2022 Modulz, Copyright (c) 2022-Present WorkOS。',
+    '   许可全文见 standards/color/LICENSE-radix-colors.txt。 */',
+    ':root {',
+  ];
   for (const token of tokens.values()) {
     if (!inWebCss(token)) continue;
     lines.push(`  /* ${token.description.replaceAll('*/', '* /')} [${token.status}] */`);
@@ -191,7 +195,7 @@ export function renderCss(tokens) {
   lines.push('}', '');
   const accent = [...tokens.values()].filter((token) => token.accentCss && inWebCss(token));
   if (accent.length) {
-    lines.push('/* 选了强调色（根元素上有 data-accent）时，这些角色改指向 --accent-hue 那条色阶。 */', ':root[data-accent] {');
+    lines.push('/* 选了强调色（根元素上有 data-accent，还要引入 standards/color/accents.css）时，这些角色改指向那条色阶。 */', ':root[data-accent] {');
     for (const token of accent) lines.push(`  ${token.cssName}: ${token.accentCss};`);
     lines.push('}', '');
   }

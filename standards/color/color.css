@@ -1,25 +1,25 @@
 /* katachi 颜色的 Web 实现，规则见 ../color.md。先引入 tokens/build/tokens.css，色阶和角色都在那里。
    可以整个复制进产品。默认跟随系统的明暗；要固定一种，在根元素上设 color-scheme。
-   选强调色：根元素加 data-accent，再设 --accent-hue。 */
+   选强调色：再引入 accents.css，根元素写 data-accent="blue"。 */
 
 :root {
   color-scheme: light dark;
 }
 
-/* 纸和墨：灰换成带暖色调的那条。只在文字本身就是产品时用。 */
+/* 纸和墨：灰换成带暖色调的 sand。只在文字本身就是产品时用。 */
 :root[data-color="paper"] {
-  --color-gray-1: var(--color-paper-1);
-  --color-gray-2: var(--color-paper-2);
-  --color-gray-3: var(--color-paper-3);
-  --color-gray-4: var(--color-paper-4);
-  --color-gray-5: var(--color-paper-5);
-  --color-gray-6: var(--color-paper-6);
-  --color-gray-7: var(--color-paper-7);
-  --color-gray-8: var(--color-paper-8);
-  --color-gray-9: var(--color-paper-9);
-  --color-gray-10: var(--color-paper-10);
-  --color-gray-11: var(--color-paper-11);
-  --color-gray-12: var(--color-paper-12);
+  --color-gray-1: var(--color-sand-1);
+  --color-gray-2: var(--color-sand-2);
+  --color-gray-3: var(--color-sand-3);
+  --color-gray-4: var(--color-sand-4);
+  --color-gray-5: var(--color-sand-5);
+  --color-gray-6: var(--color-sand-6);
+  --color-gray-7: var(--color-sand-7);
+  --color-gray-8: var(--color-sand-8);
+  --color-gray-9: var(--color-sand-9);
+  --color-gray-10: var(--color-sand-10);
+  --color-gray-11: var(--color-sand-11);
+  --color-gray-12: var(--color-sand-12);
 }
 
 /* 读的人要更高的对比度时，次要文字和分割线都加深。 */

@@ -110,15 +110,18 @@ const cases = [
   ['standard without a source', (d) => edit(d, STANDARD, (t) => t.replace(/^- 来源：.*$/m, '- 来源：')), '缺少「来源」'],
   ['standard not linked from the entry', (d) => edit(d, 'DESIGN.md', (t) => t.replaceAll('(standards/typography.md)', '(tokens/README.md)')), 'DESIGN.md 没有链接 standards/typography.md'],
 
-  ['colour below the floor', (d) => tokens(d, (t) => { t.color.gray['11'].$value.components[0] = 0.8; }), '对比度是'],
-  ['dark colour below the floor', (d) => tokens(d, (t) => { t.color.gray['11'].$extensions['local.katachi'].dark.components[0] = 0.3; }), '深色'],
-  ['paper colour below the floor', (d) => tokens(d, (t) => { t.color.paper['12'].$extensions['local.katachi'].dark.components[0] = 0.3; }), '纸和墨'],
-  ['hex out of step with components', (d) => tokens(d, (t) => { t.color.gray['12'].$value.components[0] = 0.25; }), 'components 算出来是'],
-  ['colour outside sRGB', (d) => tokens(d, (t) => { t.color.green['3'].$value.components = [0.96, 0.2, 150]; }), '超出 sRGB'],
+  ['colour below the floor', (d) => tokens(d, (t) => { t.color.gray['11'].$value.components = [0.8, 0.8, 0.8]; }), '对比度是'],
+  ['dark colour below the floor', (d) => tokens(d, (t) => { t.color.gray['11'].$extensions['local.katachi'].dark.components = [0.2, 0.2, 0.2]; }), '深色'],
+  ['sand colour below the floor', (d) => tokens(d, (t) => { t.color.sand['12'].$extensions['local.katachi'].dark.components = [0.2, 0.2, 0.2]; }), '纸和墨'],
+  ['hex out of step with components', (d) => tokens(d, (t) => { t.color.gray['12'].$value.components[0] = 0.3; }), 'components 算出来是'],
+  ['colour outside sRGB', (d) => tokens(d, (t) => { t.color.green['3'].$value.components = [1.2, 0.2, 0.2]; }), '超出 sRGB'],
+  ['colour not in sRGB space', (d) => tokens(d, (t) => { t.color.green['3'].$value = { colorSpace: 'oklch', components: [0.9, 0.02, 150] }; }), '颜色要用 srgb'],
   ['contrast against a missing role', (d) => tokens(d, (t) => { t.color.ink.$extensions['local.katachi'].contrast[0].against.push('color.nope'); }), '要比较的 color.nope 不存在'],
-  ['hue step fails for some hue', (d) => tokens(d, (t) => { t.color.hue['11'].$value.components[0] = 0.75; }), '色相'],
+  ['accent below the floor', (d) => edit(d, 'standards/color/accents.css', (t) => t.replace('--color-hue-11: light-dark(#0d74ce', '--color-hue-11: light-dark(#80b0e0')), '强调色 blue'],
+  ['accent exception below the floor', (d) => edit(d, 'standards/color/accents.css', (t) => t.replace(/(data-accent="amber"[\s\S]*?--color-accent: light-dark\()#[0-9a-f]{6}/, '$1#c8c8c8')), '强调色 amber'],
+  ['accent missing a step', (d) => edit(d, 'standards/color/accents.css', (t) => t.replace(/  --color-hue-4: light-dark\([^)]*\);\n/, '')), '缺第 4 级'],
   ['dark alias to a missing token', (d) => tokens(d, (t) => { t.color['surface-raised'].$extensions['local.katachi'].dark = '{color.nope}'; }), '引用的 token 不存在'],
-  ['paper does not replace every gray step', (d) => edit(d, 'standards/color/color.css', (t) => t.replace('--color-gray-7: var(--color-paper-7);', '')), '没有把 color.gray.7 换成'],
+  ['paper does not replace every gray step', (d) => edit(d, 'standards/color/color.css', (t) => t.replace('--color-gray-7: var(--color-sand-7);', '')), '没有把 color.gray.7 换成'],
 
   ['token for an unknown platform', (d) => tokens(d, (t) => { t.constraint.reflow.width.$extensions['local.katachi'].platforms = ['tv']; }), '未知平台 tv'],
   ['token platforms is not an array', (d) => tokens(d, (t) => { t.constraint.reflow.width.$extensions['local.katachi'].platforms = 'web'; }), 'platforms 应为'],
@@ -184,14 +187,13 @@ tokens(dir, (t) => {
     ease: { $type: 'cubicBezier', $value: [0.2, 0, 0, 1], ...meta },
     modes: { $type: 'color', $value: { colorSpace: 'oklch', components: [0.5, 0, 0] }, $description: 'x', $extensions: { 'local.katachi': { status: 'draft', source: 'test', dark: { colorSpace: 'oklch', components: [0.8, 0, 0] } } } },
     aliased: { $value: '{sample.srgb}', $description: 'x', $extensions: { 'local.katachi': { status: 'draft', source: 'test', dark: '{sample.alias}' } } },
-    hued: { $type: 'color', $value: { colorSpace: 'oklch', components: [0.5, 0.1, 255] }, $description: 'x', $extensions: { 'local.katachi': { status: 'draft', source: 'test', hue: '--accent-hue' } } },
-    remapped: { $value: '{sample.srgb}', $description: 'x', $extensions: { 'local.katachi': { status: 'draft', source: 'test', accent: '{sample.hued}' } } },
+    remapped: { $value: '{sample.srgb}', $description: 'x', $extensions: { 'local.katachi': { status: 'draft', source: 'test', accent: 11 } } },
   };
 });
 const built = build(dir);
 const css = readFileSync(join(dir, 'tokens/build/tokens.css'), 'utf8');
 const expectedCss = [
-  '--sample-srgb: color(srgb 0.2 0.4 0.6);',
+  '--sample-srgb: #336699;',
   '--sample-translucent: oklch(0.7 0.1 200 / 0.5);',
   '--sample-p3: color(display-p3 1 0 none);',
   '--sample-alias: var(--sample-srgb);',
@@ -204,8 +206,7 @@ const expectedCss = [
   '--sample-ease: cubic-bezier(0.2, 0, 0, 1);',
   '--sample-modes: light-dark(oklch(0.5 0 0), oklch(0.8 0 0));',
   '--sample-aliased: light-dark(var(--sample-srgb), var(--sample-alias));',
-  '--sample-hued: oklch(0.5 0.1 var(--accent-hue, 255));',
-  '--sample-remapped: var(--sample-hued);',
+  '--sample-remapped: var(--color-hue-11);',
 ];
 for (const line of expectedCss) {
   if (built.status !== 0 || !css.includes(line)) {
@@ -224,7 +225,7 @@ const webExpectations = [
   ['--constraint-terminal-columns-default', false],
   ['--type-size-read', true],
   ['--color-gray-1', true],
-  ['--color-hue-9', true],
+  ['--color-hue-11', true],
   [':root[data-accent]', true],
 ];
 for (const [name, shouldExist] of webExpectations) {

@@ -40,7 +40,7 @@ function modes(value) {
 export function swatch(value) {
   const one = (color) => `<span class="swatch" style="background:${escapeHtml(color)}"></span>`;
   if (value.startsWith('light-dark(')) return modes(value).map(one).join('');
-  return /^(oklch|color|var)\(/.test(value) ? one(value) : '';
+  return /^(#|(oklch|color|var)\()/.test(value) ? one(value) : '';
 }
 
 // 正文里只放短的：两种模式的颜色只显示色块，字体列表只显示第一个。全部写在 Tokens 一节。
