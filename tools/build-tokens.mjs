@@ -1,6 +1,6 @@
 // 校验 tokens/katachi.tokens.json，并生成 tokens/build/tokens.css。零依赖。
-//   node scripts/build-tokens.mjs           校验并写入
-//   node scripts/build-tokens.mjs --check   只比较，生成物过期时退出码为 1
+//   node tools/build-tokens.mjs           校验并写入
+//   node tools/build-tokens.mjs --check   只比较，生成物过期时退出码为 1
 // 只支持基本类型。组合类型（typography、shadow 等）和模式等到真正用到时再加。
 import { mkdirSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -174,7 +174,7 @@ export function loadTokens() {
 }
 
 export function renderCss(tokens) {
-  const lines = ['/* 由 scripts/build-tokens.mjs 从 tokens/katachi.tokens.json 生成，不要手改。 */', ':root {'];
+  const lines = ['/* 由 tools/build-tokens.mjs 从 tokens/katachi.tokens.json 生成，不要手改。 */', ':root {'];
   for (const token of tokens.values()) {
     if (!inWebCss(token)) continue;
     lines.push(`  /* ${token.description.replaceAll('*/', '* /')} [${token.status}] */`);
@@ -199,7 +199,7 @@ if (process.argv[1] && realpathSync(process.argv[1]) === realpathSync(THIS_FILE)
       // 文件不存在，按过期处理。
     }
     if (current !== css) {
-      console.error('tokens/build/tokens.css 已过期或被手改。运行 node scripts/build-tokens.mjs');
+      console.error('tokens/build/tokens.css 已过期或被手改。运行 node tools/build-tokens.mjs');
       process.exit(1);
     }
     console.log('tokens/build/tokens.css 是最新的。');

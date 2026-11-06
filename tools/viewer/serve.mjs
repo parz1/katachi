@@ -1,9 +1,9 @@
-// 启动本地查看器：node viewer/serve.mjs（默认端口 4173，可用 PORT 环境变量修改）
+// 启动本地查看器：node tools/viewer/serve.mjs（默认端口 4173，可用 PORT 环境变量修改）
 // 每次打开页面都从仓库重新生成。只绑定本机地址，只读，不提供以点开头的文件。
 import { createReadStream, statSync } from 'node:fs';
 import { createServer } from 'node:http';
 import { extname, join, normalize, sep } from 'node:path';
-import { ROOT } from '../scripts/build-tokens.mjs';
+import { ROOT } from '../build-tokens.mjs';
 import { escapeHtml } from './markdown.mjs';
 import { renderPage } from './build.mjs';
 

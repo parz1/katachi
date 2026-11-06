@@ -74,15 +74,6 @@
         layoutBench(bench);
       });
     }
-    const stack = bench.querySelector('[data-stack]');
-    if (stack) {
-      stack.addEventListener('click', () => {
-        const on = stack.getAttribute('aria-pressed') !== 'true';
-        stack.setAttribute('aria-pressed', String(on));
-        bench.classList.toggle('is-stacked', on);
-        layoutBench(bench);
-      });
-    }
     const gray = bench.querySelector('[data-gray]');
     if (gray) {
       gray.addEventListener('click', () => {

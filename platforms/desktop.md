@@ -9,9 +9,9 @@
 
 ## 平台要求
 
-- BASE-4：所有操作都能用键盘完成；焦点顺序符合操作顺序；菜单和快捷键遵守系统习惯。
-- BASE-5：macOS 默认用 `constraint.target.macos-default`，不低于 `constraint.target.macos-min`。Windows 的触摸目标按 `constraint.target.windows-touch`。依据 Apple HIG（Accessibility）和 Microsoft 的 [Targeting 指南](https://learn.microsoft.com/en-us/windows/apps/develop/input/guidelines-for-targeting)。Linux 还没有核对具体数值。
-- BASE-6：缩小到产品支持的最小窗口时，内容和功能不丢失；系统字号或显示缩放变化时布局不坏。
+- 所有操作都能用键盘完成；焦点顺序符合操作顺序；菜单和快捷键遵守系统习惯。
+- macOS 默认用 `constraint.target.macos-default`，不低于 `constraint.target.macos-min`。Windows 的触摸目标按 `constraint.target.windows-touch`。依据 Apple HIG（Accessibility）和 Microsoft 的 [Targeting 指南](https://learn.microsoft.com/en-us/windows/apps/develop/input/guidelines-for-targeting)。Linux 还没有核对具体数值。
+- 缩小到产品支持的最小窗口时，内容和功能不丢失；系统字号或显示缩放变化时布局不坏。
 
 ## 必查
 

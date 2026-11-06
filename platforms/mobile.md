@@ -9,9 +9,9 @@
 
 ## 平台要求
 
-- BASE-4：读屏（VoiceOver、TalkBack）的顺序和标签正确，主要流程不依赖只有部分用户能做的手势。
-- BASE-5：iOS 默认用 `constraint.target.ios-default`，不低于 `constraint.target.ios-min`。Android 不低于 `constraint.target.android-min`。依据 Apple HIG（Accessibility）和 Android Developers（Make apps more accessible）。
-- BASE-6：支持系统字号设置，最大字号时内容和功能不丢失。
+- 读屏（VoiceOver、TalkBack）的顺序和标签正确，主要流程不依赖只有部分用户能做的手势。
+- iOS 默认用 `constraint.target.ios-default`，不低于 `constraint.target.ios-min`。Android 不低于 `constraint.target.android-min`。依据 Apple HIG（Accessibility）和 Android Developers（Make apps more accessible）。
+- 支持系统字号设置，最大字号时内容和功能不丢失。
 
 ## 必查
 

@@ -1,5 +1,5 @@
 {
-  "description": "界面内容压力测试集。优先使用产品的真实内容，这里补充真实内容不容易碰到的情况。用法见 workflows/review.md。",
+  "description": "界面内容压力测试集。优先使用产品的真实内容，这里补充真实内容不容易碰到的情况。",
   "text": {
     "label-zh": "设置",
     "label-en": "Settings",

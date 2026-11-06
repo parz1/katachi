@@ -1,4 +1,4 @@
-/* 由 scripts/build-tokens.mjs 从 tokens/katachi.tokens.json 生成，不要手改。 */
+/* 由 tools/build-tokens.mjs 从 tokens/katachi.tokens.json 生成，不要手改。 */
 :root {
   /* 普通文字与背景的最低对比度。 [standard] */
   --constraint-contrast-text: 4.5;
