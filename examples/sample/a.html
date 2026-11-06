@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>方向 A：纸和卡片</title>
+<link rel="stylesheet" href="../../tokens/build/tokens.css">
+<link rel="stylesheet" href="sample.css">
+<style>
+/* Kotolog 现在的外观。颜色、阴影和圆角从它的桌面原型里实测，字号来自 design-contract。 */
+:root {
+  color-scheme: light dark;
+  --ground: #f9f3e9; --surface: #fffcf7; --ink: #1f170a; --muted: #686259; --deepest: #000000;
+  --line: #e2d9cc; --outline: #8f877b; --hover: #f4ecde; --focus: #1670c4;
+  --accent-solid: #1670c4; --on-accent: #ffffff; --accent-tint: #dcedff; --accent-ink: #284e7d;
+  --danger-ink: #8f3a12; --inverse-bg: #1f170a; --inverse-ink: #fffcf7;
+  --selected-bg: #dcedff; --selected-cue: #1670c4;
+  --shadow-a: rgb(20 14 6 / 0.1); --shadow-b: rgb(20 14 6 / 0.18);
+
+  --font-body: -apple-system, "SF Pro Text", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  --font-title: "Noto Serif SC", "New York", ui-serif, "Songti SC", Georgia, serif;
+  --font-group: var(--font-body);
+  --text: 13px; --line-height: 20px; --text-small: 12px; --body-line: 22px; --weight-strong: 600;
+  --page-title: 25px; --page-title-weight: 500; --page-title-tracking: -0.01em;
+  --group-size: 13px; --group-weight: 650; --group-ink: #564f44;
+  --row-title: 13px; --row-title-weight: 600; --row-title-line: 20px;
+
+  --nav-width: 216px; --nav-pad: 16px 12px; --nav-gap: 2px; --nav-height: 36px; --nav-bg: #f4ecde; --nav-rule: 0; --nav-rule-narrow: 0; --nav-ink: var(--ink);
+  --nav-current-bg: #1670c4; --nav-current-ink: #ffffff; --nav-current-cue: none;
+  --main-width: 760px; --main-pad: 28px 32px; --head-gap: 16px; --group-gap: 20px; --group-title-gap: 8px; --control-height: 32px;
+
+  --row-height: 46px; --row-pad-y: 4px; --row-pad-x: 12px; --row-gap: 8px; --row-inner-gap: 10px; --row-wrap: nowrap; --title-flex: 1; --meta-max: 45%;
+  --row-bg: var(--surface); --row-line: #ebe2d4; --row-border-width: 1px; --row-shadow: 0 2px 8px -2px var(--shadow-a);
+  --card-bg: var(--surface); --card-border: 1px solid #ebe2d4; --card-shadow: 0 12px 32px -8px var(--shadow-b); --page-shadow: 0 24px 64px -24px var(--shadow-b); --pop-shadow: 0 12px 32px -8px var(--shadow-b);
+  --radius-row: 12px; --radius-card: 12px; --radius-page: 16px; --radius-control: 9px; --radius-check: 50%;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ground: #2b2418; --surface: #271f13; --ink: #f3efea; --muted: #a39e96; --deepest: #ffffff;
+    --line: #3c3428; --outline: #857e74; --hover: #2f281c; --focus: #afd1fc;
+    --accent-solid: #afd1fc; --on-accent: #10233a; --accent-tint: #21344c; --accent-ink: #afd1fc;
+    --danger-ink: #f5b48f; --inverse-bg: #f3efea; --inverse-ink: #271f13;
+    --selected-bg: #21344c; --selected-cue: #afd1fc;
+    --shadow-a: rgb(7 3 0 / 0.5); --shadow-b: rgb(7 3 0 / 0.6);
+    --group-ink: #bfbab1; --nav-bg: #2f281c; --nav-current-bg: #afd1fc; --nav-current-ink: #10233a;
+    --row-line: #342d21; --card-border: 1px solid #342d21;
+  }
+}
+</style>
+</head>
+<body data-name="方向 A：纸和卡片">
+<div id="sample"></div>
+<script src="sample.js"></script>
+</body>
+</html>

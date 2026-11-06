@@ -2,7 +2,7 @@
 
 做界面时不用读这里。这里写怎么看、怎么检查、怎么改这个仓库。
 
-这是用户的设计和交互规范。这个仓库只放 agent 能直接拿来用的成品。做界面时用不上的，不放进来。原始材料留在原处：Kotolog、claude.ai 和会话记录都不搬，需要时写链接或提交号。
+这是用户的设计和交互规范。这个仓库只放 agent 能直接拿来用的东西：规范、标准和样例。做界面时用不上的，不放进来。规范是主动定下来的，agent 默认照它做；用起来之后，按用户的反应修订。原始材料留在原处：Kotolog、claude.ai 和会话记录都不搬，需要时写链接或提交号。
 
 ## 产品怎么用
 
@@ -38,10 +38,10 @@ node tools/check.mjs
 
 ## 改内容
 
-- **设计被认可之后**：按 [sediment.md](sediment.md)。
+- **修订规范**：按 [sediment.md](sediment.md)。
 - **数值**：改 `tokens/katachi.tokens.json`，运行 `node tools/build-tokens.mjs`，再检查。不要手改 `tokens/build/`。每个 token 要有 `$description`，以及 `$extensions` 里 `local.katachi` 的 `status` 和 `source`；只适用于部分平台时写 `platforms`。`status` 是 standard（来自标准）、draft（用户还没确认）、adopted（用户确认）、validated（第二个产品也用过）。
-- **根目录**：只放 `AGENTS.md`、`CLAUDE.md`、`DESIGN.md`、`patterns/`、`examples/`、`tokens/`、`platforms/`、`tools/`。校验脚本会拦住其他东西。
-- **入口**：新增的模式和平台都要从 `DESIGN.md` 能找到，新增的示例要从 `examples/README.md` 能找到，否则 agent 看不到。
+- **根目录**：只放 `AGENTS.md`、`CLAUDE.md`、`DESIGN.md`、`standards/`、`patterns/`、`examples/`、`tokens/`、`platforms/`、`tools/`。校验脚本会拦住其他东西。
+- **入口**：规范、模式和平台都要从 `DESIGN.md` 能找到，新增的示例要从 `examples/README.md` 能找到，否则 agent 看不到。
 
 ### 一页模式
 
@@ -57,7 +57,7 @@ node tools/check.mjs
 
 ## 规则
 ## 操作、数值、动效（用到才写）
-## 状态（DESIGN.md 里的七种，每行都要回答，没定义也写明）
+## 状态（交互规范里的七种，每行都要回答，和规范一样就写明）
 ## 内容（长文本、混排、极端数量时怎么样）
 ## 平台
 ## 怎么实现

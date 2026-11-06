@@ -11,6 +11,7 @@ import { escapeHtml as h, inline, markdown } from './markdown.mjs';
 const HERE = dirname(fileURLToPath(import.meta.url));
 const SECTIONS = [
   ['design', '入口'],
+  ['standards', '规范'],
   ['patterns', '模式'],
   ['examples', '示例'],
   ['platforms', '平台'],
@@ -54,12 +55,16 @@ function benchWidths(lib) {
 // 加上 <base>，例子里的相对路径仍然指向它自己的目录。
 // sandbox 要带 allow-same-origin，否则这些内嵌浏览器也会拦截例子的样式和图片。例子都是仓库自己的文件；
 // sandbox 仍然阻止例子把查看器整页跳走或打开弹窗。
+// 标签里的相对路径直接改成绝对路径：浏览器的预加载扫描器不看 srcdoc 里的 <base>，会先按错的路径试探一次。
 function withBase(html, directory) {
   const base = `<base href="/${encodeURI(directory)}/">`;
+  const absolute = html.replace(/\b(href|src)="(?![a-z][a-z0-9+.-]*:|\/|#)([^"]+)"/gi, (_, attribute, target) => (
+    `${attribute}="/${encodeURI(posix.normalize(posix.join(directory, target)))}"`
+  ));
   for (const pattern of [/<head[^>]*>/i, /<html[^>]*>/i, /<!doctype[^>]*>/i]) {
-    if (pattern.test(html)) return html.replace(pattern, (match) => `${match}${base}`);
+    if (pattern.test(absolute)) return absolute.replace(pattern, (match) => `${match}${base}`);
   }
-  return `${base}${html}`;
+  return `${base}${absolute}`;
 }
 
 function runnable(path, label, widths) {
@@ -211,7 +216,7 @@ function tokenSpecimens(lib) {
 
 function tokens(lib) {
   const rows = lib.tokens.map((item) => `<tr><th scope="row"><code>${h(item.name)}</code></th><td>${h(item.value)}</td><td>${h(item.description)}</td><td>${h(item.platforms.join('、') || '所有')}</td><td>${h(item.status)}</td><td>${h(item.source)}</td></tr>`).join('');
-  return section('tokens', `constraint 来自标准和平台规范。object 来自 Kotolog 的原型，状态是 draft，不代表用户的偏好。颜色、字体和间距还没定。来源：${source('tokens/katachi.tokens.json')}。`,
+  return section('tokens', `constraint 来自标准和平台规范。object 和 interaction 来自 Kotolog，状态是 draft。颜色、字体和间距还没定。来源：${source('tokens/katachi.tokens.json')}。`,
     `${tokenSpecimens(lib)}<h3>全部 Tokens</h3>
     <div class="table-wrap" tabindex="0" role="region" aria-label="全部 Tokens"><table class="tokens-table"><thead><tr><th scope="col">名称</th><th scope="col">值</th><th scope="col">说明</th><th scope="col">平台</th><th scope="col">状态</th><th scope="col">来源</th></tr></thead><tbody>${rows}</tbody></table></div>`);
 }
@@ -247,6 +252,7 @@ export function renderPage() {
   const pages = (files) => files.map((file) => doc(file, lib, widths)).join('');
   const body = [
     section('design', '', doc('DESIGN.md', lib, widths)),
+    section('standards', '', doc('standards/interaction.md', lib, widths)),
     section('patterns', '', lib.patterns.length ? pages(lib.patterns) : empty('还没有模式。')),
     section('examples', '', `${exists('examples/README.md') ? doc('examples/README.md', lib, widths) : ''}${pages(lib.examples)}`),
     platforms(lib),

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>方向 C：色块和留白</title>
+<link rel="stylesheet" href="../../tokens/build/tokens.css">
+<link rel="stylesheet" href="sample.css">
+<style>
+/* 不用边框和阴影，靠底色和留白分层。字大、行高，标题和时间分两行。 */
+:root {
+  color-scheme: light dark;
+  --ground: #f5f6f2; --surface: #ffffff; --ink: #1a1f1b; --muted: #5a6159; --deepest: #000000;
+  --line: #dfe2da; --outline: #7f867d; --hover: #eceee7; --focus: #0b6b4f;
+  --accent-solid: #0b6b4f; --on-accent: #ffffff; --accent-tint: #dcefe6; --accent-ink: #0a5a43;
+  --danger-ink: #a8341f; --inverse-bg: #1a1f1b; --inverse-ink: #ffffff;
+  --selected-bg: #dcefe6; --selected-cue: #0b6b4f;
+  --shadow-a: rgb(26 31 27 / 0.14);
+
+  --font-body: -apple-system, "SF Pro Text", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  --font-title: var(--font-body);
+  --font-group: var(--font-body);
+  --text: 15px; --line-height: 24px; --text-small: 13px; --body-line: 26px; --weight-strong: 500;
+  --page-title: 32px; --page-title-weight: 500; --page-title-tracking: -0.015em;
+  --group-size: 15px; --group-weight: 500; --group-ink: var(--muted);
+  --row-title: 15px; --row-title-weight: 500; --row-title-line: 22px;
+
+  --nav-width: 232px; --nav-pad: 24px 16px; --nav-gap: 4px; --nav-height: 44px; --nav-bg: transparent; --nav-rule: 0; --nav-rule-narrow: 0; --nav-ink: var(--ink);
+  --nav-current-bg: #dcefe6; --nav-current-ink: #0a5a43; --nav-current-cue: none;
+  --main-width: 720px; --main-pad: 40px 32px; --head-gap: 24px; --group-gap: 32px; --group-title-gap: 12px; --control-height: 40px;
+
+  --row-height: 60px; --row-pad-y: 8px; --row-pad-x: 16px; --row-gap: 6px; --row-inner-gap: 2px; --row-wrap: wrap; --title-flex: 1 1 100%; --meta-max: 100%;
+  --row-bg: var(--surface); --row-line: transparent; --row-border-width: 0; --row-shadow: none;
+  --card-bg: var(--surface); --card-border: 0; --card-shadow: 0 0 0 2px var(--line); --page-shadow: 0 0 0 2px var(--line); --pop-shadow: 0 8px 24px -8px var(--shadow-a);
+  --radius-row: 14px; --radius-card: 18px; --radius-page: 24px; --radius-control: 10px; --radius-check: 50%;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ground: #161917; --surface: #222623; --ink: #eef1ec; --muted: #a9b0a7; --deepest: #ffffff;
+    --line: #323732; --outline: #879085; --hover: #2b302c; --focus: #7fd6b4;
+    --accent-solid: #7fd6b4; --on-accent: #0d2a20; --accent-tint: #1f3a30; --accent-ink: #9be3c7;
+    --danger-ink: #ffab91; --inverse-bg: #eef1ec; --inverse-ink: #161917;
+    --selected-bg: #1f3a30; --selected-cue: #7fd6b4; --shadow-a: rgb(0 0 0 / 0.5);
+    --nav-current-bg: #1f3a30; --nav-current-ink: #9be3c7;
+  }
+}
+</style>
+</head>
+<body data-name="方向 C：色块和留白">
+<div id="sample"></div>
+<script src="sample.js"></script>
+</body>
+</html>

@@ -7,69 +7,175 @@
       "text": {
         "$value": 4.5,
         "$description": "普通文字与背景的最低对比度。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "WCAG 2.2 SC 1.4.3 (AA)", "platforms": ["web", "desktop", "mobile", "adaptive"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "standard",
+            "source": "WCAG 2.2 SC 1.4.3 (AA)",
+            "platforms": [
+              "web",
+              "desktop",
+              "mobile",
+              "adaptive"
+            ]
+          }
+        }
       },
       "text-large": {
         "$value": 3,
         "$description": "大号文字（按 WCAG 定义）与背景的最低对比度。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "WCAG 2.2 SC 1.4.3 (AA)", "platforms": ["web", "desktop", "mobile", "adaptive"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "standard",
+            "source": "WCAG 2.2 SC 1.4.3 (AA)",
+            "platforms": [
+              "web",
+              "desktop",
+              "mobile",
+              "adaptive"
+            ]
+          }
+        }
       },
       "non-text": {
         "$value": 3,
         "$description": "控件边界、图标、焦点指示等与相邻颜色的最低对比度。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "WCAG 2.2 SC 1.4.11 (AA)", "platforms": ["web", "desktop", "mobile", "adaptive"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "standard",
+            "source": "WCAG 2.2 SC 1.4.11 (AA)",
+            "platforms": [
+              "web",
+              "desktop",
+              "mobile",
+              "adaptive"
+            ]
+          }
+        }
       }
     },
     "target": {
       "web-min": {
         "$type": "dimension",
-        "$value": { "value": 24, "unit": "px" },
+        "$value": {
+          "value": 24,
+          "unit": "px"
+        },
         "$description": "Web 点击目标的最小尺寸。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "WCAG 2.2 SC 2.5.8 (AA)", "platforms": ["web"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "standard",
+            "source": "WCAG 2.2 SC 2.5.8 (AA)",
+            "platforms": [
+              "web"
+            ]
+          }
+        }
       },
       "ios-default": {
         "$type": "number",
         "$value": 44,
         "$description": "iOS、iPadOS 控件的默认尺寸，单位 pt。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "Apple HIG, Accessibility: Mobility", "platforms": ["mobile", "adaptive"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "standard",
+            "source": "Apple HIG, Accessibility: Mobility",
+            "platforms": [
+              "mobile",
+              "adaptive"
+            ]
+          }
+        }
       },
       "ios-min": {
         "$type": "number",
         "$value": 28,
         "$description": "iOS、iPadOS 控件的最小尺寸，单位 pt。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "Apple HIG, Accessibility: Mobility", "platforms": ["mobile", "adaptive"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "standard",
+            "source": "Apple HIG, Accessibility: Mobility",
+            "platforms": [
+              "mobile",
+              "adaptive"
+            ]
+          }
+        }
       },
       "macos-default": {
         "$type": "number",
         "$value": 28,
         "$description": "macOS 控件的默认尺寸，单位 pt。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "Apple HIG, Accessibility: Mobility", "platforms": ["desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "standard",
+            "source": "Apple HIG, Accessibility: Mobility",
+            "platforms": [
+              "desktop"
+            ]
+          }
+        }
       },
       "macos-min": {
         "$type": "number",
         "$value": 20,
         "$description": "macOS 控件的最小尺寸，单位 pt。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "Apple HIG, Accessibility: Mobility", "platforms": ["desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "standard",
+            "source": "Apple HIG, Accessibility: Mobility",
+            "platforms": [
+              "desktop"
+            ]
+          }
+        }
       },
       "windows-touch": {
         "$type": "number",
         "$value": 40,
         "$description": "Windows 触摸目标的建议尺寸，单位 epx，约 7.5 mm。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "Microsoft, Targeting - Windows apps", "platforms": ["desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "standard",
+            "source": "Microsoft, Targeting - Windows apps",
+            "platforms": [
+              "desktop"
+            ]
+          }
+        }
       },
       "android-min": {
         "$type": "number",
         "$value": 48,
         "$description": "Android 触摸目标的最小尺寸，单位 dp。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "Android Developers, Make apps more accessible", "platforms": ["mobile", "adaptive"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "standard",
+            "source": "Android Developers, Make apps more accessible",
+            "platforms": [
+              "mobile",
+              "adaptive"
+            ]
+          }
+        }
       }
     },
     "reflow": {
       "width": {
         "$type": "dimension",
-        "$value": { "value": 320, "unit": "px" },
+        "$value": {
+          "value": 320,
+          "unit": "px"
+        },
         "$description": "内容重排检查的视口宽度，此宽度下不应需要同时横向和纵向滚动。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "WCAG 2.2 SC 1.4.10 (AA)", "platforms": ["web"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "standard",
+            "source": "WCAG 2.2 SC 1.4.10 (AA)",
+            "platforms": [
+              "web"
+            ]
+          }
+        }
       }
     },
     "window": {
@@ -77,32 +183,80 @@
       "width-medium-min": {
         "$value": 600,
         "$description": "窗口宽度进入 medium 的分界，单位 dp。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "Android Developers, Use window size classes", "platforms": ["adaptive"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "standard",
+            "source": "Android Developers, Use window size classes",
+            "platforms": [
+              "adaptive"
+            ]
+          }
+        }
       },
       "width-expanded-min": {
         "$value": 840,
         "$description": "窗口宽度进入 expanded 的分界，单位 dp。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "Android Developers, Use window size classes", "platforms": ["adaptive"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "standard",
+            "source": "Android Developers, Use window size classes",
+            "platforms": [
+              "adaptive"
+            ]
+          }
+        }
       },
       "width-large-min": {
         "$value": 1200,
         "$description": "窗口宽度进入 large 的分界，单位 dp。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "Android Developers, Use window size classes", "platforms": ["adaptive"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "standard",
+            "source": "Android Developers, Use window size classes",
+            "platforms": [
+              "adaptive"
+            ]
+          }
+        }
       },
       "width-extra-large-min": {
         "$value": 1600,
         "$description": "窗口宽度进入 extra-large 的分界，单位 dp。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "Android Developers, Use window size classes", "platforms": ["adaptive"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "standard",
+            "source": "Android Developers, Use window size classes",
+            "platforms": [
+              "adaptive"
+            ]
+          }
+        }
       },
       "height-medium-min": {
         "$value": 480,
         "$description": "窗口高度进入 medium 的分界，单位 dp。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "Android Developers, Use window size classes", "platforms": ["adaptive"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "standard",
+            "source": "Android Developers, Use window size classes",
+            "platforms": [
+              "adaptive"
+            ]
+          }
+        }
       },
       "height-expanded-min": {
         "$value": 900,
         "$description": "窗口高度进入 expanded 的分界，单位 dp。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "Android Developers, Use window size classes", "platforms": ["adaptive"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "standard",
+            "source": "Android Developers, Use window size classes",
+            "platforms": [
+              "adaptive"
+            ]
+          }
+        }
       }
     },
     "terminal": {
@@ -110,12 +264,28 @@
       "columns-default": {
         "$value": 80,
         "$description": "终端常见的默认列数。用户可以改变，这只是检查的起点。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "VT100 的默认尺寸，许多终端沿用（事实标准）", "platforms": ["terminal"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "standard",
+            "source": "VT100 的默认尺寸，许多终端沿用（事实标准）",
+            "platforms": [
+              "terminal"
+            ]
+          }
+        }
       },
       "rows-default": {
         "$value": 24,
         "$description": "终端常见的默认行数。用户可以改变，这只是检查的起点。",
-        "$extensions": { "local.katachi": { "status": "standard", "source": "VT100 的默认尺寸，许多终端沿用（事实标准）", "platforms": ["terminal"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "standard",
+            "source": "VT100 的默认尺寸，许多终端沿用（事实标准）",
+            "platforms": [
+              "terminal"
+            ]
+          }
+        }
       }
     }
   },
@@ -124,191 +294,515 @@
     "bar": {
       "height": {
         "$type": "dimension",
-        "$value": { "value": 40, "unit": "px" },
+        "$value": {
+          "value": 40,
+          "unit": "px"
+        },
         "$description": "条的高度（桌面）。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog design-contract metrics control.row", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog design-contract metrics control.row",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       },
       "min-height-touch": {
         "$type": "number",
         "$value": 48,
         "$description": "手机上条的最小高度，单位 pt 或 dp。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog design-contract platformMetrics.mobile.rowMinHeight", "platforms": ["mobile", "adaptive"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog design-contract platformMetrics.mobile.rowMinHeight",
+            "platforms": [
+              "mobile",
+              "adaptive"
+            ]
+          }
+        }
       }
     },
     "radius": {
       "$type": "dimension",
       "bar": {
-        "$value": { "value": 12, "unit": "px" },
+        "$value": {
+          "value": 12,
+          "unit": "px"
+        },
         "$description": "条的圆角。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog docs/object-forms.md 的原型取值", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog docs/object-forms.md 的原型取值",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       },
       "card": {
-        "$value": { "value": 12, "unit": "px" },
+        "$value": {
+          "value": 12,
+          "unit": "px"
+        },
         "$description": "卡的圆角。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog docs/object-forms.md 的原型取值", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog docs/object-forms.md 的原型取值",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       },
       "page": {
-        "$value": { "value": 16, "unit": "px" },
+        "$value": {
+          "value": 16,
+          "unit": "px"
+        },
         "$description": "页的圆角。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog docs/object-forms.md 的原型取值", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog docs/object-forms.md 的原型取值",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       },
       "window": {
-        "$value": { "value": 14, "unit": "px" },
+        "$value": {
+          "value": 14,
+          "unit": "px"
+        },
         "$description": "窗的圆角。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog docs/object-forms.md 的原型取值", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog docs/object-forms.md 的原型取值",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       }
     },
     "size": {
       "$type": "dimension",
       "card-max-height": {
-        "$value": { "value": 440, "unit": "px" },
+        "$value": {
+          "value": 440,
+          "unit": "px"
+        },
         "$description": "列表里原地卡的最大高度。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog docs/object-forms.md 的原型取值", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog docs/object-forms.md 的原型取值",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       },
       "card-max-height-embedded": {
-        "$value": { "value": 320, "unit": "px" },
+        "$value": {
+          "value": 320,
+          "unit": "px"
+        },
         "$description": "搜索和回答里卡的最大高度。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog docs/object-forms.md 的原型取值", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog docs/object-forms.md 的原型取值",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       },
       "page-inset": {
-        "$value": { "value": 12, "unit": "px" },
+        "$value": {
+          "value": 12,
+          "unit": "px"
+        },
         "$description": "页相对工作区内缩的距离。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog docs/object-forms.md 的原型取值", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog docs/object-forms.md 的原型取值",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       },
       "window-min-width": {
-        "$value": { "value": 340, "unit": "px" },
+        "$value": {
+          "value": 340,
+          "unit": "px"
+        },
         "$description": "窗的最小宽度。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog docs/object-forms.md 的原型取值", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog docs/object-forms.md 的原型取值",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       },
       "window-max-width": {
-        "$value": { "value": 540, "unit": "px" },
+        "$value": {
+          "value": 540,
+          "unit": "px"
+        },
         "$description": "窗的最大宽度。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog docs/object-forms.md 的原型取值", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog docs/object-forms.md 的原型取值",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       },
       "window-min-height": {
-        "$value": { "value": 280, "unit": "px" },
+        "$value": {
+          "value": 280,
+          "unit": "px"
+        },
         "$description": "窗的最小高度。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog docs/object-forms.md 的原型取值", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog docs/object-forms.md 的原型取值",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       },
       "window-max-height": {
-        "$value": { "value": 620, "unit": "px" },
+        "$value": {
+          "value": 620,
+          "unit": "px"
+        },
         "$description": "窗的最大高度。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog docs/object-forms.md 的原型取值", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog docs/object-forms.md 的原型取值",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       },
       "list-min-width": {
-        "$value": { "value": 360, "unit": "px" },
+        "$value": {
+          "value": 360,
+          "unit": "px"
+        },
         "$description": "桌面工作台里列表的最小宽度，和手机差不多宽。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog docs/object-forms.md，2026-10-31 用户定", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog docs/object-forms.md，2026-10-31 用户定",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       }
     },
     "motion": {
       "$type": "duration",
       "inline": {
-        "$value": { "value": 400, "unit": "ms" },
+        "$value": {
+          "value": 400,
+          "unit": "ms"
+        },
         "$description": "条在原地长成卡，或收回。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog design-contract object-motion.ts", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog design-contract object-motion.ts",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       },
       "land": {
-        "$value": { "value": 480, "unit": "ms" },
+        "$value": {
+          "value": 480,
+          "unit": "ms"
+        },
         "$description": "新东西飞到落点。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog design-contract object-motion.ts", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog design-contract object-motion.ts",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       },
       "side": {
-        "$value": { "value": 480, "unit": "ms" },
+        "$value": {
+          "value": 480,
+          "unit": "ms"
+        },
         "$description": "移到旁边栏。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog design-contract object-motion.ts", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog design-contract object-motion.ts",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       },
       "page": {
-        "$value": { "value": 540, "unit": "ms" },
+        "$value": {
+          "value": 540,
+          "unit": "ms"
+        },
         "$description": "长成整页。也是形态变换时长的上限。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog design-contract object-motion.ts", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog design-contract object-motion.ts",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       },
       "window": {
-        "$value": { "value": 480, "unit": "ms" },
+        "$value": {
+          "value": 480,
+          "unit": "ms"
+        },
         "$description": "变成窗。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog design-contract object-motion.ts", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog design-contract object-motion.ts",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       },
       "shelf": {
-        "$value": { "value": 460, "unit": "ms" },
+        "$value": {
+          "value": 460,
+          "unit": "ms"
+        },
         "$description": "窗收到架子上。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog design-contract object-motion.ts", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog design-contract object-motion.ts",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       },
       "close": {
-        "$value": { "value": 460, "unit": "ms" },
+        "$value": {
+          "value": 460,
+          "unit": "ms"
+        },
         "$description": "收回，飞回列表里的家。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog design-contract object-motion.ts", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog design-contract object-motion.ts",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       },
       "slide": {
-        "$value": { "value": 560, "unit": "ms" },
+        "$value": {
+          "value": 560,
+          "unit": "ms"
+        },
         "$description": "列表变化后，各行滑到新位置。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog design-contract object-motion.ts", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog design-contract object-motion.ts",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       },
       "done-pause": {
-        "$value": { "value": 450, "unit": "ms" },
+        "$value": {
+          "value": 450,
+          "unit": "ms"
+        },
         "$description": "勾掉任务后，先停这么久再滑走。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog design-contract object-motion.ts", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog design-contract object-motion.ts",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       },
       "damping": {
         "$type": "number",
         "$value": 0.8,
         "$description": "形态变换所用弹簧的阻尼比。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog design-contract object-motion.ts", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog design-contract object-motion.ts",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       },
       "easing-fallback": {
         "$type": "cubicBezier",
-        "$value": [0.2, 0.85, 0.2, 1],
+        "$value": [
+          0.2,
+          0.85,
+          0.2,
+          1
+        ],
         "$description": "浏览器不支持 linear() 时用的缓动。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog docs/object-forms.md", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog docs/object-forms.md",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       },
       "fade-out": {
         "$type": "number",
         "$value": 0.42,
         "$description": "旧内容淡出占总时长的比例。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog packages/ui/src/styles/morph.css", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog packages/ui/src/styles/morph.css",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       },
       "fade-in-delay": {
         "$type": "number",
         "$value": 0.08,
         "$description": "新内容开始淡入的时刻占总时长的比例。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog packages/ui/src/styles/morph.css", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog packages/ui/src/styles/morph.css",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       },
       "fade-in": {
         "$type": "number",
         "$value": 0.55,
         "$description": "新内容淡入占总时长的比例。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog packages/ui/src/styles/morph.css", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog packages/ui/src/styles/morph.css",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       },
       "title-fade": {
         "$type": "number",
         "$value": 0.6,
         "$description": "标题新旧交叉淡化占总时长的比例。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog packages/ui/src/styles/morph.css", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog packages/ui/src/styles/morph.css",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       },
       "landed": {
         "$type": "duration",
-        "$value": { "value": 900, "unit": "ms" },
+        "$value": {
+          "value": 900,
+          "unit": "ms"
+        },
         "$description": "东西落到位，或被带到眼前时，闪一下的时长。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog packages/ui/src/styles/morph.css", "platforms": ["web", "desktop"] } }
-      },
-      "editor-settle": {
-        "$type": "duration",
-        "$value": { "value": 220, "unit": "ms" },
-        "$description": "方向键换选中项时，选中停稳这么久才挂编辑器。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog docs/object-forms.md", "platforms": ["web", "desktop"] } }
-      }
-    },
-    "drag": {
-      "threshold": {
-        "$type": "dimension",
-        "$value": { "value": 4, "unit": "px" },
-        "$description": "按下后移动超过这个距离才算拖动。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog docs/object-forms.md", "platforms": ["web", "desktop"] } }
-      },
-      "long-press": {
-        "$type": "duration",
-        "$value": { "value": 330, "unit": "ms" },
-        "$description": "触屏宽窗里，按住条这么久才能拖动。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog docs/object-forms.md", "platforms": ["adaptive"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog packages/ui/src/styles/morph.css",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       }
     },
     "behind": {
@@ -316,19 +810,186 @@
         "$type": "number",
         "$value": 0.55,
         "$description": "列表里有原地卡时，其他条的不透明度。悬停或聚焦时恢复。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog docs/object-forms.md 的原型取值", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog docs/object-forms.md 的原型取值",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       },
       "page-opacity": {
         "$type": "number",
         "$value": 0.3,
         "$description": "页打开时，原页面的不透明度。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog docs/object-forms.md 的原型取值", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog docs/object-forms.md 的原型取值",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
       },
       "page-blur": {
         "$type": "dimension",
-        "$value": { "value": 1.5, "unit": "px" },
+        "$value": {
+          "value": 1.5,
+          "unit": "px"
+        },
         "$description": "页打开时，原页面的模糊半径。",
-        "$extensions": { "local.katachi": { "status": "draft", "source": "Kotolog docs/object-forms.md 的原型取值", "platforms": ["web", "desktop"] } }
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog docs/object-forms.md 的原型取值",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "interaction": {
+    "feedback": {
+      "toast": {
+        "$type": "duration",
+        "$value": {
+          "value": 4000,
+          "unit": "ms"
+        },
+        "$description": "不关键的短暂提示停留多久。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog packages/ui/src/components/feedback/FeedbackProvider.tsx"
+          }
+        }
+      },
+      "undo": {
+        "$type": "duration",
+        "$value": {
+          "value": 8000,
+          "unit": "ms"
+        },
+        "$description": "带撤销的提示停留多久。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog packages/ui/src/components/feedback/FeedbackProvider.tsx"
+          }
+        }
+      }
+    },
+    "save": {
+      "idle": {
+        "$type": "duration",
+        "$value": {
+          "value": 800,
+          "unit": "ms"
+        },
+        "$description": "停止输入多久后自动保存。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog apps/mobile/src/features/detail/useDetailEditor.ts"
+          }
+        }
+      }
+    },
+    "search": {
+      "debounce": {
+        "$type": "duration",
+        "$value": {
+          "value": 180,
+          "unit": "ms"
+        },
+        "$description": "输入停顿多久后才查询。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog packages/product-ui/src/components/app-shell/AppCommandPalette.tsx"
+          }
+        }
+      }
+    },
+    "loading": {
+      "delay": {
+        "$type": "duration",
+        "$value": {
+          "value": 300,
+          "unit": "ms"
+        },
+        "$description": "这么久内有结果就不显示加载指示。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "agent 提案，Kotolog 没有定义"
+          }
+        }
+      }
+    },
+    "select": {
+      "settle": {
+        "$type": "duration",
+        "$value": {
+          "value": 220,
+          "unit": "ms"
+        },
+        "$description": "方向键换选中项时，选中停稳这么久才加载详情。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog docs/object-forms.md",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
+      }
+    },
+    "drag": {
+      "threshold": {
+        "$type": "dimension",
+        "$value": {
+          "value": 4,
+          "unit": "px"
+        },
+        "$description": "按下后移动超过这个距离才算拖动。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog docs/object-forms.md",
+            "platforms": [
+              "web",
+              "desktop"
+            ]
+          }
+        }
+      },
+      "long-press": {
+        "$type": "duration",
+        "$value": {
+          "value": 330,
+          "unit": "ms"
+        },
+        "$description": "触屏宽窗里，按住条这么久才能拖动。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "Kotolog docs/object-forms.md",
+            "platforms": [
+              "adaptive"
+            ]
+          }
+        }
       }
     }
   }

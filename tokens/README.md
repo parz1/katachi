@@ -13,8 +13,9 @@
 | 分组 | 内容 | 状态 | 怎么对待 |
 |---|---|---|---|
 | `constraint` | 标准和平台规范给出的下限 | standard | 遵守 |
-| `object` | [条卡页窗](../patterns/object-forms.md)的尺寸、圆角和动效，来自 Kotolog 的原型 | draft | 用这个模式时用，不代表用户的偏好 |
+| `interaction` | [交互规范](../standards/interaction.md)里的时长和阈值，来自 Kotolog，加载延迟是提案 | draft | 默认照用 |
+| `object` | [条卡页窗](../patterns/object-forms.md)的尺寸、圆角和动效，来自 Kotolog 的原型 | draft | 用这个模式时用 |
 
-颜色、字体和间距还没有，因为还没定。需要时怎么办，见 [DESIGN.md](../DESIGN.md) 的「没定的」。
+颜色、字体和间距还没有，正在[样例页](../examples/sample/README.md)上比较 3 个方向。需要时怎么办，见 [DESIGN.md](../DESIGN.md) 的「没定的」。
 
 修改数值的步骤见 [tools/README.md](../tools/README.md)。

@@ -68,14 +68,24 @@
   --object-motion-title-fade: 0.6;
   /* 东西落到位，或被带到眼前时，闪一下的时长。 [draft] */
   --object-motion-landed: 900ms;
-  /* 方向键换选中项时，选中停稳这么久才挂编辑器。 [draft] */
-  --object-motion-editor-settle: 220ms;
-  /* 按下后移动超过这个距离才算拖动。 [draft] */
-  --object-drag-threshold: 4px;
   /* 列表里有原地卡时，其他条的不透明度。悬停或聚焦时恢复。 [draft] */
   --object-behind-others-opacity: 0.55;
   /* 页打开时，原页面的不透明度。 [draft] */
   --object-behind-page-opacity: 0.3;
   /* 页打开时，原页面的模糊半径。 [draft] */
   --object-behind-page-blur: 1.5px;
+  /* 不关键的短暂提示停留多久。 [draft] */
+  --interaction-feedback-toast: 4000ms;
+  /* 带撤销的提示停留多久。 [draft] */
+  --interaction-feedback-undo: 8000ms;
+  /* 停止输入多久后自动保存。 [draft] */
+  --interaction-save-idle: 800ms;
+  /* 输入停顿多久后才查询。 [draft] */
+  --interaction-search-debounce: 180ms;
+  /* 这么久内有结果就不显示加载指示。 [draft] */
+  --interaction-loading-delay: 300ms;
+  /* 方向键换选中项时，选中停稳这么久才加载详情。 [draft] */
+  --interaction-select-settle: 220ms;
+  /* 按下后移动超过这个距离才算拖动。 [draft] */
+  --interaction-drag-threshold: 4px;
 }

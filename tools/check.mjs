@@ -8,7 +8,7 @@ import { renderPage } from './viewer/build.mjs';
 
 const MB = 1024 * 1024;
 const LIMITS = { agentsLines: 5, claudeLines: 3, designLines: 120, patternLines: 180, warnBytes: 1 * MB, errorBytes: 10 * MB };
-const ROOT_ENTRIES = new Set(['AGENTS.md', 'CLAUDE.md', 'DESIGN.md', 'patterns', 'examples', 'tokens', 'platforms', 'tools', '.gitignore']);
+const ROOT_ENTRIES = new Set(['AGENTS.md', 'CLAUDE.md', 'DESIGN.md', 'standards', 'patterns', 'examples', 'tokens', 'platforms', 'tools', '.gitignore']);
 const ROOT_IGNORED = new Set(['.git', '.claude', '.DS_Store', 'node_modules']);
 const DESIGN_SECTIONS = ['按任务找', '定了的', '底线', '没定的，别自己决定', '交付前'];
 const PATTERN_STATUS = new Set(['draft', 'adopted', 'validated']);
@@ -49,7 +49,7 @@ function checkEntries() {
 function checkFindable() {
   const errors = [];
   const design = read('DESIGN.md');
-  const required = [...patternFiles, ...platformFiles, 'tokens/README.md', 'examples/README.md', 'tools/sediment.md'];
+  const required = ['standards/interaction.md', ...patternFiles, ...platformFiles, 'tokens/README.md', 'examples/README.md', 'tools/sediment.md'];
   for (const file of required) {
     if (!design.includes(`(${file})`)) errors.push(`DESIGN.md 没有链接 ${file}`);
   }
@@ -113,8 +113,8 @@ function checkLinks() {
 
 function checkPatterns() {
   const errors = [];
-  const states = findTable(read('DESIGN.md'), '状态')?.rows.map((row) => row[0]) ?? [];
-  if (!states.length) errors.push('DESIGN.md 缺少状态清单');
+  const states = findTable(read('standards/interaction.md'), '状态')?.rows.map((row) => row[0]) ?? [];
+  if (!states.length) errors.push('standards/interaction.md 缺少状态表');
   for (const file of patternFiles) {
     const raw = read(file);
     const text = stripFences(raw);
@@ -188,6 +188,7 @@ function checkViewer() {
   const title = (file) => read(file).match(/^# (.+)$/m)?.[1] ?? file;
   const expected = [
     title('DESIGN.md'),
+    title('standards/interaction.md'),
     ...patternFiles.map(title),
     ...subdirectories('examples').map((dir) => title(`${dir}/README.md`)),
     ...loadTokens().tokens.keys(),

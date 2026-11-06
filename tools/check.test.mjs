@@ -94,7 +94,9 @@ const cases = [
   ['pattern must answer every state', (d) => edit(d, PATTERN, (t) => t.replace('| 禁用 |', '| 停用 |')), '没有回答「禁用」'],
   ['pattern without a state section', (d) => edit(d, PATTERN, (t) => t.replace('## 状态\n', '## 情况\n')), '缺少「状态」一节'],
   ['pattern without a final check', (d) => edit(d, PATTERN, (t) => t.replace('## 做完检查', '## 收尾')), '缺少「做完检查」一节'],
-  ['state checklist removed from the entry', (d) => edit(d, 'DESIGN.md', (t) => t.replace('| 状态 | 要回答 |', '| 情况 | 要回答 |')), '缺少状态清单'],
+  ['state table removed from the standard', (d) => edit(d, 'standards/interaction.md', (t) => t.replace('| 状态 | 默认怎么做 |', '| 情况 | 默认怎么做 |')), '缺少状态表'],
+  ['standard not linked from the entry', (d) => edit(d, 'DESIGN.md', (t) => t.replaceAll('(standards/interaction.md)', '(examples/README.md)')), 'DESIGN.md 没有链接 standards/interaction.md'],
+  ['standard names a missing token', (d) => append(d, 'standards/interaction.md', '\n`interaction.nope`\n'), 'token 不存在：interaction.nope'],
 
   ['token for an unknown platform', (d) => tokens(d, (t) => { t.constraint.reflow.width.$extensions['local.katachi'].platforms = ['tv']; }), '未知平台 tv'],
   ['token platforms is not an array', (d) => tokens(d, (t) => { t.constraint.reflow.width.$extensions['local.katachi'].platforms = 'web'; }), 'platforms 应为'],
@@ -191,7 +193,8 @@ const webExpectations = [
   ['--constraint-target-ios-default', false],
   ['--constraint-window-width-medium-min', false],
   ['--constraint-terminal-columns-default', false],
-  ['--object-drag-long-press', false],
+  ['--interaction-drag-long-press', false],
+  ['--interaction-feedback-undo', true],
 ];
 for (const [name, shouldExist] of webExpectations) {
   if (webCss.includes(name) !== shouldExist) {
@@ -210,6 +213,8 @@ const viewerExpectations = [
   ['没定的，别自己决定', true],
   ['列表里的对象怎么打开', true],
   ['Kotolog：桌面工作台', true],
+  ['交互规范', true],
+  ['方向 B：线和密度', true],
   ['<img src="/examples/kotolog-object-forms/bar.png"', true],
   ['<span class="token-value">40px</span>', true],
   ['条卡页窗：最小参考实现', true],
