@@ -212,7 +212,7 @@ summary {
 .doc > p, .doc > ul, .doc > ol { max-width: 46em; }
 .doc > .meta { margin-top: 24px; }
 .doc td:first-child { min-width: 6em; }
-.token-value { color: var(--muted); font-size: 0.85em; white-space: nowrap; }
+.token-value { color: var(--muted); font-size: 0.85em; }
 
 .figures {
   display: grid;

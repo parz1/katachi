@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>文档：像书一样</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&display=swap">
+<link rel="stylesheet" href="../../tokens/build/tokens.css">
+<link rel="stylesheet" href="type.css">
+<link rel="stylesheet" href="sample.css">
+<style>
+/* 文字本身就是产品：宋体，标题居中，首行缩进两字，段间不留白，两端对齐，着重号。操作和比对的字不变。 */
+:root {
+  --font-title: var(--type-family-serif);
+  --font-read: var(--type-family-serif);
+  --font-title-en: var(--type-family-serif);
+  --font-read-en: var(--type-family-serif);
+}
+
+.article {
+  max-inline-size: calc(var(--type-measure-read-large) * var(--type-size-read-large));
+  margin-inline: auto;
+}
+
+.article h1,
+.article h2,
+.article .byline {
+  text-align: center;
+}
+
+.article .byline {
+  margin-block: 0.5rem 2.5rem;
+}
+
+.body .t-read {
+  font-size: var(--type-size-read-large);
+  line-height: var(--type-line-read-large);
+  max-inline-size: none;
+  text-align: justify;
+  text-indent: 2em;
+}
+
+.body > .t-read + .t-read {
+  margin-block-start: 0;
+}
+
+.body h2 {
+  margin-block: 2rem 1rem;
+}
+
+.body > .t-read + blockquote.t-read {
+  margin: 1rem 2em;
+  padding: 0;
+  border: 0;
+  font-size: var(--type-size-read);
+  line-height: var(--type-line-read);
+  text-indent: 0;
+}
+
+.body .t-read:lang(en) {
+  hyphens: auto;
+}
+
+.body strong {
+  font-weight: inherit;
+  text-emphasis: filled dot;
+  text-emphasis-position: under right;
+}
+</style>
+</head>
+<body data-fonts="Noto Serif SC">
+<script src="sample.js"></script>
+</body>
+</html>

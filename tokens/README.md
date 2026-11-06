@@ -13,7 +13,8 @@
 | 分组 | 内容 | 状态 | 怎么对待 |
 |---|---|---|---|
 | `constraint` | 标准和平台规范给出的下限 | standard | 遵守 |
+| `type` | [排版](../standards/typography.md)的字体、字号、行高、字重和行长 | draft | 默认照用，说明这是提案 |
 
-字体、字号、颜色和间距还没有，从[字体](../standards/typography.md)开始一步步定。需要时怎么办，见 [DESIGN.md](../DESIGN.md) 的「没定的」。
+颜色和间距还没有。需要时怎么办，见 [DESIGN.md](../DESIGN.md) 的「没定的」。
 
 修改数值的步骤见 [tools/README.md](../tools/README.md)。

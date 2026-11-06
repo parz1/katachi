@@ -83,7 +83,9 @@ function runnable(path, label, widths) {
 
 function doc(file, lib, widths) {
   const base = dirname(file);
-  const tokens = new Map(lib.tokens.map((item) => [item.name, item.value]));
+  // 字体列表太长，正文里只显示第一个，全部写在 Tokens 一节。
+  const brief = (value) => (value.length > 24 && value.includes(',') ? `${value.split(',')[0]} 等` : value);
+  const tokens = new Map(lib.tokens.map((item) => [item.name, brief(item.value)]));
   const embed = (target, label) => {
     const path = posix.normalize(posix.join(base, target));
     return path.startsWith('..') || !exists(path) ? null : runnable(path, label, widths);
@@ -215,7 +217,7 @@ function tokenSpecimens(lib) {
 
 function tokens(lib) {
   const rows = lib.tokens.map((item) => `<tr><th scope="row"><code>${h(item.name)}</code></th><td>${h(item.value)}</td><td>${h(item.description)}</td><td>${h(item.platforms.join('、') || '所有')}</td><td>${h(item.status)}</td><td>${h(item.source)}</td></tr>`).join('');
-  return section('tokens', `这些数值来自标准和平台规范，不是审美选择。字体、颜色和间距还没定。来源：${source('tokens/katachi.tokens.json')}。`,
+  return section('tokens', `constraint 来自标准和平台规范，不是审美选择。type 是排版的提案，状态是 draft。颜色和间距还没定。来源：${source('tokens/katachi.tokens.json')}。`,
     `${tokenSpecimens(lib)}<h3>全部 Tokens</h3>
     <div class="table-wrap" tabindex="0" role="region" aria-label="全部 Tokens"><table class="tokens-table"><thead><tr><th scope="col">名称</th><th scope="col">值</th><th scope="col">说明</th><th scope="col">平台</th><th scope="col">状态</th><th scope="col">来源</th></tr></thead><tbody>${rows}</tbody></table></div>`);
 }

@@ -10,4 +10,56 @@
   --constraint-target-web-min: 24px;
   /* 内容重排检查的视口宽度，此宽度下不应需要同时横向和纵向滚动。 [standard] */
   --constraint-reflow-width: 320px;
+  /* 默认字体，用系统字体。中文字体排在前面，破折号和省略号才有两个字宽。 [draft] */
+  --type-family-sans: "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans CJK SC", "Noto Sans SC", system-ui, sans-serif;
+  /* 比对和纯英文用。西文字体排在前面，数字才能等宽。 [draft] */
+  --type-family-latin: "Segoe UI", system-ui, Roboto, "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans CJK SC", "Noto Sans SC", sans-serif;
+  /* 代码和校验值。 [draft] */
+  --type-family-mono: ui-monospace, "SF Mono", Menlo, Consolas, "Noto Sans Mono CJK SC", monospace;
+  /* 文字本身就是产品时用。没有加载网页字体时回退到系统宋体。 [draft] */
+  --type-family-serif: "Noto Serif SC", "Noto Serif CJK SC", "Source Han Serif SC", "Songti SC", STSong, serif;
+  /* 有人在说话时用。没有加载网页字体时回退到系统楷体。 [draft] */
+  --type-family-kai: "LXGW WenKai", "LXGW WenKai Screen", "Kaiti SC", STKaiti, KaiTi, serif;
+  /* 页面主标题，一页一个。 [draft] */
+  --type-size-title-l: 2rem;
+  /* 区块标题。 [draft] */
+  --type-size-title-m: 1.5rem;
+  /* 小节标题、弹层标题。 [draft] */
+  --type-size-title-s: 1.25rem;
+  /* 连续阅读的正文。 [draft] */
+  --type-size-read: 1rem;
+  /* 宋体或楷体的正文。它们的字面比黑体小，要大一点才读得一样舒服。 [draft] */
+  --type-size-read-large: 1.125rem;
+  /* 操作和扫读：按钮、标签、输入框、菜单、列表、表格。 [draft] */
+  --type-size-ui: 0.875rem;
+  /* 触屏上的 ui。也避免 iOS Safari 在输入框获得焦点时放大页面。 [draft] */
+  --type-size-ui-touch: 1rem;
+  /* 时间、来源这类次要说明。中文不要再小。 [draft] */
+  --type-size-caption: 0.75rem;
+  /* 和同名字号配对。字号和行高都是偶数像素，上下留白才是整数像素。 [draft] */
+  --type-line-title-l: 2.75rem;
+  /* 和同名字号配对。 [draft] */
+  --type-line-title-m: 2rem;
+  /* 和同名字号配对。 [draft] */
+  --type-line-title-s: 1.75rem;
+  /* 和同名字号配对，1.75 倍。汉字撑满方框，行距要比英文大。 [draft] */
+  --type-line-read: 1.75rem;
+  /* 和同名字号配对。 [draft] */
+  --type-line-read-large: 2rem;
+  /* 和同名字号配对。 [draft] */
+  --type-line-ui: 1.375rem;
+  /* 和同名字号配对。 [draft] */
+  --type-line-ui-touch: 1.5rem;
+  /* 和同名字号配对。 [draft] */
+  --type-line-caption: 1.125rem;
+  /* 正文和大多数界面文字。 [draft] */
+  --type-weight-regular: 400;
+  /* 标题和强调。只用这两档：苹方没有 700，微软雅黑没有 500。 [draft] */
+  --type-weight-strong: 600;
+  /* 连续阅读时每行最多多少个汉字。 [draft] */
+  --type-measure-read: 40;
+  /* 纯英文段落的行宽，单位是字号的倍数，约等于每行 76 个字符。汉字一个字就是一倍字号，同样的宽度放不下 80 个字符以内的英文。 [draft] */
+  --type-measure-read-en: 36;
+  /* 宋体或楷体正文每行最多多少个汉字。字号更大，每行要更短。 [draft] */
+  --type-measure-read-large: 34;
 }

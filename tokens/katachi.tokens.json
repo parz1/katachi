@@ -1,5 +1,5 @@
 {
-  "$description": "katachi 设计数值的唯一来源，格式为 DTCG Format Module 2025.10。目前只有来自标准和平台规范的数值，没有任何审美选择。",
+  "$description": "katachi 设计数值的唯一来源，格式为 DTCG Format Module 2025.10。constraint 来自标准和平台规范；type 是排版的提案，用户还没确认。",
   "constraint": {
     "$description": "外部标准或平台规范给出的数值，用于检查和判断，不代表审美偏好。",
     "contrast": {
@@ -283,6 +283,464 @@
             "source": "VT100 的默认尺寸，许多终端沿用（事实标准）",
             "platforms": [
               "terminal"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "type": {
+    "$description": "排版的提案，规则见 standards/typography.md。样式按读法分，字体不止一种。",
+    "family": {
+      "$type": "fontFamily",
+      "sans": {
+        "$value": [
+          "PingFang SC",
+          "Microsoft YaHei UI",
+          "Microsoft YaHei",
+          "Noto Sans CJK SC",
+          "Noto Sans SC",
+          "system-ui",
+          "sans-serif"
+        ],
+        "$description": "默认字体，用系统字体。中文字体排在前面，破折号和省略号才有两个字宽。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "提案，见 standards/typography.md",
+            "platforms": [
+              "web"
+            ]
+          }
+        }
+      },
+      "latin": {
+        "$value": [
+          "Segoe UI",
+          "system-ui",
+          "Roboto",
+          "PingFang SC",
+          "Microsoft YaHei UI",
+          "Microsoft YaHei",
+          "Noto Sans CJK SC",
+          "Noto Sans SC",
+          "sans-serif"
+        ],
+        "$description": "比对和纯英文用。西文字体排在前面，数字才能等宽。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "提案，见 standards/typography.md",
+            "platforms": [
+              "web"
+            ]
+          }
+        }
+      },
+      "mono": {
+        "$value": [
+          "ui-monospace",
+          "SF Mono",
+          "Menlo",
+          "Consolas",
+          "Noto Sans Mono CJK SC",
+          "monospace"
+        ],
+        "$description": "代码和校验值。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "提案，见 standards/typography.md",
+            "platforms": [
+              "web"
+            ]
+          }
+        }
+      },
+      "serif": {
+        "$value": [
+          "Noto Serif SC",
+          "Noto Serif CJK SC",
+          "Source Han Serif SC",
+          "Songti SC",
+          "STSong",
+          "serif"
+        ],
+        "$description": "文字本身就是产品时用。没有加载网页字体时回退到系统宋体。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "提案，见 standards/typography.md",
+            "platforms": [
+              "web"
+            ]
+          }
+        }
+      },
+      "kai": {
+        "$value": [
+          "LXGW WenKai",
+          "LXGW WenKai Screen",
+          "Kaiti SC",
+          "STKaiti",
+          "KaiTi",
+          "serif"
+        ],
+        "$description": "有人在说话时用。没有加载网页字体时回退到系统楷体。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "提案，见 standards/typography.md",
+            "platforms": [
+              "web"
+            ]
+          }
+        }
+      }
+    },
+    "size": {
+      "$type": "dimension",
+      "title-l": {
+        "$value": {
+          "value": 2,
+          "unit": "rem"
+        },
+        "$description": "页面主标题，一页一个。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "提案，见 standards/typography.md",
+            "platforms": [
+              "web"
+            ]
+          }
+        }
+      },
+      "title-m": {
+        "$value": {
+          "value": 1.5,
+          "unit": "rem"
+        },
+        "$description": "区块标题。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "提案，见 standards/typography.md",
+            "platforms": [
+              "web"
+            ]
+          }
+        }
+      },
+      "title-s": {
+        "$value": {
+          "value": 1.25,
+          "unit": "rem"
+        },
+        "$description": "小节标题、弹层标题。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "提案，见 standards/typography.md",
+            "platforms": [
+              "web"
+            ]
+          }
+        }
+      },
+      "read": {
+        "$value": {
+          "value": 1,
+          "unit": "rem"
+        },
+        "$description": "连续阅读的正文。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "提案，见 standards/typography.md",
+            "platforms": [
+              "web"
+            ]
+          }
+        }
+      },
+      "read-large": {
+        "$value": {
+          "value": 1.125,
+          "unit": "rem"
+        },
+        "$description": "宋体或楷体的正文。它们的字面比黑体小，要大一点才读得一样舒服。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "提案，见 standards/typography.md",
+            "platforms": [
+              "web"
+            ]
+          }
+        }
+      },
+      "ui": {
+        "$value": {
+          "value": 0.875,
+          "unit": "rem"
+        },
+        "$description": "操作和扫读：按钮、标签、输入框、菜单、列表、表格。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "提案，见 standards/typography.md",
+            "platforms": [
+              "web"
+            ]
+          }
+        }
+      },
+      "ui-touch": {
+        "$value": {
+          "value": 1,
+          "unit": "rem"
+        },
+        "$description": "触屏上的 ui。也避免 iOS Safari 在输入框获得焦点时放大页面。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "提案，见 standards/typography.md",
+            "platforms": [
+              "web"
+            ]
+          }
+        }
+      },
+      "caption": {
+        "$value": {
+          "value": 0.75,
+          "unit": "rem"
+        },
+        "$description": "时间、来源这类次要说明。中文不要再小。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "提案，见 standards/typography.md",
+            "platforms": [
+              "web"
+            ]
+          }
+        }
+      }
+    },
+    "line": {
+      "$type": "dimension",
+      "title-l": {
+        "$value": {
+          "value": 2.75,
+          "unit": "rem"
+        },
+        "$description": "和同名字号配对。字号和行高都是偶数像素，上下留白才是整数像素。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "提案，见 standards/typography.md",
+            "platforms": [
+              "web"
+            ]
+          }
+        }
+      },
+      "title-m": {
+        "$value": {
+          "value": 2,
+          "unit": "rem"
+        },
+        "$description": "和同名字号配对。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "提案，见 standards/typography.md",
+            "platforms": [
+              "web"
+            ]
+          }
+        }
+      },
+      "title-s": {
+        "$value": {
+          "value": 1.75,
+          "unit": "rem"
+        },
+        "$description": "和同名字号配对。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "提案，见 standards/typography.md",
+            "platforms": [
+              "web"
+            ]
+          }
+        }
+      },
+      "read": {
+        "$value": {
+          "value": 1.75,
+          "unit": "rem"
+        },
+        "$description": "和同名字号配对，1.75 倍。汉字撑满方框，行距要比英文大。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "提案，见 standards/typography.md",
+            "platforms": [
+              "web"
+            ]
+          }
+        }
+      },
+      "read-large": {
+        "$value": {
+          "value": 2,
+          "unit": "rem"
+        },
+        "$description": "和同名字号配对。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "提案，见 standards/typography.md",
+            "platforms": [
+              "web"
+            ]
+          }
+        }
+      },
+      "ui": {
+        "$value": {
+          "value": 1.375,
+          "unit": "rem"
+        },
+        "$description": "和同名字号配对。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "提案，见 standards/typography.md",
+            "platforms": [
+              "web"
+            ]
+          }
+        }
+      },
+      "ui-touch": {
+        "$value": {
+          "value": 1.5,
+          "unit": "rem"
+        },
+        "$description": "和同名字号配对。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "提案，见 standards/typography.md",
+            "platforms": [
+              "web"
+            ]
+          }
+        }
+      },
+      "caption": {
+        "$value": {
+          "value": 1.125,
+          "unit": "rem"
+        },
+        "$description": "和同名字号配对。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "提案，见 standards/typography.md",
+            "platforms": [
+              "web"
+            ]
+          }
+        }
+      }
+    },
+    "weight": {
+      "$type": "fontWeight",
+      "regular": {
+        "$value": 400,
+        "$description": "正文和大多数界面文字。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "提案，见 standards/typography.md",
+            "platforms": [
+              "web",
+              "desktop",
+              "mobile",
+              "adaptive"
+            ]
+          }
+        }
+      },
+      "strong": {
+        "$value": 600,
+        "$description": "标题和强调。只用这两档：苹方没有 700，微软雅黑没有 500。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "提案，见 standards/typography.md",
+            "platforms": [
+              "web",
+              "desktop",
+              "mobile",
+              "adaptive"
+            ]
+          }
+        }
+      }
+    },
+    "measure": {
+      "$type": "number",
+      "read": {
+        "$value": 40,
+        "$description": "连续阅读时每行最多多少个汉字。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "WCAG 2.2 SC 1.4.8 (AAA)：CJK 每行不超过 40 字",
+            "platforms": [
+              "web",
+              "desktop",
+              "mobile",
+              "adaptive"
+            ]
+          }
+        }
+      },
+      "read-en": {
+        "$value": 36,
+        "$description": "纯英文段落的行宽，单位是字号的倍数，约等于每行 76 个字符。汉字一个字就是一倍字号，同样的宽度放不下 80 个字符以内的英文。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "WCAG 2.2 SC 1.4.8 (AAA)：每行不超过 80 个字符",
+            "platforms": [
+              "web",
+              "desktop",
+              "mobile",
+              "adaptive"
+            ]
+          }
+        }
+      },
+      "read-large": {
+        "$value": 34,
+        "$description": "宋体或楷体正文每行最多多少个汉字。字号更大，每行要更短。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "提案，见 standards/typography.md",
+            "platforms": [
+              "web",
+              "desktop",
+              "mobile",
+              "adaptive"
             ]
           }
         }

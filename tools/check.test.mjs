@@ -203,6 +203,7 @@ const webExpectations = [
   ['--constraint-target-ios-default', false],
   ['--constraint-window-width-medium-min', false],
   ['--constraint-terminal-columns-default', false],
+  ['--type-size-read', true],
 ];
 for (const [name, shouldExist] of webExpectations) {
   if (webCss.includes(name) !== shouldExist) {
@@ -222,7 +223,7 @@ const viewerExpectations = [
   ['探针', true],
   ['<img src="/patterns/probe/good.png"', true],
   ['<span class="token-value">4.5</span>', true],
-  ['方案 B：宋体标题', true],
+  ['文档：像书一样', true],
   ['srcdoc="', true],
   ['&lt;base href=&quot;/standards/typography/&quot;&gt;', true],
   ['&lt;img src=x onerror', true],

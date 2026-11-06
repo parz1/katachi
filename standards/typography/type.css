@@ -1,0 +1,134 @@
+/* katachi 排版的 Web 实现，规则见 ../typography.md。先引入 tokens/build/tokens.css。
+   这里只管字，可以整个复制进产品。颜色和间距还没定，不在这里。 */
+
+:root {
+  --font-title: var(--type-family-sans);
+  --font-read: var(--type-family-sans);
+  --font-ui: var(--type-family-sans);
+  --font-data: var(--type-family-latin);
+  --font-title-en: var(--type-family-latin);
+  --font-read-en: var(--type-family-latin);
+  --font-ui-en: var(--type-family-latin);
+  font-synthesis: none;
+  text-autospace: normal;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* 纯英文的内容标 lang="en"，换成西文字体在前的字体。 */
+:lang(en) {
+  --font-title: var(--font-title-en);
+  --font-read: var(--font-read-en);
+  --font-ui: var(--font-ui-en);
+}
+
+body,
+.t-ui {
+  font-family: var(--font-ui);
+  font-size: var(--type-size-ui);
+  font-weight: var(--type-weight-regular);
+  line-height: var(--type-line-ui);
+}
+
+body {
+  overflow-wrap: anywhere;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+strong {
+  font-weight: var(--type-weight-strong);
+}
+
+.t-title-l,
+.t-title-m,
+.t-title-s {
+  font-family: var(--font-title);
+  font-weight: var(--type-weight-strong);
+  text-wrap: balance;
+}
+
+.t-title-l {
+  font-size: var(--type-size-title-l);
+  line-height: var(--type-line-title-l);
+}
+
+.t-title-m {
+  font-size: var(--type-size-title-m);
+  line-height: var(--type-line-title-m);
+}
+
+.t-title-s {
+  font-size: var(--type-size-title-s);
+  line-height: var(--type-line-title-s);
+}
+
+.t-read {
+  font-family: var(--font-read);
+  font-size: var(--type-size-read);
+  font-weight: var(--type-weight-regular);
+  line-height: var(--type-line-read);
+  max-inline-size: calc(var(--type-measure-read) * 1em);
+  text-wrap: pretty;
+}
+
+.t-read:lang(en) {
+  max-inline-size: calc(var(--type-measure-read-en) * 1em);
+}
+
+.t-read-large {
+  font-family: var(--font-read);
+  font-size: var(--type-size-read-large);
+  font-weight: var(--type-weight-regular);
+  line-height: var(--type-line-read-large);
+  max-inline-size: calc(var(--type-measure-read-large) * 1em);
+  text-wrap: pretty;
+}
+
+.t-caption {
+  font-family: var(--font-ui);
+  font-size: var(--type-size-caption);
+  font-weight: var(--type-weight-regular);
+  line-height: var(--type-line-caption);
+}
+
+.t-data {
+  font-family: var(--font-data);
+  font-size: var(--type-size-ui);
+  font-variant-numeric: tabular-nums;
+  line-height: var(--type-line-ui);
+}
+
+/* 行内的等宽字不能撑开行高。 */
+.t-mono {
+  font-family: var(--type-family-mono);
+  line-height: 1;
+}
+
+/* 窗口窄于 constraint.window.width-medium-min 时，标题降一档。 */
+@media (max-width: 599.98px) {
+  .t-title-l {
+    font-size: var(--type-size-title-m);
+    line-height: var(--type-line-title-m);
+  }
+
+  .t-title-m {
+    font-size: var(--type-size-title-s);
+    line-height: var(--type-line-title-s);
+  }
+}
+
+/* 触屏上操作的字放大。 */
+@media (pointer: coarse) {
+  body,
+  .t-ui,
+  .t-data {
+    font-size: var(--type-size-ui-touch);
+    line-height: var(--type-line-ui-touch);
+  }
+}

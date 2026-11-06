@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>说话：带着语气</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/lxgwwenkai-regular.css">
+<link rel="stylesheet" href="../../tokens/build/tokens.css">
+<link rel="stylesheet" href="type.css">
+<link rel="stylesheet" href="sample.css">
+<style>
+/* 有人在说话：楷体，不用粗体，引文放大，署名落在文末，强调用下划线。操作和比对的字不变。 */
+:root {
+  --font-title: var(--type-family-kai);
+  --font-read: var(--type-family-kai);
+  --font-title-en: var(--type-family-kai);
+  --font-read-en: var(--type-family-kai);
+}
+
+.article {
+  display: flex;
+  flex-direction: column;
+  max-inline-size: calc(var(--type-measure-read-large) * var(--type-size-read-large));
+  margin-inline: auto;
+}
+
+.article h1,
+.article h2 {
+  font-weight: var(--type-weight-regular);
+}
+
+.article h1 {
+  margin-block-end: 1.5rem;
+}
+
+.article .body {
+  order: 1;
+}
+
+.article .byline {
+  order: 2;
+  margin-block: 2rem 0;
+  font-family: var(--font-read);
+  font-size: var(--type-size-read);
+  line-height: var(--type-line-read);
+  text-align: end;
+}
+
+.body .t-read {
+  font-size: var(--type-size-read-large);
+  line-height: var(--type-line-read-large);
+  max-inline-size: none;
+}
+
+.body > .t-read + .t-read {
+  margin-block-start: 1.25rem;
+}
+
+.body h2 {
+  margin-block: 2.5rem 1rem;
+  font-size: var(--type-size-title-m);
+  line-height: var(--type-line-title-m);
+}
+
+.body > .t-read + blockquote.t-read {
+  margin-block: 1.75rem;
+  padding: 0;
+  border: 0;
+  font-size: var(--type-size-title-s);
+  line-height: var(--type-line-read-large);
+}
+
+.body strong {
+  font-weight: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+</style>
+</head>
+<body data-fonts="LXGW WenKai">
+<script src="sample.js"></script>
+</body>
+</html>
