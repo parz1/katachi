@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { OUTPUT } from '../build-tokens.mjs';
 import { exists, read } from '../library.mjs';
 import { readLibrary } from './data.mjs';
-import { escapeHtml as h, inline, markdown } from './markdown.mjs';
+import { escapeHtml as h, inline, markdown, swatch } from './markdown.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const SECTIONS = [
@@ -216,8 +216,8 @@ function tokenSpecimens(lib) {
 }
 
 function tokens(lib) {
-  const rows = lib.tokens.map((item) => `<tr><th scope="row"><code>${h(item.name)}</code></th><td>${h(item.value)}</td><td>${h(item.description)}</td><td>${h(item.platforms.join('、') || '所有')}</td><td>${h(item.status)}</td><td>${h(item.source)}</td></tr>`).join('');
-  return section('tokens', `constraint 来自标准和平台规范，不是审美选择。type 是排版的提案，状态是 draft。颜色和间距还没定。来源：${source('tokens/katachi.tokens.json')}。`,
+  const rows = lib.tokens.map((item) => `<tr><th scope="row"><code>${h(item.name)}</code></th><td>${swatch(item.value)}${h(item.value)}</td><td>${h(item.description)}</td><td>${h(item.platforms.join('、') || '所有')}</td><td>${h(item.status)}</td><td>${h(item.source)}</td></tr>`).join('');
+  return section('tokens', `constraint 来自标准和平台规范，不是审美选择。type 和 color 是提案，状态是 draft。间距还没定。来源：${source('tokens/katachi.tokens.json')}。`,
     `${tokenSpecimens(lib)}<h3>全部 Tokens</h3>
     <div class="table-wrap" tabindex="0" role="region" aria-label="全部 Tokens"><table class="tokens-table"><thead><tr><th scope="col">名称</th><th scope="col">值</th><th scope="col">说明</th><th scope="col">平台</th><th scope="col">状态</th><th scope="col">来源</th></tr></thead><tbody>${rows}</tbody></table></div>`);
 }

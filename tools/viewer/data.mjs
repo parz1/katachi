@@ -84,7 +84,8 @@ export function readLibrary() {
     git: readGit(),
     tokens: readTokens(),
     platforms: readPlatforms(),
-    standards: pagesIn('standards'),
+    // 规范按 DESIGN.md 里第一次出现的先后排列，这也是从基础往上建的顺序。
+    standards: pagesIn('standards').sort((a, b) => read('DESIGN.md').indexOf(`(${a})`) - read('DESIGN.md').indexOf(`(${b})`)),
     patterns: pagesIn('patterns'),
     examples: readExamples(),
     contentStress: JSON.parse(read('standards/content-stress.json')),

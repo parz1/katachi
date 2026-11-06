@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN" data-color="paper">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>纸和墨：表面和文字带色调</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&display=swap">
+<link rel="stylesheet" href="../../tokens/build/tokens.css">
+<link rel="stylesheet" href="../typography/type.css">
+<link rel="stylesheet" href="color.css">
+<link rel="stylesheet" href="../typography/sample.css">
+<link rel="stylesheet" href="sample.css">
+<style>
+/* 文字本身就是产品时用，所以配「像书一样」的排法。操作和比对的字不变。 */
+:root {
+  --font-title: var(--type-family-serif);
+  --font-read: var(--type-family-serif);
+}
+
+.article {
+  max-inline-size: calc(var(--type-measure-read-large) * var(--type-size-read-large));
+  margin-inline: auto;
+}
+
+.article h1,
+.article .byline {
+  text-align: center;
+}
+
+.article .byline {
+  margin-block: 0.5rem 2.5rem;
+}
+
+.body .t-read {
+  font-size: var(--type-size-read-large);
+  line-height: var(--type-line-read-large);
+  max-inline-size: none;
+  text-align: justify;
+  text-indent: 2em;
+}
+
+.body > .t-read + .t-read {
+  margin-block-start: 0;
+}
+
+.body > .t-read + blockquote.t-read {
+  margin: 1rem 2em;
+  padding: 0;
+  border: 0;
+  font-size: var(--type-size-read);
+  line-height: var(--type-line-read);
+  text-indent: 0;
+}
+</style>
+</head>
+<body data-fonts="Noto Serif SC">
+<script src="sample.js"></script>
+</body>
+</html>

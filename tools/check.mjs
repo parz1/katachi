@@ -77,6 +77,106 @@ function checkTokens() {
   return { errors, note: `${tokens.size} 个 token` };
 }
 
+// 颜色：OKLCH 转到线性 sRGB，再按 WCAG 算对比度。
+function linearSrgb([L, C, H]) {
+  const angle = (H * Math.PI) / 180;
+  const a = C * Math.cos(angle);
+  const b = C * Math.sin(angle);
+  const l = (L + 0.3963377774 * a + 0.2158037573 * b) ** 3;
+  const m = (L - 0.1055613458 * a - 0.0638541728 * b) ** 3;
+  const s = (L - 0.0894841775 * a - 1.2914855480 * b) ** 3;
+  return [
+    4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
+    -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
+    -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s,
+  ];
+}
+const clampChannels = (rgb) => rgb.map((value) => Math.min(1, Math.max(0, value)));
+const contrastRatio = (one, other) => {
+  const luminance = (rgb) => {
+    const [r, g, b] = clampChannels(rgb);
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  };
+  const [light, dark] = [luminance(one), luminance(other)].sort((x, y) => y - x);
+  return (light + 0.05) / (dark + 0.05);
+};
+const hexOf = (rgb) => `#${clampChannels(rgb).map((value) => {
+  const encoded = value <= 0.0031308 ? 12.92 * value : 1.055 * value ** (1 / 2.4) - 0.055;
+  return Math.round(encoded * 255).toString(16).padStart(2, '0');
+}).join('')}`;
+
+function checkColors() {
+  const { tokens } = loadTokens();
+  const errors = [];
+  const valueOf = (name) => {
+    let value = tokens.get(name)?.node.$value;
+    while (typeof value === 'string') value = tokens.get(value.slice(1, -1))?.node.$value;
+    return value;
+  };
+  const isColor = (token) => (token.node.$type ?? token.inheritedType) === 'color';
+  for (const [name, token] of tokens) {
+    if (!isColor(token) || typeof token.node.$value === 'string') continue;
+    const { colorSpace, components, hex } = token.node.$value;
+    if (colorSpace !== 'oklch') {
+      errors.push(`${name}：颜色要用 oklch，校验脚本才算得了对比度`);
+      continue;
+    }
+    const rgb = linearSrgb(components);
+    if (rgb.some((value) => value < -0.0005 || value > 1.0005)) errors.push(`${name}：超出 sRGB`);
+    else if (hex && hex !== hexOf(rgb)) errors.push(`${name}：hex 是 ${hex}，components 算出来是 ${hexOf(rgb)}`);
+  }
+
+  // 每个声明了 contrast 的角色，在默认和纸和墨两组、浅色和深色下都要过下限。
+  const floor = (name) => tokens.get(`constraint.contrast.${name}`)?.node.$value;
+  let pairs = 0;
+  for (const [base, overlay] of [['color.light', 'color.light'], ['color.dark', 'color.dark'], ['color.light', 'color.paper.light'], ['color.dark', 'color.paper.dark']]) {
+    const role = (name) => valueOf(tokens.has(`${overlay}.${name}`) ? `${overlay}.${name}` : `${base}.${name}`);
+    for (const [name, token] of tokens) {
+      const spec = token.node.$extensions?.['local.katachi']?.contrast;
+      if (!spec || !name.startsWith(`${base}.`)) continue;
+      const foreground = name.slice(base.length + 1);
+      for (const background of spec.against) {
+        pairs += 1;
+        const front = role(foreground);
+        const back = role(background);
+        if (!front || !back) {
+          errors.push(`${overlay}.${foreground}：要比较的 ${background} 不存在`);
+          continue;
+        }
+        const ratio = contrastRatio(linearSrgb(front.components), linearSrgb(back.components));
+        if (ratio < floor(spec.floor)) errors.push(`${overlay}.${foreground} 在 ${background} 上的对比度是 ${ratio.toFixed(2)}，低于 ${floor(spec.floor)}`);
+      }
+    }
+  }
+
+  // 强调色的配方：360 个色相都要过下限，选哪个都行。
+  for (const mode of ['light', 'dark']) {
+    const lightness = tokens.get(`color.recipe.${mode}-l`)?.node.$value;
+    const chroma = tokens.get(`color.recipe.${mode}-c`)?.node.$value;
+    if (lightness === undefined || chroma === undefined) continue;
+    const surfaces = ['surface', 'surface-subtle'].map((name) => linearSrgb(valueOf(`color.${mode}.${name}`).components));
+    for (let hue = 0; hue < 360; hue += 1) {
+      const accent = linearSrgb([lightness, chroma, hue]);
+      const worst = Math.min(...surfaces.map((surface) => contrastRatio(accent, surface)));
+      if (worst < floor('text')) {
+        errors.push(`color.recipe.${mode}：色相 ${hue} 的对比度是 ${worst.toFixed(2)}，低于 ${floor('text')}`);
+        break;
+      }
+    }
+  }
+
+  // tokens 和 Web 实现不能脱节。
+  if (exists('standards/color/color.css')) {
+    const css = read('standards/color/color.css');
+    for (const name of tokens.keys()) {
+      if (/^color\.(light|dark|paper\.light|paper\.dark|recipe)\./.test(name) && !css.includes(`--${name.replaceAll('.', '-')}`)) {
+        errors.push(`standards/color/color.css 没有用到 ${name}`);
+      }
+    }
+  }
+  return { errors, note: `${pairs} 组配对，360 个色相` };
+}
+
 function checkTokenReferences() {
   const { tokens } = loadTokens();
   const names = [...tokens.keys()];
@@ -221,6 +321,7 @@ const checks = [
   ['入口', checkEntries],
   ['能从入口找到', checkFindable],
   ['tokens', checkTokens],
+  ['颜色对比度', checkColors],
   ['token 引用', checkTokenReferences],
   ['Markdown 链接', checkLinks],
   ['规范和模式', checkPatterns],

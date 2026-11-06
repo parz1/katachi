@@ -213,6 +213,7 @@ summary {
 .doc > .meta { margin-top: 24px; }
 .doc td:first-child { min-width: 6em; }
 .token-value { color: var(--muted); font-size: 0.85em; }
+.swatch { display: inline-block; width: 0.9em; height: 0.9em; margin-right: 0.3em; border: 1px solid var(--line-strong); border-radius: 2px; vertical-align: -0.05em; }
 
 .figures {
   display: grid;

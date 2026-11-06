@@ -1,4 +1,5 @@
-// 同一份内容在终端里的样子。字体和字号是用户的，层次只能靠粗体、暗淡、缩进、空行和位置。
+// 同一份内容在终端里的样子。字体、字号和配色是用户的，层次只能靠粗体、暗淡、缩进、空行和位置。
+// 颜色只用 16 色的名字，不指定具体颜色，也不设背景。去掉颜色，文字本身也说得清。
 // 用法：node standards/typography/terminal.mjs [--no-color]
 // 窗口宽度取实际列数；输出不是终端时取 COLUMNS，默认 constraint.terminal.columns-default。
 
@@ -7,6 +8,8 @@ const paint = (open, close) => (text) => (color ? `\x1b[${open}m${text}\x1b[${cl
 const bold = paint(1, 22);
 const dim = paint(2, 22);
 const red = paint(31, 39);
+const yellow = paint(33, 39);
+const green = paint(32, 39);
 const limit = Math.min(process.stdout.columns || Number(process.env.COLUMNS) || 80, 80);
 
 // 按显示列宽算，不按字符数。中日韩字符和全角标点占 2 列。
@@ -69,7 +72,8 @@ for (const [title, meta] of [
   ['Supplementary Notes on Revising the Cross-Department Collaboration Process and Related Approval Permissions for Q4', 'Alexandria Montgomery-Featherstonehaugh · Nov 5, 2026, 2:30 PM'],
   ['2026年11月产品评审_最终版_final_v3_修订_不要再改了.pdf', '阿依古丽·买买提艾力 · 3 minutes ago'],
 ]) {
-  block(title, undefined, '  ');
+  const selected = title.startsWith('关于调整');
+  wrap(title, limit - 2).forEach((line, index) => out(selected ? bold(`${index ? '  ' : '> '}${line}`) : `  ${line}`));
   block(meta, dim, '  ');
 }
 out();
@@ -103,6 +107,11 @@ if (first >= 16) {
 }
 out();
 
-// 操作：不只靠颜色，文字本身说清发生了什么。
-block('无法保存：网络连接已断开。你的修改仍保留在本页，恢复连接后可以重试。', red);
+// 状态：前面的词说清发生了什么，颜色只是加强。
+const status = (word, text, style) => {
+  wrap(text, limit - 6).forEach((line, index) => out(style(`${index ? '      ' : `${word}  `}${line}`)));
+};
+status('完成', '发布成功，共 12 项。', green);
+status('警告', '存储空间只剩 5%，同步可能变慢。', yellow);
+status('错误', '无法保存：网络连接已断开。你的修改仍保留在本页，恢复连接后可以重试。', red);
 block('要重试吗？[Y/n]');

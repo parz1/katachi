@@ -39,7 +39,7 @@ node tools/check.mjs
 ## 改内容
 
 - **修订规范**：按 [sediment.md](sediment.md)。
-- **数值**：改 `tokens/katachi.tokens.json`，运行 `node tools/build-tokens.mjs`，再检查。不要手改 `tokens/build/`。每个 token 要有 `$description`，以及 `$extensions` 里 `local.katachi` 的 `status` 和 `source`；只适用于部分平台时写 `platforms`。`status` 是 standard（来自标准）、draft（用户还没确认）、adopted（用户确认）、validated（第二个产品也用过）。
+- **数值**：改 `tokens/katachi.tokens.json`，运行 `node tools/build-tokens.mjs`，再检查。不要手改 `tokens/build/`。每个 token 要有 `$description`，以及 `$extensions` 里 `local.katachi` 的 `status` 和 `source`；只适用于部分平台时写 `platforms`。颜色 token 的 `contrast` 写明要和哪些角色比、用哪条下限，校验脚本会算；`hex` 要和 `components` 一致。`status` 是 standard（来自标准）、draft（用户还没确认）、adopted（用户确认）、validated（第二个产品也用过）。
 - **根目录**：只放 `AGENTS.md`、`CLAUDE.md`、`DESIGN.md`、`standards/`、`tokens/`、`platforms/`、`tools/`，有内容后再加 `patterns/` 和 `examples/`。校验脚本会拦住其他东西。
 - **入口**：规范、模式和平台都要从 `DESIGN.md` 能找到，示例要从 `examples/README.md` 能找到，否则 agent 看不到。
 

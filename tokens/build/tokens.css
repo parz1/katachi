@@ -62,4 +62,124 @@
   --type-measure-read-en: 36;
   /* 宋体或楷体正文每行最多多少个汉字。字号更大，每行要更短。 [draft] */
   --type-measure-read-large: 34;
+  /* 页面背景。 [draft] */
+  --color-light-surface: oklch(1 0 0);
+  /* 选中和当前项的底色、代码块、表头。 [draft] */
+  --color-light-surface-subtle: oklch(0.97 0 0);
+  /* 弹层和浮起的面。 [draft] */
+  --color-light-surface-raised: oklch(1 0 0);
+  /* 正文和标题。 [draft] */
+  --color-light-ink: oklch(0.22 0 0);
+  /* 次要文字：时间、来源、提示。 [draft] */
+  --color-light-ink-muted: oklch(0.47 0 0);
+  /* 禁用的文字。WCAG 1.4.3 不要求对比度，但要读得出。 [draft] */
+  --color-light-ink-disabled: oklch(0.63 0 0);
+  /* 分割线，只是装饰，不靠它传达信息。 [draft] */
+  --color-light-line: oklch(0.89 0 0);
+  /* 控件的边界：输入框、次要按钮。 [draft] */
+  --color-light-control: oklch(0.6 0 0);
+  /* 能点的东西：链接、主按钮、复选框。默认等于 ink，不用色相。 [draft] */
+  --color-light-accent: var(--color-light-ink);
+  /* 主按钮上的文字。 [draft] */
+  --color-light-on-accent: var(--color-light-surface);
+  /* 焦点环。默认等于 ink。 [draft] */
+  --color-light-focus: var(--color-light-ink);
+  /* 错误和危险。要同时有文字或图标。 [draft] */
+  --color-light-error: oklch(0.5 0.18 27);
+  /* 错误提示的底色。 [draft] */
+  --color-light-error-subtle: oklch(0.955 0.018 27);
+  /* 警告。要同时有文字或图标。 [draft] */
+  --color-light-warning: oklch(0.5 0.1 75);
+  /* 警告提示的底色。 [draft] */
+  --color-light-warning-subtle: oklch(0.96 0.03 85);
+  /* 成功。要同时有文字或图标。 [draft] */
+  --color-light-success: oklch(0.5 0.12 150);
+  /* 成功提示的底色。 [draft] */
+  --color-light-success-subtle: oklch(0.96 0.03 150);
+  /* 页面背景。 [draft] */
+  --color-dark-surface: oklch(0.2 0 0);
+  /* 选中和当前项的底色、代码块、表头。 [draft] */
+  --color-dark-surface-subtle: oklch(0.25 0 0);
+  /* 弹层和浮起的面。 [draft] */
+  --color-dark-surface-raised: oklch(0.25 0 0);
+  /* 正文和标题。 [draft] */
+  --color-dark-ink: oklch(0.93 0 0);
+  /* 次要文字：时间、来源、提示。 [draft] */
+  --color-dark-ink-muted: oklch(0.75 0 0);
+  /* 禁用的文字。WCAG 1.4.3 不要求对比度，但要读得出。 [draft] */
+  --color-dark-ink-disabled: oklch(0.55 0 0);
+  /* 分割线，只是装饰，不靠它传达信息。 [draft] */
+  --color-dark-line: oklch(0.32 0 0);
+  /* 控件的边界：输入框、次要按钮。 [draft] */
+  --color-dark-control: oklch(0.62 0 0);
+  /* 能点的东西：链接、主按钮、复选框。默认等于 ink，不用色相。 [draft] */
+  --color-dark-accent: var(--color-dark-ink);
+  /* 主按钮上的文字。 [draft] */
+  --color-dark-on-accent: var(--color-dark-surface);
+  /* 焦点环。默认等于 ink。 [draft] */
+  --color-dark-focus: var(--color-dark-ink);
+  /* 错误和危险。要同时有文字或图标。 [draft] */
+  --color-dark-error: oklch(0.76 0.13 25);
+  /* 错误提示的底色。 [draft] */
+  --color-dark-error-subtle: oklch(0.27 0.05 27);
+  /* 警告。要同时有文字或图标。 [draft] */
+  --color-dark-warning: oklch(0.82 0.12 85);
+  /* 警告提示的底色。 [draft] */
+  --color-dark-warning-subtle: oklch(0.27 0.035 85);
+  /* 成功。要同时有文字或图标。 [draft] */
+  --color-dark-success: oklch(0.79 0.14 150);
+  /* 成功提示的底色。 [draft] */
+  --color-dark-success-subtle: oklch(0.27 0.04 150);
+  /* 纸面：页面背景。 [draft] */
+  --color-paper-light-surface: oklch(0.972 0.007 85);
+  /* 纸面：选中和当前项的底色、代码块、表头。 [draft] */
+  --color-paper-light-surface-subtle: oklch(0.945 0.009 85);
+  /* 纸面：弹层和浮起的面。 [draft] */
+  --color-paper-light-surface-raised: oklch(0.985 0.005 85);
+  /* 墨：正文和标题。 [draft] */
+  --color-paper-light-ink: oklch(0.25 0.012 60);
+  /* 墨：次要文字。 [draft] */
+  --color-paper-light-ink-muted: oklch(0.46 0.014 60);
+  /* 墨：禁用的文字。 [draft] */
+  --color-paper-light-ink-disabled: oklch(0.63 0.01 60);
+  /* 纸面上的分割线。 [draft] */
+  --color-paper-light-line: oklch(0.875 0.012 85);
+  /* 纸面上控件的边界。 [draft] */
+  --color-paper-light-control: oklch(0.58 0.012 70);
+  /* 纸面上能点的东西，等于墨。 [draft] */
+  --color-paper-light-accent: var(--color-paper-light-ink);
+  /* 纸面上主按钮的文字。 [draft] */
+  --color-paper-light-on-accent: var(--color-paper-light-surface);
+  /* 纸面上的焦点环。 [draft] */
+  --color-paper-light-focus: var(--color-paper-light-ink);
+  /* 纸面：页面背景。 [draft] */
+  --color-paper-dark-surface: oklch(0.21 0.006 70);
+  /* 纸面：选中和当前项的底色、代码块、表头。 [draft] */
+  --color-paper-dark-surface-subtle: oklch(0.26 0.007 70);
+  /* 纸面：弹层和浮起的面。 [draft] */
+  --color-paper-dark-surface-raised: oklch(0.26 0.007 70);
+  /* 墨：正文和标题。 [draft] */
+  --color-paper-dark-ink: oklch(0.9 0.012 85);
+  /* 墨：次要文字。 [draft] */
+  --color-paper-dark-ink-muted: oklch(0.75 0.014 85);
+  /* 墨：禁用的文字。 [draft] */
+  --color-paper-dark-ink-disabled: oklch(0.56 0.01 80);
+  /* 纸面上的分割线。 [draft] */
+  --color-paper-dark-line: oklch(0.33 0.008 70);
+  /* 纸面上控件的边界。 [draft] */
+  --color-paper-dark-control: oklch(0.62 0.01 80);
+  /* 纸面上能点的东西，等于墨。 [draft] */
+  --color-paper-dark-accent: var(--color-paper-dark-ink);
+  /* 纸面上主按钮的文字。 [draft] */
+  --color-paper-dark-on-accent: var(--color-paper-dark-surface);
+  /* 纸面上的焦点环。 [draft] */
+  --color-paper-dark-focus: var(--color-paper-dark-ink);
+  /* 浅色模式下强调色的明度。 [draft] */
+  --color-recipe-light-l: 0.5;
+  /* 浅色模式下强调色的彩度。 [draft] */
+  --color-recipe-light-c: 0.13;
+  /* 深色模式下强调色的明度。 [draft] */
+  --color-recipe-dark-l: 0.78;
+  /* 深色模式下强调色的彩度。 [draft] */
+  --color-recipe-dark-c: 0.11;
 }

@@ -72,7 +72,8 @@ const cases = [
   ['hand-edited generated CSS', (d) => append(d, 'tokens/build/tokens.css', '/* edit */\n'), '已过期或被手改'],
   ['missing generated CSS', (d) => rmSync(join(d, 'tokens/build/tokens.css')), '已过期或被手改'],
   ['source changed without rebuild', (d) => tokens(d, (t) => { t.constraint.contrast.text.$value = 7; }), '已过期或被手改'],
-  ['source changed and rebuilt', (d) => { tokens(d, (t) => { t.constraint.contrast.text.$value = 7; }); build(d); }, 'pass'],
+  ['source changed and rebuilt', (d) => { tokens(d, (t) => { t.constraint.target['web-min'].$value.value = 28; }); build(d); }, 'pass'],
+  ['raising a contrast floor checks the colours again', (d) => { tokens(d, (t) => { t.constraint.contrast.text.$value = 7; }); build(d); }, '对比度是'],
   ['token without status', (d) => tokens(d, (t) => { delete t.constraint.contrast.text.$extensions['local.katachi'].status; }), 'status'],
   ['token without source', (d) => tokens(d, (t) => { delete t.constraint.contrast.text.$extensions['local.katachi'].source; }), 'source'],
   ['token without description', (d) => tokens(d, (t) => { delete t.constraint.contrast.text.$description; }), '$description'],
@@ -108,6 +109,14 @@ const cases = [
   ['standard with an unknown status', (d) => edit(d, STANDARD, (t) => t.replace('- 状态：draft', '- 状态：done')), '状态只能是'],
   ['standard without a source', (d) => edit(d, STANDARD, (t) => t.replace(/^- 来源：.*$/m, '- 来源：')), '缺少「来源」'],
   ['standard not linked from the entry', (d) => edit(d, 'DESIGN.md', (t) => t.replaceAll('(standards/typography.md)', '(tokens/README.md)')), 'DESIGN.md 没有链接 standards/typography.md'],
+
+  ['colour below the floor', (d) => tokens(d, (t) => { t.color.light['ink-muted'].$value.components[0] = 0.8; }), '对比度是'],
+  ['paper colour below the floor', (d) => tokens(d, (t) => { t.color.paper.dark.ink.$value.components[0] = 0.3; }), 'color.paper.dark.ink'],
+  ['hex out of step with components', (d) => tokens(d, (t) => { t.color.light.ink.$value.components[0] = 0.25; }), 'components 算出来是'],
+  ['colour outside sRGB', (d) => tokens(d, (t) => { t.color.light['success-subtle'].$value.components = [0.96, 0.2, 150]; }), '超出 sRGB'],
+  ['contrast against a missing role', (d) => tokens(d, (t) => { t.color.light.ink.$extensions['local.katachi'].contrast.against.push('nope'); }), '要比较的 nope 不存在'],
+  ['accent recipe fails for some hue', (d) => tokens(d, (t) => { t.color.recipe['light-l'].$value = 0.75; }), '色相'],
+  ['colour not in the implementation', (d) => tokens(d, (t) => { t.color.light.extra = { $value: { colorSpace: 'oklch', components: [0.5, 0, 0] }, $description: 'x', $extensions: META }; }), '没有用到 color.light.extra'],
 
   ['token for an unknown platform', (d) => tokens(d, (t) => { t.constraint.reflow.width.$extensions['local.katachi'].platforms = ['tv']; }), '未知平台 tv'],
   ['token platforms is not an array', (d) => tokens(d, (t) => { t.constraint.reflow.width.$extensions['local.katachi'].platforms = 'web'; }), 'platforms 应为'],
@@ -204,6 +213,7 @@ const webExpectations = [
   ['--constraint-window-width-medium-min', false],
   ['--constraint-terminal-columns-default', false],
   ['--type-size-read', true],
+  ['--color-light-ink', true],
 ];
 for (const [name, shouldExist] of webExpectations) {
   if (webCss.includes(name) !== shouldExist) {
@@ -224,6 +234,8 @@ const viewerExpectations = [
   ['<img src="/patterns/probe/good.png"', true],
   ['<span class="token-value">4.5</span>', true],
   ['文档：像书一样', true],
+  ['强调色：能点的才有颜色', true],
+  ['class="swatch"', true],
   ['srcdoc="', true],
   ['&lt;base href=&quot;/standards/typography/&quot;&gt;', true],
   ['&lt;img src=x onerror', true],

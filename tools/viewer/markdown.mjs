@@ -24,6 +24,11 @@ function image(alt, target, base) {
   return src ? `<img src="${src}" alt="${escapeHtml(alt)}" loading="lazy">` : escapeHtml(alt);
 }
 
+// 颜色值前面放一个小色块。值来自仓库自己的 tokens。
+export const swatch = (value) => (/^(oklch|color|var)\(/.test(value)
+  ? `<span class="swatch" style="background:${escapeHtml(value)}"></span>`
+  : '');
+
 // context 可以只写 base 字符串。tokens 是 token 名到值的 Map：有它时，代码样式的 token 名后面会显示当前的值。
 const contextOf = (context) => (typeof context === 'string' ? { base: context } : context);
 
@@ -36,7 +41,7 @@ export function inline(text, context = '') {
     html += escapeHtml(text.slice(last, match.index));
     if (match[1] !== undefined) {
       html += `<code>${escapeHtml(match[1])}</code>`;
-      if (tokens?.has(match[1])) html += ` <span class="token-value">${escapeHtml(tokens.get(match[1]))}</span>`;
+      if (tokens?.has(match[1])) html += ` <span class="token-value">${swatch(tokens.get(match[1]))}${escapeHtml(tokens.get(match[1]))}</span>`;
     } else if (match[2] !== undefined) html += `<strong>${inline(match[2], context)}</strong>`;
     else if (match[4] !== undefined) html += image(match[3], match[4], base);
     else html += link(inline(match[5], context), match[6], base);
