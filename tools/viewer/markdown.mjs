@@ -24,10 +24,30 @@ function image(alt, target, base) {
   return src ? `<img src="${src}" alt="${escapeHtml(alt)}" loading="lazy">` : escapeHtml(alt);
 }
 
-// 颜色值前面放一个小色块。值来自仓库自己的 tokens。
-export const swatch = (value) => (/^(oklch|color|var)\(/.test(value)
-  ? `<span class="swatch" style="background:${escapeHtml(value)}"></span>`
-  : '');
+// light-dark(a, b) 拆成 [a, b]。
+function modes(value) {
+  const inner = value.slice('light-dark('.length, -1);
+  let depth = 0;
+  for (let index = 0; index < inner.length; index += 1) {
+    if (inner[index] === '(') depth += 1;
+    if (inner[index] === ')') depth -= 1;
+    if (inner[index] === ',' && depth === 0) return [inner.slice(0, index).trim(), inner.slice(index + 1).trim()];
+  }
+  return [value];
+}
+
+// 颜色值前面放小色块，两种模式各一个。值来自仓库自己的 tokens。
+export function swatch(value) {
+  const one = (color) => `<span class="swatch" style="background:${escapeHtml(color)}"></span>`;
+  if (value.startsWith('light-dark(')) return modes(value).map(one).join('');
+  return /^(oklch|color|var)\(/.test(value) ? one(value) : '';
+}
+
+// 正文里只放短的：两种模式的颜色只显示色块，字体列表只显示第一个。全部写在 Tokens 一节。
+export function briefValue(value) {
+  if (value.startsWith('light-dark(')) return '';
+  return value.length > 24 && value.includes(',') ? `${value.split(',')[0]} 等` : value;
+}
 
 // context 可以只写 base 字符串。tokens 是 token 名到值的 Map：有它时，代码样式的 token 名后面会显示当前的值。
 const contextOf = (context) => (typeof context === 'string' ? { base: context } : context);
@@ -41,7 +61,7 @@ export function inline(text, context = '') {
     html += escapeHtml(text.slice(last, match.index));
     if (match[1] !== undefined) {
       html += `<code>${escapeHtml(match[1])}</code>`;
-      if (tokens?.has(match[1])) html += ` <span class="token-value">${swatch(tokens.get(match[1]))}${escapeHtml(tokens.get(match[1]))}</span>`;
+      if (tokens?.has(match[1])) html += ` <span class="token-value">${swatch(tokens.get(match[1]))}${escapeHtml(briefValue(tokens.get(match[1])))}</span>`;
     } else if (match[2] !== undefined) html += `<strong>${inline(match[2], context)}</strong>`;
     else if (match[4] !== undefined) html += image(match[3], match[4], base);
     else html += link(inline(match[5], context), match[6], base);

@@ -115,9 +115,9 @@ button {
 }
 
 button.primary {
-  border-color: var(--color-accent);
-  background: var(--color-accent);
-  color: var(--color-on-accent);
+  border-color: var(--color-accent-solid);
+  background: var(--color-accent-solid);
+  color: var(--color-on-solid);
   font-weight: var(--type-weight-strong);
 }
 

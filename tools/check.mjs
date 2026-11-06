@@ -105,76 +105,124 @@ const hexOf = (rgb) => `#${clampChannels(rgb).map((value) => {
   return Math.round(encoded * 255).toString(16).padStart(2, '0');
 }).join('')}`;
 
+// 12 级的约定：哪一级要过哪条下限。
+const STEP_RULES = [
+  { steps: [11, 12], floor: 'text', against: [1, 2, 3, 4, 5] },
+  { steps: [7, 8], floor: 'non-text', against: [1, 2, 3] },
+];
+const SOLID_STEPS = [9, 10];
+
 function checkColors() {
   const { tokens } = loadTokens();
   const errors = [];
-  const valueOf = (name) => {
-    let value = tokens.get(name)?.node.$value;
-    while (typeof value === 'string') value = tokens.get(value.slice(1, -1))?.node.$value;
-    return value;
-  };
-  const isColor = (token) => (token.node.$type ?? token.inheritedType) === 'color';
-  for (const [name, token] of tokens) {
-    if (!isColor(token) || typeof token.node.$value === 'string') continue;
-    const { colorSpace, components, hex } = token.node.$value;
-    if (colorSpace !== 'oklch') {
-      errors.push(`${name}：颜色要用 oklch，校验脚本才算得了对比度`);
-      continue;
-    }
-    const rgb = linearSrgb(components);
-    if (rgb.some((value) => value < -0.0005 || value > 1.0005)) errors.push(`${name}：超出 sRGB`);
-    else if (hex && hex !== hexOf(rgb)) errors.push(`${name}：hex 是 ${hex}，components 算出来是 ${hexOf(rgb)}`);
-  }
-
-  // 每个声明了 contrast 的角色，在默认和纸和墨两组、浅色和深色下都要过下限。
+  const metaOf = (name) => tokens.get(name)?.node.$extensions?.['local.katachi'] ?? {};
   const floor = (name) => tokens.get(`constraint.contrast.${name}`)?.node.$value;
+  const isColor = (token) => (token.node.$type ?? token.inheritedType) === 'color';
+  const scaleTokens = [...tokens.keys()].filter((name) => /^color\.[a-z]+\.\d+$/.test(name));
+  const scales = [...new Set(scaleTokens.map((name) => name.split('.')[1]))];
+
+  // 数值本身：要在 sRGB 里，hex 要和 components 一致。色相会变的那条只看默认色相的 hex。
+  for (const [name, token] of tokens) {
+    if (!isColor(token)) continue;
+    for (const [mode, value] of [['浅色', token.node.$value], ['深色', metaOf(name).dark]]) {
+      if (value === undefined || typeof value === 'string') continue;
+      if (value.colorSpace !== 'oklch') {
+        errors.push(`${name}：颜色要用 oklch，校验脚本才算得了对比度`);
+        continue;
+      }
+      const rgb = linearSrgb(value.components);
+      if (!metaOf(name).hue && rgb.some((channel) => channel < -0.0005 || channel > 1.0005)) errors.push(`${name}（${mode}）：超出 sRGB`);
+      else if (value.hex && value.hex !== hexOf(rgb)) errors.push(`${name}（${mode}）：hex 是 ${value.hex}，components 算出来是 ${hexOf(rgb)}`);
+    }
+  }
+
+  // 取一个角色或一级在某种情况下的颜色。纸和墨把灰换成纸；选了强调色时角色改指向 accent；hue 是要试的色相。
+  const pick = (name, mode, { paper = false, accent = false, hue } = {}) => {
+    let current = name;
+    for (let hops = 0; hops < 20; hops += 1) {
+      const token = tokens.get(current);
+      if (!token) return null;
+      const meta = metaOf(current);
+      let raw = token.node.$value;
+      if (mode === 'dark' && meta.dark !== undefined) raw = meta.dark;
+      if (accent && meta.accent !== undefined) raw = meta.accent;
+      if (typeof raw === 'string') {
+        current = raw.slice(1, -1);
+        continue;
+      }
+      if (paper && current.startsWith('color.gray.')) {
+        current = current.replace('color.gray.', 'color.paper.');
+        paper = false;
+        continue;
+      }
+      const [L, C, H] = raw.components;
+      return linearSrgb([L, C, meta.hue && hue !== undefined ? hue : H]);
+    }
+    return null;
+  };
+
   let pairs = 0;
-  for (const [base, overlay] of [['color.light', 'color.light'], ['color.dark', 'color.dark'], ['color.light', 'color.paper.light'], ['color.dark', 'color.paper.dark']]) {
-    const role = (name) => valueOf(tokens.has(`${overlay}.${name}`) ? `${overlay}.${name}` : `${base}.${name}`);
-    for (const [name, token] of tokens) {
-      const spec = token.node.$extensions?.['local.katachi']?.contrast;
-      if (!spec || !name.startsWith(`${base}.`)) continue;
-      const foreground = name.slice(base.length + 1);
-      for (const background of spec.against) {
-        pairs += 1;
-        const front = role(foreground);
-        const back = role(background);
-        if (!front || !back) {
-          errors.push(`${overlay}.${foreground}：要比较的 ${background} 不存在`);
-          continue;
-        }
-        const ratio = contrastRatio(linearSrgb(front.components), linearSrgb(back.components));
-        if (ratio < floor(spec.floor)) errors.push(`${overlay}.${foreground} 在 ${background} 上的对比度是 ${ratio.toFixed(2)}，低于 ${floor(spec.floor)}`);
-      }
+  const seen = new Set();
+  const compare = (front, back, floorName, label, options, mode) => {
+    pairs += 1;
+    const one = pick(front, mode, options);
+    const other = pick(back, mode, options);
+    if (!one || !other) {
+      errors.push(`${front}：要比较的 ${one ? back : front} 不存在`);
+      return;
     }
-  }
+    const ratio = contrastRatio(one, other);
+    if (ratio >= floor(floorName)) return;
+    const key = `${front}|${back}|${label}`;
+    if (seen.has(key)) return;
+    seen.add(key);
+    errors.push(`${front} 在 ${back} 上（${label}）的对比度是 ${ratio.toFixed(2)}，低于 ${floor(floorName)}`);
+  };
 
-  // 强调色的配方：360 个色相都要过下限，选哪个都行。
+  // 情况：默认、纸和墨，浅色和深色；选了强调色时 360 个色相都试。
+  const HUES = Array.from({ length: 360 }, (_, hue) => hue);
+  const situations = [];
   for (const mode of ['light', 'dark']) {
-    const lightness = tokens.get(`color.recipe.${mode}-l`)?.node.$value;
-    const chroma = tokens.get(`color.recipe.${mode}-c`)?.node.$value;
-    if (lightness === undefined || chroma === undefined) continue;
-    const surfaces = ['surface', 'surface-subtle'].map((name) => linearSrgb(valueOf(`color.${mode}.${name}`).components));
-    for (let hue = 0; hue < 360; hue += 1) {
-      const accent = linearSrgb([lightness, chroma, hue]);
-      const worst = Math.min(...surfaces.map((surface) => contrastRatio(accent, surface)));
-      if (worst < floor('text')) {
-        errors.push(`color.recipe.${mode}：色相 ${hue} 的对比度是 ${worst.toFixed(2)}，低于 ${floor('text')}`);
-        break;
+    const label = mode === 'light' ? '浅色' : '深色';
+    situations.push({ mode, label, options: {} });
+    situations.push({ mode, label: `纸和墨，${label}`, options: { paper: true } });
+    for (const hue of HUES) situations.push({ mode, label: `色相 ${hue}，${label}`, options: { accent: true, hue } });
+  }
+  const withContrast = [...tokens.keys()].filter((name) => metaOf(name).contrast);
+  for (const { mode, label, options } of situations) {
+    for (const name of withContrast) {
+      for (const spec of metaOf(name).contrast) {
+        for (const background of spec.against) compare(name, background, spec.floor, label, options, mode);
       }
     }
   }
 
-  // tokens 和 Web 实现不能脱节。
+  // 12 级的约定：每条色阶都要过，强调色那条 360 个色相都要过。
+  for (const scale of scales) {
+    for (const mode of ['light', 'dark']) {
+      const label = mode === 'light' ? '浅色' : '深色';
+      const variants = scale === 'hue' ? HUES.map((hue) => ({ hue, text: `色相 ${hue}，${label}` })) : [{ text: label }];
+      for (const { hue, text } of variants) {
+        const options = { hue, paper: scale === 'paper' };
+        for (const rule of STEP_RULES) {
+          for (const step of rule.steps) {
+            for (const base of rule.against) compare(`color.${scale}.${step}`, `color.${scale}.${base}`, rule.floor, text, options, mode);
+          }
+        }
+        for (const step of SOLID_STEPS) compare('color.on-solid', `color.${scale}.${step}`, 'text', text, options, mode);
+      }
+    }
+  }
+
+  // 纸和墨要把灰的 12 级都换掉，不然会混着用。
   if (exists('standards/color/color.css')) {
     const css = read('standards/color/color.css');
-    for (const name of tokens.keys()) {
-      if (/^color\.(light|dark|paper\.light|paper\.dark|recipe)\./.test(name) && !css.includes(`--${name.replaceAll('.', '-')}`)) {
-        errors.push(`standards/color/color.css 没有用到 ${name}`);
-      }
+    for (const name of scaleTokens.filter((token) => token.startsWith('color.gray.'))) {
+      const step = name.split('.')[2];
+      if (!css.includes(`--color-gray-${step}: var(--color-paper-${step});`)) errors.push(`standards/color/color.css 没有把 ${name} 换成纸和墨的值`);
     }
   }
-  return { errors, note: `${pairs} 组配对，360 个色相` };
+  return { errors, note: `${scales.length} 条色阶，${pairs} 组配对` };
 }
 
 function checkTokenReferences() {

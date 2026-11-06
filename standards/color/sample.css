@@ -50,12 +50,48 @@
   border-radius: 4px;
 }
 
-input[aria-invalid="true"] {
-  border-color: var(--color-error);
+input:hover {
+  border-color: var(--color-control-hover);
 }
 
-button:disabled {
+input[aria-invalid="true"] {
+  border-color: var(--color-error-line);
+}
+
+button:hover,
+button.is-hover {
+  border-color: var(--color-control-hover);
+  background: var(--color-fill);
+}
+
+button:active,
+button.is-active {
+  background: var(--color-fill-hover);
+}
+
+button.primary:hover,
+button.primary.is-hover {
+  border-color: var(--color-accent-solid-hover);
+  background: var(--color-accent-solid-hover);
+}
+
+button.danger {
+  border-color: var(--color-error-solid);
+  background: var(--color-error-solid);
+  color: var(--color-on-solid);
+  font-weight: var(--type-weight-strong);
+}
+
+button.danger:hover,
+button.danger.is-hover {
+  border-color: var(--color-error-solid-hover);
+  background: var(--color-error-solid-hover);
+}
+
+button:disabled,
+button:disabled:hover {
   border-color: var(--color-line);
+  background: transparent;
   color: var(--color-ink-disabled);
   cursor: not-allowed;
 }
@@ -63,6 +99,10 @@ button:disabled {
 .show-focus {
   outline: 2px solid var(--color-focus);
   outline-offset: 2px;
+}
+
+.states-title {
+  margin-block: 1rem 0;
 }
 
 .tabs {
@@ -82,7 +122,7 @@ button:disabled {
   color: var(--color-ink);
   font-weight: var(--type-weight-strong);
   text-decoration: underline;
-  text-decoration-color: var(--color-accent);
+  text-decoration-color: var(--color-accent-solid);
   text-decoration-thickness: 2px;
   text-underline-offset: 0.4em;
 }
@@ -91,11 +131,16 @@ button:disabled {
   padding-inline: calc(0.5rem + 3px) 0.5rem;
 }
 
+.rows li:hover {
+  background: var(--color-fill);
+}
+
 /* 选中靠底色和竖线一起认出来，灰阶和强制颜色模式下竖线还在。 */
-.rows li[aria-current] {
+.rows li[aria-current],
+.rows li[aria-current]:hover {
   padding-inline-start: 0.5rem;
-  border-inline-start: 3px solid var(--color-accent);
-  background: var(--color-surface-subtle);
+  border-inline-start: 3px solid var(--color-accent-solid);
+  background: var(--color-selected);
 }
 
 .code {
@@ -108,4 +153,56 @@ button:disabled {
 
 .check {
   margin-block-start: 0.75rem;
+}
+
+/* 色阶页。 */
+.scale-wrap {
+  overflow-x: auto;
+}
+
+.scale {
+  min-inline-size: 38rem;
+  table-layout: fixed;
+}
+
+.scale th,
+.scale td {
+  padding: 0.25rem 0.125rem;
+  border: 0;
+  text-align: center;
+  vertical-align: top;
+}
+
+.scale .name {
+  inline-size: 4.5rem;
+  padding-inline-end: 0.5rem;
+  text-align: start;
+}
+
+.chip {
+  display: block;
+  block-size: 2.5rem;
+  border: 1px solid var(--color-line);
+  border-radius: 4px;
+}
+
+.ratio {
+  display: block;
+  margin-block-start: 0.125rem;
+  color: var(--color-ink-muted);
+  white-space: nowrap;
+}
+
+.ratio.fail {
+  color: var(--color-error);
+  font-weight: var(--type-weight-strong);
+}
+
+.tally {
+  margin-block-start: 0.75rem;
+}
+
+.legend {
+  margin-block-start: 0.5rem;
+  color: var(--color-ink-muted);
 }

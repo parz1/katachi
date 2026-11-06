@@ -110,13 +110,15 @@ const cases = [
   ['standard without a source', (d) => edit(d, STANDARD, (t) => t.replace(/^- 来源：.*$/m, '- 来源：')), '缺少「来源」'],
   ['standard not linked from the entry', (d) => edit(d, 'DESIGN.md', (t) => t.replaceAll('(standards/typography.md)', '(tokens/README.md)')), 'DESIGN.md 没有链接 standards/typography.md'],
 
-  ['colour below the floor', (d) => tokens(d, (t) => { t.color.light['ink-muted'].$value.components[0] = 0.8; }), '对比度是'],
-  ['paper colour below the floor', (d) => tokens(d, (t) => { t.color.paper.dark.ink.$value.components[0] = 0.3; }), 'color.paper.dark.ink'],
-  ['hex out of step with components', (d) => tokens(d, (t) => { t.color.light.ink.$value.components[0] = 0.25; }), 'components 算出来是'],
-  ['colour outside sRGB', (d) => tokens(d, (t) => { t.color.light['success-subtle'].$value.components = [0.96, 0.2, 150]; }), '超出 sRGB'],
-  ['contrast against a missing role', (d) => tokens(d, (t) => { t.color.light.ink.$extensions['local.katachi'].contrast.against.push('nope'); }), '要比较的 nope 不存在'],
-  ['accent recipe fails for some hue', (d) => tokens(d, (t) => { t.color.recipe['light-l'].$value = 0.75; }), '色相'],
-  ['colour not in the implementation', (d) => tokens(d, (t) => { t.color.light.extra = { $value: { colorSpace: 'oklch', components: [0.5, 0, 0] }, $description: 'x', $extensions: META }; }), '没有用到 color.light.extra'],
+  ['colour below the floor', (d) => tokens(d, (t) => { t.color.gray['11'].$value.components[0] = 0.8; }), '对比度是'],
+  ['dark colour below the floor', (d) => tokens(d, (t) => { t.color.gray['11'].$extensions['local.katachi'].dark.components[0] = 0.3; }), '深色'],
+  ['paper colour below the floor', (d) => tokens(d, (t) => { t.color.paper['12'].$extensions['local.katachi'].dark.components[0] = 0.3; }), '纸和墨'],
+  ['hex out of step with components', (d) => tokens(d, (t) => { t.color.gray['12'].$value.components[0] = 0.25; }), 'components 算出来是'],
+  ['colour outside sRGB', (d) => tokens(d, (t) => { t.color.green['3'].$value.components = [0.96, 0.2, 150]; }), '超出 sRGB'],
+  ['contrast against a missing role', (d) => tokens(d, (t) => { t.color.ink.$extensions['local.katachi'].contrast[0].against.push('color.nope'); }), '要比较的 color.nope 不存在'],
+  ['hue step fails for some hue', (d) => tokens(d, (t) => { t.color.hue['11'].$value.components[0] = 0.75; }), '色相'],
+  ['dark alias to a missing token', (d) => tokens(d, (t) => { t.color['surface-raised'].$extensions['local.katachi'].dark = '{color.nope}'; }), '引用的 token 不存在'],
+  ['paper does not replace every gray step', (d) => edit(d, 'standards/color/color.css', (t) => t.replace('--color-gray-7: var(--color-paper-7);', '')), '没有把 color.gray.7 换成'],
 
   ['token for an unknown platform', (d) => tokens(d, (t) => { t.constraint.reflow.width.$extensions['local.katachi'].platforms = ['tv']; }), '未知平台 tv'],
   ['token platforms is not an array', (d) => tokens(d, (t) => { t.constraint.reflow.width.$extensions['local.katachi'].platforms = 'web'; }), 'platforms 应为'],
@@ -180,6 +182,10 @@ tokens(dir, (t) => {
     bold: { $type: 'fontWeight', $value: 'semi-bold', ...meta },
     w: { $type: 'fontWeight', $value: 450, ...meta },
     ease: { $type: 'cubicBezier', $value: [0.2, 0, 0, 1], ...meta },
+    modes: { $type: 'color', $value: { colorSpace: 'oklch', components: [0.5, 0, 0] }, $description: 'x', $extensions: { 'local.katachi': { status: 'draft', source: 'test', dark: { colorSpace: 'oklch', components: [0.8, 0, 0] } } } },
+    aliased: { $value: '{sample.srgb}', $description: 'x', $extensions: { 'local.katachi': { status: 'draft', source: 'test', dark: '{sample.alias}' } } },
+    hued: { $type: 'color', $value: { colorSpace: 'oklch', components: [0.5, 0.1, 255] }, $description: 'x', $extensions: { 'local.katachi': { status: 'draft', source: 'test', hue: '--accent-hue' } } },
+    remapped: { $value: '{sample.srgb}', $description: 'x', $extensions: { 'local.katachi': { status: 'draft', source: 'test', accent: '{sample.hued}' } } },
   };
 });
 const built = build(dir);
@@ -196,6 +202,10 @@ const expectedCss = [
   '--sample-bold: 600;',
   '--sample-w: 450;',
   '--sample-ease: cubic-bezier(0.2, 0, 0, 1);',
+  '--sample-modes: light-dark(oklch(0.5 0 0), oklch(0.8 0 0));',
+  '--sample-aliased: light-dark(var(--sample-srgb), var(--sample-alias));',
+  '--sample-hued: oklch(0.5 0.1 var(--accent-hue, 255));',
+  '--sample-remapped: var(--sample-hued);',
 ];
 for (const line of expectedCss) {
   if (built.status !== 0 || !css.includes(line)) {
@@ -213,7 +223,9 @@ const webExpectations = [
   ['--constraint-window-width-medium-min', false],
   ['--constraint-terminal-columns-default', false],
   ['--type-size-read', true],
-  ['--color-light-ink', true],
+  ['--color-gray-1', true],
+  ['--color-hue-9', true],
+  [':root[data-accent]', true],
 ];
 for (const [name, shouldExist] of webExpectations) {
   if (webCss.includes(name) !== shouldExist) {

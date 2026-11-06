@@ -10,10 +10,7 @@
   const icon = (kind) => `<svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">${ICONS[kind]}</svg>`;
   const main = document.createElement('main');
   main.innerHTML = `
-    <div class="bar t-caption" id="bar">
-      <span id="status">${NAME}</span>
-      <label class="t-caption">明暗 <select id="scheme"><option value="">跟随系统</option><option value="light">浅色</option><option value="dark">深色</option></select></label>
-    </div>
+    <div class="bar t-caption" id="bar"><span id="status">${NAME}</span></div>
     <article class="article">
       <p class="mode t-caption">阅读：层次全靠灰，链接靠下划线</p>
       <h1 class="t-title-l">用 Claude 和 Codex 在 3 个 iOS 项目里复用 Design Tokens</h1>
@@ -31,7 +28,7 @@
       <p class="notice success t-ui">${icon('success')}<span>发布成功，共 12 项。</span></p>
     </section>
     <section>
-      <p class="mode t-caption">操作：主按钮靠填充，边界过对比度，禁用可以更淡</p>
+      <p class="mode t-caption">操作：主按钮靠填充，边框过对比度，禁用可以更淡</p>
       <label class="t-ui" for="field"><strong>仅在连接到受信任的无线网络时自动同步附件</strong></label>
       <input class="t-ui" id="field" lang="en" aria-invalid="true" aria-describedby="field-error" value="Automatically sync attachments only when connected to a trusted wireless network">
       <p class="error t-caption" id="field-error">这个设置和当前的存储方案冲突，请先修改存储方案。</p>
@@ -41,7 +38,15 @@
         <button class="t-ui" type="button">取消</button>
         <button class="t-ui" type="button" lang="en">Settings</button>
         <button class="t-ui" type="button" disabled>暂不可用</button>
-        <button class="t-ui show-focus" type="button">焦点的样子</button>
+        <button class="t-ui danger" type="button">删除</button>
+      </div>
+      <p class="mode t-caption states-title">这些状态平时看不见，这里固定下来：悬停、按下、焦点</p>
+      <div class="controls">
+        <button class="t-ui primary is-hover" type="button">主按钮悬停</button>
+        <button class="t-ui danger is-hover" type="button">删除悬停</button>
+        <button class="t-ui is-hover" type="button">按钮悬停</button>
+        <button class="t-ui is-active" type="button">按钮按下</button>
+        <button class="t-ui show-focus" type="button">焦点</button>
       </div>
     </section>
     <section>
@@ -74,12 +79,10 @@
   });
 
   const root = document.documentElement;
-  document.getElementById('scheme').addEventListener('change', ({ target }) => {
-    root.style.colorScheme = target.value;
-  });
-
   const bar = document.getElementById('bar');
   const status = document.getElementById('status');
+  window.addColorControls(bar, { values: root.dataset.color !== 'paper', hues: root.dataset.accent !== undefined });
+
   const needed = (document.body.dataset.fonts ?? '').split('|').filter(Boolean);
   if (needed.length && document.fonts) {
     // 样式表没加载时没有对应的字体，fonts.check 仍然返回 true；fonts.load 这时返回空，所以用它判断。
@@ -90,21 +93,4 @@
       status.textContent = `${NAME}：字体没有从网络加载（${missing.join('、')}），看到的可能不是这个样例。检查网络后刷新，或单独打开这个页面。`;
     });
   }
-
-  // 强调色这一版可以换色相，明度和彩度不动。色相只是举例，不是推荐。
-  if (root.dataset.accent === undefined) return;
-  const HUES = { 蓝: 255, 青: 200, 绿: 150, 琥珀: 75, 红: 27, 紫: 300 };
-  const NEAR_STATUS = { 绿: '成功', 琥珀: '警告', 红: '错误' };
-  const label = document.createElement('label');
-  label.className = 't-caption';
-  label.innerHTML = `色相 <select id="hue">${Object.keys(HUES).map((name) => `<option>${name}</option>`).join('')}</select>`;
-  const note = document.createElement('span');
-  note.className = 'note';
-  note.id = 'hue-note';
-  bar.append(label, note);
-  document.getElementById('hue').addEventListener('change', ({ target }) => {
-    root.style.setProperty('--accent-hue', HUES[target.value]);
-    const near = NEAR_STATUS[target.value];
-    note.textContent = near ? `这个色相和${near}的颜色相近，状态要靠文字和图标分开。` : '';
-  });
 })();

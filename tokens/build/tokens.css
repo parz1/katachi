@@ -63,123 +63,225 @@
   /* 宋体或楷体正文每行最多多少个汉字。字号更大，每行要更短。 [draft] */
   --type-measure-read-large: 34;
   /* 页面背景。 [draft] */
-  --color-light-surface: oklch(1 0 0);
-  /* 选中和当前项的底色、代码块、表头。 [draft] */
-  --color-light-surface-subtle: oklch(0.97 0 0);
-  /* 弹层和浮起的面。 [draft] */
-  --color-light-surface-raised: oklch(1 0 0);
-  /* 正文和标题。 [draft] */
-  --color-light-ink: oklch(0.22 0 0);
-  /* 次要文字：时间、来源、提示。 [draft] */
-  --color-light-ink-muted: oklch(0.47 0 0);
-  /* 禁用的文字。WCAG 1.4.3 不要求对比度，但要读得出。 [draft] */
-  --color-light-ink-disabled: oklch(0.63 0 0);
-  /* 分割线，只是装饰，不靠它传达信息。 [draft] */
-  --color-light-line: oklch(0.89 0 0);
-  /* 控件的边界：输入框、次要按钮。 [draft] */
-  --color-light-control: oklch(0.6 0 0);
-  /* 能点的东西：链接、主按钮、复选框。默认等于 ink，不用色相。 [draft] */
-  --color-light-accent: var(--color-light-ink);
-  /* 主按钮上的文字。 [draft] */
-  --color-light-on-accent: var(--color-light-surface);
-  /* 焦点环。默认等于 ink。 [draft] */
-  --color-light-focus: var(--color-light-ink);
-  /* 错误和危险。要同时有文字或图标。 [draft] */
-  --color-light-error: oklch(0.5 0.18 27);
-  /* 错误提示的底色。 [draft] */
-  --color-light-error-subtle: oklch(0.955 0.018 27);
-  /* 警告。要同时有文字或图标。 [draft] */
-  --color-light-warning: oklch(0.5 0.1 75);
-  /* 警告提示的底色。 [draft] */
-  --color-light-warning-subtle: oklch(0.96 0.03 85);
-  /* 成功。要同时有文字或图标。 [draft] */
-  --color-light-success: oklch(0.5 0.12 150);
-  /* 成功提示的底色。 [draft] */
-  --color-light-success-subtle: oklch(0.96 0.03 150);
+  --color-gray-1: light-dark(oklch(1 0 0), oklch(0.2 0 0));
+  /* 区块背景：代码块、表头、侧栏。 [draft] */
+  --color-gray-2: light-dark(oklch(0.975 0 0), oklch(0.23 0 0));
+  /* 控件底色；透明控件的悬停。 [draft] */
+  --color-gray-3: light-dark(oklch(0.955 0 0), oklch(0.26 0 0));
+  /* 控件悬停。 [draft] */
+  --color-gray-4: light-dark(oklch(0.93 0 0), oklch(0.29 0 0));
+  /* 控件按下或选中。 [draft] */
+  --color-gray-5: light-dark(oklch(0.91 0 0), oklch(0.32 0 0));
+  /* 分割线，只是装饰。 [draft] */
+  --color-gray-6: light-dark(oklch(0.885 0 0), oklch(0.36 0 0));
+  /* 控件边框。 [draft] */
+  --color-gray-7: light-dark(oklch(0.61 0 0), oklch(0.62 0 0));
+  /* 控件边框的悬停。 [draft] */
+  --color-gray-8: light-dark(oklch(0.565 0 0), oklch(0.68 0 0));
+  /* 实心底色：主按钮。 [draft] */
+  --color-gray-9: light-dark(oklch(0.52 0 0), oklch(0.72 0 0));
+  /* 实心底色的悬停。 [draft] */
+  --color-gray-10: light-dark(oklch(0.48 0 0), oklch(0.76 0 0));
+  /* 次要文字。 [draft] */
+  --color-gray-11: light-dark(oklch(0.45 0 0), oklch(0.8 0 0));
+  /* 正文。 [draft] */
+  --color-gray-12: light-dark(oklch(0.22 0 0), oklch(0.94 0 0));
   /* 页面背景。 [draft] */
-  --color-dark-surface: oklch(0.2 0 0);
-  /* 选中和当前项的底色、代码块、表头。 [draft] */
-  --color-dark-surface-subtle: oklch(0.25 0 0);
-  /* 弹层和浮起的面。 [draft] */
-  --color-dark-surface-raised: oklch(0.25 0 0);
-  /* 正文和标题。 [draft] */
-  --color-dark-ink: oklch(0.93 0 0);
-  /* 次要文字：时间、来源、提示。 [draft] */
-  --color-dark-ink-muted: oklch(0.75 0 0);
-  /* 禁用的文字。WCAG 1.4.3 不要求对比度，但要读得出。 [draft] */
-  --color-dark-ink-disabled: oklch(0.55 0 0);
+  --color-red-1: light-dark(oklch(0.995 0.002 27), oklch(0.2 0.008 27));
+  /* 区块背景：代码块、表头、侧栏。 [draft] */
+  --color-red-2: light-dark(oklch(0.975 0.012 27), oklch(0.23 0.016 27));
+  /* 控件底色；透明控件的悬停。 [draft] */
+  --color-red-3: light-dark(oklch(0.955 0.022 27), oklch(0.26 0.031 27));
+  /* 控件悬停。 [draft] */
+  --color-red-4: light-dark(oklch(0.93 0.035 27), oklch(0.29 0.044 27));
+  /* 控件按下或选中。 [draft] */
+  --color-red-5: light-dark(oklch(0.91 0.046 27), oklch(0.32 0.057 27));
+  /* 分割线，只是装饰。 [draft] */
+  --color-red-6: light-dark(oklch(0.885 0.06 27), oklch(0.36 0.078 27));
+  /* 控件边框。 [draft] */
+  --color-red-7: light-dark(oklch(0.61 0.156 27), oklch(0.62 0.13 27));
+  /* 控件边框的悬停。 [draft] */
+  --color-red-8: light-dark(oklch(0.565 0.169 27), oklch(0.68 0.143 27));
+  /* 实心底色：主按钮。 [draft] */
+  --color-red-9: light-dark(oklch(0.52 0.182 27), oklch(0.72 0.156 27));
+  /* 实心底色的悬停。 [draft] */
+  --color-red-10: light-dark(oklch(0.48 0.182 27), oklch(0.76 0.143 27));
+  /* 次要文字。 [draft] */
+  --color-red-11: light-dark(oklch(0.45 0.169 27), oklch(0.8 0.114 27));
+  /* 正文。 [draft] */
+  --color-red-12: light-dark(oklch(0.22 0.091 27), oklch(0.94 0.03 27));
+  /* 页面背景。 [draft] */
+  --color-amber-1: light-dark(oklch(0.995 0.007 92), oklch(0.2 0.007 82));
+  /* 区块背景：代码块、表头、侧栏。 [draft] */
+  --color-amber-2: light-dark(oklch(0.975 0.025 92), oklch(0.23 0.013 82));
+  /* 控件底色；透明控件的悬停。 [draft] */
+  --color-amber-3: light-dark(oklch(0.955 0.05 92), oklch(0.26 0.026 82));
+  /* 控件悬停。 [draft] */
+  --color-amber-4: light-dark(oklch(0.93 0.07 92), oklch(0.29 0.037 82));
+  /* 控件按下或选中。 [draft] */
+  --color-amber-5: light-dark(oklch(0.91 0.09 92), oklch(0.32 0.048 82));
+  /* 分割线，只是装饰。 [draft] */
+  --color-amber-6: light-dark(oklch(0.885 0.11 92), oklch(0.36 0.066 82));
+  /* 控件边框。 [draft] */
+  --color-amber-7: light-dark(oklch(0.61 0.102 72), oklch(0.62 0.085 82));
+  /* 控件边框的悬停。 [draft] */
+  --color-amber-8: light-dark(oklch(0.565 0.111 72), oklch(0.68 0.094 82));
+  /* 实心底色：主按钮。 [draft] */
+  --color-amber-9: light-dark(oklch(0.52 0.111 72), oklch(0.72 0.102 82));
+  /* 实心底色的悬停。 [draft] */
+  --color-amber-10: light-dark(oklch(0.48 0.103 72), oklch(0.76 0.094 82));
+  /* 次要文字。 [draft] */
+  --color-amber-11: light-dark(oklch(0.45 0.097 72), oklch(0.8 0.085 82));
+  /* 正文。 [draft] */
+  --color-amber-12: light-dark(oklch(0.22 0.05 72), oklch(0.94 0.026 82));
+  /* 页面背景。 [draft] */
+  --color-green-1: light-dark(oklch(0.995 0.004 150), oklch(0.2 0.006 150));
+  /* 区块背景：代码块、表头、侧栏。 [draft] */
+  --color-green-2: light-dark(oklch(0.975 0.012 150), oklch(0.23 0.012 150));
+  /* 控件底色；透明控件的悬停。 [draft] */
+  --color-green-3: light-dark(oklch(0.955 0.024 150), oklch(0.26 0.024 150));
+  /* 控件悬停。 [draft] */
+  --color-green-4: light-dark(oklch(0.93 0.038 150), oklch(0.29 0.034 150));
+  /* 控件按下或选中。 [draft] */
+  --color-green-5: light-dark(oklch(0.91 0.05 150), oklch(0.32 0.044 150));
+  /* 分割线，只是装饰。 [draft] */
+  --color-green-6: light-dark(oklch(0.885 0.07 150), oklch(0.36 0.06 150));
+  /* 控件边框。 [draft] */
+  --color-green-7: light-dark(oklch(0.61 0.12 150), oklch(0.62 0.1 150));
+  /* 控件边框的悬停。 [draft] */
+  --color-green-8: light-dark(oklch(0.565 0.13 150), oklch(0.68 0.11 150));
+  /* 实心底色：主按钮。 [draft] */
+  --color-green-9: light-dark(oklch(0.52 0.14 150), oklch(0.72 0.12 150));
+  /* 实心底色的悬停。 [draft] */
+  --color-green-10: light-dark(oklch(0.48 0.132 150), oklch(0.76 0.11 150));
+  /* 次要文字。 [draft] */
+  --color-green-11: light-dark(oklch(0.45 0.124 150), oklch(0.8 0.1 150));
+  /* 正文。 [draft] */
+  --color-green-12: light-dark(oklch(0.22 0.063 150), oklch(0.94 0.03 150));
+  /* 页面背景。 [draft] */
+  --color-paper-1: light-dark(oklch(0.972 0.007 85), oklch(0.21 0.006 70));
+  /* 区块背景：代码块、表头、侧栏。 [draft] */
+  --color-paper-2: light-dark(oklch(0.955 0.008 85), oklch(0.24 0.007 70));
+  /* 控件底色；透明控件的悬停。 [draft] */
+  --color-paper-3: light-dark(oklch(0.94 0.009 85), oklch(0.27 0.007 70));
+  /* 控件悬停。 [draft] */
+  --color-paper-4: light-dark(oklch(0.92 0.01 85), oklch(0.3 0.008 70));
+  /* 控件按下或选中。 [draft] */
+  --color-paper-5: light-dark(oklch(0.9 0.011 85), oklch(0.33 0.008 70));
+  /* 分割线，只是装饰。 [draft] */
+  --color-paper-6: light-dark(oklch(0.875 0.012 85), oklch(0.37 0.008 70));
+  /* 控件边框。 [draft] */
+  --color-paper-7: light-dark(oklch(0.6 0.012 70), oklch(0.62 0.01 80));
+  /* 控件边框的悬停。 [draft] */
+  --color-paper-8: light-dark(oklch(0.555 0.012 70), oklch(0.68 0.011 80));
+  /* 实心底色：主按钮。 [draft] */
+  --color-paper-9: light-dark(oklch(0.52 0.012 65), oklch(0.72 0.012 85));
+  /* 实心底色的悬停。 [draft] */
+  --color-paper-10: light-dark(oklch(0.48 0.013 60), oklch(0.76 0.012 85));
+  /* 次要文字。 [draft] */
+  --color-paper-11: light-dark(oklch(0.45 0.014 60), oklch(0.8 0.014 85));
+  /* 正文。 [draft] */
+  --color-paper-12: light-dark(oklch(0.25 0.012 60), oklch(0.9 0.012 85));
+  /* 页面背景。 [draft] */
+  --color-hue-1: light-dark(oklch(0.995 0.004 var(--accent-hue, 255)), oklch(0.2 0.006 var(--accent-hue, 255)));
+  /* 区块背景：代码块、表头、侧栏。 [draft] */
+  --color-hue-2: light-dark(oklch(0.975 0.012 var(--accent-hue, 255)), oklch(0.23 0.012 var(--accent-hue, 255)));
+  /* 控件底色；透明控件的悬停。 [draft] */
+  --color-hue-3: light-dark(oklch(0.955 0.024 var(--accent-hue, 255)), oklch(0.26 0.024 var(--accent-hue, 255)));
+  /* 控件悬停。 [draft] */
+  --color-hue-4: light-dark(oklch(0.93 0.038 var(--accent-hue, 255)), oklch(0.29 0.034 var(--accent-hue, 255)));
+  /* 控件按下或选中。 [draft] */
+  --color-hue-5: light-dark(oklch(0.91 0.05 var(--accent-hue, 255)), oklch(0.32 0.044 var(--accent-hue, 255)));
+  /* 分割线，只是装饰。 [draft] */
+  --color-hue-6: light-dark(oklch(0.885 0.07 var(--accent-hue, 255)), oklch(0.36 0.06 var(--accent-hue, 255)));
+  /* 控件边框。 [draft] */
+  --color-hue-7: light-dark(oklch(0.61 0.12 var(--accent-hue, 255)), oklch(0.62 0.1 var(--accent-hue, 255)));
+  /* 控件边框的悬停。 [draft] */
+  --color-hue-8: light-dark(oklch(0.565 0.13 var(--accent-hue, 255)), oklch(0.68 0.11 var(--accent-hue, 255)));
+  /* 实心底色：主按钮。 [draft] */
+  --color-hue-9: light-dark(oklch(0.52 0.14 var(--accent-hue, 255)), oklch(0.72 0.12 var(--accent-hue, 255)));
+  /* 实心底色的悬停。 [draft] */
+  --color-hue-10: light-dark(oklch(0.48 0.14 var(--accent-hue, 255)), oklch(0.76 0.11 var(--accent-hue, 255)));
+  /* 次要文字。 [draft] */
+  --color-hue-11: light-dark(oklch(0.45 0.13 var(--accent-hue, 255)), oklch(0.8 0.1 var(--accent-hue, 255)));
+  /* 正文。 [draft] */
+  --color-hue-12: light-dark(oklch(0.22 0.07 var(--accent-hue, 255)), oklch(0.94 0.03 var(--accent-hue, 255)));
+  /* 页面背景。 [draft] */
+  --color-surface: var(--color-gray-1);
+  /* 区块背景：代码块、表头、侧栏。 [draft] */
+  --color-surface-subtle: var(--color-gray-2);
+  /* 弹层和浮起的面。深色模式下比页面亮一级。 [draft] */
+  --color-surface-raised: light-dark(var(--color-gray-1), var(--color-gray-2));
+  /* 控件底色；透明控件的悬停。 [draft] */
+  --color-fill: var(--color-gray-3);
+  /* 控件悬停。 [draft] */
+  --color-fill-hover: var(--color-gray-4);
+  /* 控件按下。 [draft] */
+  --color-fill-active: var(--color-gray-5);
   /* 分割线，只是装饰，不靠它传达信息。 [draft] */
-  --color-dark-line: oklch(0.32 0 0);
-  /* 控件的边界：输入框、次要按钮。 [draft] */
-  --color-dark-control: oklch(0.62 0 0);
-  /* 能点的东西：链接、主按钮、复选框。默认等于 ink，不用色相。 [draft] */
-  --color-dark-accent: var(--color-dark-ink);
-  /* 主按钮上的文字。 [draft] */
-  --color-dark-on-accent: var(--color-dark-surface);
-  /* 焦点环。默认等于 ink。 [draft] */
-  --color-dark-focus: var(--color-dark-ink);
-  /* 错误和危险。要同时有文字或图标。 [draft] */
-  --color-dark-error: oklch(0.76 0.13 25);
+  --color-line: var(--color-gray-6);
+  /* 控件边框：输入框、次要按钮。 [draft] */
+  --color-control: var(--color-gray-7);
+  /* 控件边框的悬停。 [draft] */
+  --color-control-hover: var(--color-gray-8);
+  /* 正文和标题。 [draft] */
+  --color-ink: var(--color-gray-12);
+  /* 次要文字：时间、来源、提示。 [draft] */
+  --color-ink-muted: var(--color-gray-11);
+  /* 禁用的文字。WCAG 1.4.3 不要求对比度，但要读得出。 [draft] */
+  --color-ink-disabled: var(--color-gray-7);
+  /* 文字里能点的东西：链接。默认等于 ink，选了色相后指向第 11 级。 [draft] */
+  --color-accent: var(--color-gray-12);
+  /* 主按钮的底色。默认等于 ink，选了色相后指向第 9 级。 [draft] */
+  --color-accent-solid: var(--color-gray-12);
+  /* 主按钮底色的悬停。 [draft] */
+  --color-accent-solid-hover: var(--color-gray-11);
+  /* 带强调的浅底。 [draft] */
+  --color-accent-fill: var(--color-gray-3);
+  /* 选中项的底色。 [draft] */
+  --color-selected: var(--color-gray-5);
+  /* 焦点环。默认等于 ink，选了色相后指向第 9 级。 [draft] */
+  --color-focus: var(--color-gray-12);
+  /* 实心底色上的文字。 [draft] */
+  --color-on-solid: var(--color-gray-1);
+  /* 错误的文字和图标。要同时有文字或图标。 [draft] */
+  --color-error: var(--color-red-11);
   /* 错误提示的底色。 [draft] */
-  --color-dark-error-subtle: oklch(0.27 0.05 27);
-  /* 警告。要同时有文字或图标。 [draft] */
-  --color-dark-warning: oklch(0.82 0.12 85);
+  --color-error-subtle: var(--color-red-3);
+  /* 错误的边框，比如出错的输入框。 [draft] */
+  --color-error-line: var(--color-red-7);
+  /* 错误的实心底色，比如删除按钮。 [draft] */
+  --color-error-solid: var(--color-red-9);
+  /* 错误实心底色的悬停。 [draft] */
+  --color-error-solid-hover: var(--color-red-10);
+  /* 警告的文字和图标。要同时有文字或图标。 [draft] */
+  --color-warning: var(--color-amber-11);
   /* 警告提示的底色。 [draft] */
-  --color-dark-warning-subtle: oklch(0.27 0.035 85);
-  /* 成功。要同时有文字或图标。 [draft] */
-  --color-dark-success: oklch(0.79 0.14 150);
+  --color-warning-subtle: var(--color-amber-3);
+  /* 警告的边框，比如出错的输入框。 [draft] */
+  --color-warning-line: var(--color-amber-7);
+  /* 警告的实心底色，比如删除按钮。 [draft] */
+  --color-warning-solid: var(--color-amber-9);
+  /* 警告实心底色的悬停。 [draft] */
+  --color-warning-solid-hover: var(--color-amber-10);
+  /* 成功的文字和图标。要同时有文字或图标。 [draft] */
+  --color-success: var(--color-green-11);
   /* 成功提示的底色。 [draft] */
-  --color-dark-success-subtle: oklch(0.27 0.04 150);
-  /* 纸面：页面背景。 [draft] */
-  --color-paper-light-surface: oklch(0.972 0.007 85);
-  /* 纸面：选中和当前项的底色、代码块、表头。 [draft] */
-  --color-paper-light-surface-subtle: oklch(0.945 0.009 85);
-  /* 纸面：弹层和浮起的面。 [draft] */
-  --color-paper-light-surface-raised: oklch(0.985 0.005 85);
-  /* 墨：正文和标题。 [draft] */
-  --color-paper-light-ink: oklch(0.25 0.012 60);
-  /* 墨：次要文字。 [draft] */
-  --color-paper-light-ink-muted: oklch(0.46 0.014 60);
-  /* 墨：禁用的文字。 [draft] */
-  --color-paper-light-ink-disabled: oklch(0.63 0.01 60);
-  /* 纸面上的分割线。 [draft] */
-  --color-paper-light-line: oklch(0.875 0.012 85);
-  /* 纸面上控件的边界。 [draft] */
-  --color-paper-light-control: oklch(0.58 0.012 70);
-  /* 纸面上能点的东西，等于墨。 [draft] */
-  --color-paper-light-accent: var(--color-paper-light-ink);
-  /* 纸面上主按钮的文字。 [draft] */
-  --color-paper-light-on-accent: var(--color-paper-light-surface);
-  /* 纸面上的焦点环。 [draft] */
-  --color-paper-light-focus: var(--color-paper-light-ink);
-  /* 纸面：页面背景。 [draft] */
-  --color-paper-dark-surface: oklch(0.21 0.006 70);
-  /* 纸面：选中和当前项的底色、代码块、表头。 [draft] */
-  --color-paper-dark-surface-subtle: oklch(0.26 0.007 70);
-  /* 纸面：弹层和浮起的面。 [draft] */
-  --color-paper-dark-surface-raised: oklch(0.26 0.007 70);
-  /* 墨：正文和标题。 [draft] */
-  --color-paper-dark-ink: oklch(0.9 0.012 85);
-  /* 墨：次要文字。 [draft] */
-  --color-paper-dark-ink-muted: oklch(0.75 0.014 85);
-  /* 墨：禁用的文字。 [draft] */
-  --color-paper-dark-ink-disabled: oklch(0.56 0.01 80);
-  /* 纸面上的分割线。 [draft] */
-  --color-paper-dark-line: oklch(0.33 0.008 70);
-  /* 纸面上控件的边界。 [draft] */
-  --color-paper-dark-control: oklch(0.62 0.01 80);
-  /* 纸面上能点的东西，等于墨。 [draft] */
-  --color-paper-dark-accent: var(--color-paper-dark-ink);
-  /* 纸面上主按钮的文字。 [draft] */
-  --color-paper-dark-on-accent: var(--color-paper-dark-surface);
-  /* 纸面上的焦点环。 [draft] */
-  --color-paper-dark-focus: var(--color-paper-dark-ink);
-  /* 浅色模式下强调色的明度。 [draft] */
-  --color-recipe-light-l: 0.5;
-  /* 浅色模式下强调色的彩度。 [draft] */
-  --color-recipe-light-c: 0.13;
-  /* 深色模式下强调色的明度。 [draft] */
-  --color-recipe-dark-l: 0.78;
-  /* 深色模式下强调色的彩度。 [draft] */
-  --color-recipe-dark-c: 0.11;
+  --color-success-subtle: var(--color-green-3);
+  /* 成功的边框，比如出错的输入框。 [draft] */
+  --color-success-line: var(--color-green-7);
+  /* 成功的实心底色，比如删除按钮。 [draft] */
+  --color-success-solid: var(--color-green-9);
+  /* 成功实心底色的悬停。 [draft] */
+  --color-success-solid-hover: var(--color-green-10);
+}
+
+/* 选了强调色（根元素上有 data-accent）时，这些角色改指向 --accent-hue 那条色阶。 */
+:root[data-accent] {
+  --color-accent: var(--color-hue-11);
+  --color-accent-solid: var(--color-hue-9);
+  --color-accent-solid-hover: var(--color-hue-10);
+  --color-accent-fill: var(--color-hue-3);
+  --color-selected: var(--color-hue-4);
+  --color-focus: var(--color-hue-9);
 }

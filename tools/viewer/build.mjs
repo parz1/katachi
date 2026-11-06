@@ -83,9 +83,7 @@ function runnable(path, label, widths) {
 
 function doc(file, lib, widths) {
   const base = dirname(file);
-  // 字体列表太长，正文里只显示第一个，全部写在 Tokens 一节。
-  const brief = (value) => (value.length > 24 && value.includes(',') ? `${value.split(',')[0]} 等` : value);
-  const tokens = new Map(lib.tokens.map((item) => [item.name, brief(item.value)]));
+  const tokens = new Map(lib.tokens.map((item) => [item.name, item.value]));
   const embed = (target, label) => {
     const path = posix.normalize(posix.join(base, target));
     return path.startsWith('..') || !exists(path) ? null : runnable(path, label, widths);

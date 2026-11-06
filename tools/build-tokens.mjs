@@ -1,7 +1,8 @@
 // 校验 tokens/katachi.tokens.json，并生成 tokens/build/tokens.css。零依赖。
 //   node tools/build-tokens.mjs           校验并写入
 //   node tools/build-tokens.mjs --check   只比较，生成物过期时退出码为 1
-// 只支持基本类型。组合类型（typography、shadow 等）和模式等到真正用到时再加。
+// 只支持基本类型。组合类型（typography、shadow 等）等到真正用到时再加。
+// 颜色可以在 local.katachi 里写 dark，生成 light-dark()；写 hue，色相变成 CSS 变量；写 accent，选了强调色时改指向它。
 import { mkdirSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -31,13 +32,15 @@ const cssName = (dottedPath) => `--${dottedPath.replaceAll('.', '-')}`;
 // 没写 platforms 表示适用于所有平台。
 const inWebCss = (token) => !Array.isArray(token.platforms) || token.platforms.includes('web');
 
-function colorToCss(value) {
+function colorToCss(value, hueVariable) {
   const { colorSpace, components, alpha } = value ?? {};
   const isFunction = CSS_COLOR_FUNCTIONS.has(colorSpace);
   if ((!isFunction && !CSS_COLOR_SPACES.has(colorSpace)) || !Array.isArray(components)) {
     throw new Error('color 的 $value 需要合法的 colorSpace 和 components');
   }
-  const channels = components.join(' ');
+  const channels = hueVariable
+    ? `${components[0]} ${components[1]} var(${hueVariable}, ${components[2]})`
+    : components.join(' ');
   const suffix = alpha === undefined || alpha === 1 ? '' : ` / ${alpha}`;
   // 规范里 hex 只是后备值，这里以 components 为准。
   return isFunction
@@ -45,7 +48,7 @@ function colorToCss(value) {
     : `color(${colorSpace} ${channels}${suffix})`;
 }
 
-function valueToCss(type, value) {
+function valueToCss(type, value, meta) {
   switch (type) {
     case 'number':
       if (typeof value !== 'number') throw new Error('number 的 $value 应为数字');
@@ -59,7 +62,7 @@ function valueToCss(type, value) {
       return `${value.value}${value.unit}`;
     }
     case 'color':
-      return colorToCss(value);
+      return colorToCss(value, meta?.hue);
     case 'fontFamily': {
       const names = Array.isArray(value) ? value : [value];
       if (!names.length || names.some((name) => typeof name !== 'string' || !name)) {
@@ -144,12 +147,17 @@ export function collectTokens(tree) {
     token.cssName = cssName(name);
     try {
       const target = aliasTarget(node.$value);
-      if (target) {
-        followAlias(name);
-        token.css = `var(${cssName(target)})`;
-      } else {
-        token.css = valueToCss(node.$type ?? inheritedType, node.$value);
-      }
+      if (target) followAlias(name);
+      const type = node.$type ?? inheritedType;
+      const toCss = (value) => {
+        const reference = aliasTarget(value);
+        if (!reference) return valueToCss(type, value, meta);
+        if (!tokens.has(reference)) throw new Error(`引用的 token 不存在：${reference}`);
+        return `var(${cssName(reference)})`;
+      };
+      const light = toCss(node.$value);
+      token.css = meta?.dark === undefined ? light : `light-dark(${light}, ${toCss(meta.dark)})`;
+      if (meta?.accent !== undefined) token.accentCss = toCss(meta.accent);
     } catch (error) {
       problems.push(`${name}：${error.message}`);
     }
@@ -181,6 +189,12 @@ export function renderCss(tokens) {
     lines.push(`  ${token.cssName}: ${token.css};`);
   }
   lines.push('}', '');
+  const accent = [...tokens.values()].filter((token) => token.accentCss && inWebCss(token));
+  if (accent.length) {
+    lines.push('/* 选了强调色（根元素上有 data-accent）时，这些角色改指向 --accent-hue 那条色阶。 */', ':root[data-accent] {');
+    for (const token of accent) lines.push(`  ${token.cssName}: ${token.accentCss};`);
+    lines.push('}', '');
+  }
   return lines.join('\n');
 }
 

@@ -1,5 +1,5 @@
 {
-  "$description": "katachi 设计数值的唯一来源，格式为 DTCG Format Module 2025.10。constraint 来自标准和平台规范；type 和 color 是提案，用户还没确认。",
+  "$description": "katachi 设计数值的唯一来源，格式为 DTCG Format Module 2025.10。constraint 来自标准和平台规范；type 和 color 是提案，用户还没确认。dark 写在 local.katachi 里，生成 CSS 时变成 light-dark()。",
   "constraint": {
     "$description": "外部标准或平台规范给出的数值，用于检查和判断，不代表审美偏好。",
     "contrast": {
@@ -748,10 +748,9 @@
     }
   },
   "color": {
-    "$description": "颜色的提案，规则见 standards/color.md。按角色命名，浅色和深色各定一遍。contrast 声明它要和哪些角色比，校验脚本会算。",
-    "light": {
-      "$type": "color",
-      "surface": {
+    "$description": "颜色的提案，规则见 standards/color.md。每条色阶 12 级，每级用途固定，浅色和深色各一个值。角色指向某一级，样式里只写角色。",
+    "gray": {
+      "1": {
         "$value": {
           "colorSpace": "oklch",
           "components": [
@@ -765,461 +764,83 @@
         "$extensions": {
           "local.katachi": {
             "status": "draft",
-            "source": "提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ]
-          }
-        }
-      },
-      "surface-subtle": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.97,
-            0,
-            0
-          ],
-          "hex": "#f5f5f5"
-        },
-        "$description": "选中和当前项的底色、代码块、表头。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ]
-          }
-        }
-      },
-      "surface-raised": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            1,
-            0,
-            0
-          ],
-          "hex": "#ffffff"
-        },
-        "$description": "弹层和浮起的面。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ]
-          }
-        }
-      },
-      "ink": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.22,
-            0,
-            0
-          ],
-          "hex": "#1b1b1b"
-        },
-        "$description": "正文和标题。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "提案，见 standards/color.md",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
             "platforms": [
               "web"
             ],
-            "contrast": {
-              "floor": "text",
-              "against": [
-                "surface",
-                "surface-subtle",
-                "surface-raised"
-              ]
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.2,
+                0,
+                0
+              ],
+              "hex": "#161616"
             }
           }
         }
       },
-      "ink-muted": {
+      "2": {
         "$value": {
           "colorSpace": "oklch",
           "components": [
-            0.47,
+            0.975,
             0,
             0
           ],
-          "hex": "#5b5b5b"
+          "hex": "#f7f7f7"
         },
-        "$description": "次要文字：时间、来源、提示。",
+        "$description": "区块背景：代码块、表头、侧栏。",
         "$extensions": {
           "local.katachi": {
             "status": "draft",
-            "source": "提案，见 standards/color.md",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
             "platforms": [
               "web"
             ],
-            "contrast": {
-              "floor": "text",
-              "against": [
-                "surface",
-                "surface-subtle",
-                "surface-raised"
-              ]
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.23,
+                0,
+                0
+              ],
+              "hex": "#1d1d1d"
             }
           }
         }
       },
-      "ink-disabled": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.63,
-            0,
-            0
-          ],
-          "hex": "#898989"
-        },
-        "$description": "禁用的文字。WCAG 1.4.3 不要求对比度，但要读得出。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ]
-          }
-        }
-      },
-      "line": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.89,
-            0,
-            0
-          ],
-          "hex": "#dbdbdb"
-        },
-        "$description": "分割线，只是装饰，不靠它传达信息。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ]
-          }
-        }
-      },
-      "control": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.6,
-            0,
-            0
-          ],
-          "hex": "#808080"
-        },
-        "$description": "控件的边界：输入框、次要按钮。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "contrast": {
-              "floor": "non-text",
-              "against": [
-                "surface",
-                "surface-subtle",
-                "surface-raised"
-              ]
-            }
-          }
-        }
-      },
-      "accent": {
-        "$value": "{color.light.ink}",
-        "$description": "能点的东西：链接、主按钮、复选框。默认等于 ink，不用色相。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "contrast": {
-              "floor": "text",
-              "against": [
-                "surface",
-                "surface-subtle"
-              ]
-            }
-          }
-        }
-      },
-      "on-accent": {
-        "$value": "{color.light.surface}",
-        "$description": "主按钮上的文字。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "contrast": {
-              "floor": "text",
-              "against": [
-                "accent"
-              ]
-            }
-          }
-        }
-      },
-      "focus": {
-        "$value": "{color.light.ink}",
-        "$description": "焦点环。默认等于 ink。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "contrast": {
-              "floor": "non-text",
-              "against": [
-                "surface",
-                "surface-subtle",
-                "surface-raised"
-              ]
-            }
-          }
-        }
-      },
-      "error": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.5,
-            0.18,
-            27
-          ],
-          "hex": "#b32322"
-        },
-        "$description": "错误和危险。要同时有文字或图标。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "contrast": {
-              "floor": "text",
-              "against": [
-                "surface",
-                "surface-subtle",
-                "error-subtle"
-              ]
-            }
-          }
-        }
-      },
-      "error-subtle": {
+      "3": {
         "$value": {
           "colorSpace": "oklch",
           "components": [
             0.955,
-            0.018,
-            27
+            0,
+            0
           ],
-          "hex": "#fcecea"
+          "hex": "#f0f0f0"
         },
-        "$description": "错误提示的底色。",
+        "$description": "控件底色；透明控件的悬停。",
         "$extensions": {
           "local.katachi": {
             "status": "draft",
-            "source": "提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ]
-          }
-        }
-      },
-      "warning": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.5,
-            0.1,
-            75
-          ],
-          "hex": "#845a0f"
-        },
-        "$description": "警告。要同时有文字或图标。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "提案，见 standards/color.md",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
             "platforms": [
               "web"
             ],
-            "contrast": {
-              "floor": "text",
-              "against": [
-                "surface",
-                "surface-subtle",
-                "warning-subtle"
-              ]
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.26,
+                0,
+                0
+              ],
+              "hex": "#242424"
             }
           }
         }
       },
-      "warning-subtle": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.96,
-            0.03,
-            85
-          ],
-          "hex": "#fbf1dc"
-        },
-        "$description": "警告提示的底色。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ]
-          }
-        }
-      },
-      "success": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.5,
-            0.12,
-            150
-          ],
-          "hex": "#21763c"
-        },
-        "$description": "成功。要同时有文字或图标。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "contrast": {
-              "floor": "text",
-              "against": [
-                "surface",
-                "surface-subtle",
-                "success-subtle"
-              ]
-            }
-          }
-        }
-      },
-      "success-subtle": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.96,
-            0.03,
-            150
-          ],
-          "hex": "#e4f8e7"
-        },
-        "$description": "成功提示的底色。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ]
-          }
-        }
-      }
-    },
-    "dark": {
-      "$type": "color",
-      "surface": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.2,
-            0,
-            0
-          ],
-          "hex": "#161616"
-        },
-        "$description": "页面背景。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ]
-          }
-        }
-      },
-      "surface-subtle": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.25,
-            0,
-            0
-          ],
-          "hex": "#222222"
-        },
-        "$description": "选中和当前项的底色、代码块、表头。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ]
-          }
-        }
-      },
-      "surface-raised": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.25,
-            0,
-            0
-          ],
-          "hex": "#222222"
-        },
-        "$description": "弹层和浮起的面。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ]
-          }
-        }
-      },
-      "ink": {
+      "4": {
         "$value": {
           "colorSpace": "oklch",
           "components": [
@@ -1229,812 +850,2690 @@
           ],
           "hex": "#e8e8e8"
         },
-        "$description": "正文和标题。",
+        "$description": "控件悬停。",
         "$extensions": {
           "local.katachi": {
             "status": "draft",
-            "source": "提案，见 standards/color.md",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
             "platforms": [
               "web"
             ],
-            "contrast": {
-              "floor": "text",
-              "against": [
-                "surface",
-                "surface-subtle",
-                "surface-raised"
-              ]
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.29,
+                0,
+                0
+              ],
+              "hex": "#2b2b2b"
             }
           }
         }
       },
-      "ink-muted": {
+      "5": {
         "$value": {
           "colorSpace": "oklch",
           "components": [
-            0.75,
+            0.91,
             0,
             0
           ],
-          "hex": "#aeaeae"
+          "hex": "#e1e1e1"
         },
-        "$description": "次要文字：时间、来源、提示。",
+        "$description": "控件按下或选中。",
         "$extensions": {
           "local.katachi": {
             "status": "draft",
-            "source": "提案，见 standards/color.md",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
             "platforms": [
               "web"
             ],
-            "contrast": {
-              "floor": "text",
-              "against": [
-                "surface",
-                "surface-subtle",
-                "surface-raised"
-              ]
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.32,
+                0,
+                0
+              ],
+              "hex": "#333333"
             }
           }
         }
       },
-      "ink-disabled": {
+      "6": {
         "$value": {
           "colorSpace": "oklch",
           "components": [
-            0.55,
+            0.885,
             0,
             0
           ],
-          "hex": "#717171"
+          "hex": "#d9d9d9"
         },
-        "$description": "禁用的文字。WCAG 1.4.3 不要求对比度，但要读得出。",
+        "$description": "分割线，只是装饰。",
         "$extensions": {
           "local.katachi": {
             "status": "draft",
-            "source": "提案，见 standards/color.md",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
             "platforms": [
               "web"
-            ]
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.36,
+                0,
+                0
+              ],
+              "hex": "#3d3d3d"
+            }
           }
         }
       },
-      "line": {
+      "7": {
         "$value": {
           "colorSpace": "oklch",
           "components": [
-            0.32,
+            0.61,
             0,
             0
           ],
-          "hex": "#333333"
+          "hex": "#838383"
         },
-        "$description": "分割线，只是装饰，不靠它传达信息。",
+        "$description": "控件边框。",
         "$extensions": {
           "local.katachi": {
             "status": "draft",
-            "source": "提案，见 standards/color.md",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
             "platforms": [
               "web"
-            ]
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.62,
+                0,
+                0
+              ],
+              "hex": "#868686"
+            }
           }
         }
       },
-      "control": {
+      "8": {
         "$value": {
           "colorSpace": "oklch",
           "components": [
-            0.62,
+            0.565,
             0,
             0
           ],
-          "hex": "#868686"
+          "hex": "#767676"
         },
-        "$description": "控件的边界：输入框、次要按钮。",
+        "$description": "控件边框的悬停。",
         "$extensions": {
           "local.katachi": {
             "status": "draft",
-            "source": "提案，见 standards/color.md",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
             "platforms": [
               "web"
             ],
-            "contrast": {
-              "floor": "non-text",
-              "against": [
-                "surface",
-                "surface-subtle",
-                "surface-raised"
-              ]
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.68,
+                0,
+                0
+              ],
+              "hex": "#989898"
             }
           }
         }
       },
-      "accent": {
-        "$value": "{color.dark.ink}",
-        "$description": "能点的东西：链接、主按钮、复选框。默认等于 ink，不用色相。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "contrast": {
-              "floor": "text",
-              "against": [
-                "surface",
-                "surface-subtle"
-              ]
-            }
-          }
-        }
-      },
-      "on-accent": {
-        "$value": "{color.dark.surface}",
-        "$description": "主按钮上的文字。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "contrast": {
-              "floor": "text",
-              "against": [
-                "accent"
-              ]
-            }
-          }
-        }
-      },
-      "focus": {
-        "$value": "{color.dark.ink}",
-        "$description": "焦点环。默认等于 ink。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ],
-            "contrast": {
-              "floor": "non-text",
-              "against": [
-                "surface",
-                "surface-subtle",
-                "surface-raised"
-              ]
-            }
-          }
-        }
-      },
-      "error": {
+      "9": {
         "$value": {
           "colorSpace": "oklch",
           "components": [
-            0.76,
-            0.13,
-            25
+            0.52,
+            0,
+            0
           ],
-          "hex": "#f98f87"
+          "hex": "#696969"
         },
-        "$description": "错误和危险。要同时有文字或图标。",
+        "$description": "实心底色：主按钮。",
         "$extensions": {
           "local.katachi": {
             "status": "draft",
-            "source": "提案，见 standards/color.md",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
             "platforms": [
               "web"
             ],
-            "contrast": {
-              "floor": "text",
-              "against": [
-                "surface",
-                "surface-subtle",
-                "error-subtle"
-              ]
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.72,
+                0,
+                0
+              ],
+              "hex": "#a4a4a4"
             }
           }
         }
       },
-      "error-subtle": {
+      "10": {
         "$value": {
           "colorSpace": "oklch",
           "components": [
-            0.27,
-            0.05,
+            0.48,
+            0,
+            0
+          ],
+          "hex": "#5d5d5d"
+        },
+        "$description": "实心底色的悬停。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.76,
+                0,
+                0
+              ],
+              "hex": "#b1b1b1"
+            }
+          }
+        }
+      },
+      "11": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.45,
+            0,
+            0
+          ],
+          "hex": "#555555"
+        },
+        "$description": "次要文字。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.8,
+                0,
+                0
+              ],
+              "hex": "#bebebe"
+            }
+          }
+        }
+      },
+      "12": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.22,
+            0,
+            0
+          ],
+          "hex": "#1b1b1b"
+        },
+        "$description": "正文。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.94,
+                0,
+                0
+              ],
+              "hex": "#ebebeb"
+            }
+          }
+        }
+      },
+      "$type": "color",
+      "$description": "默认的灰，彩度是 0。"
+    },
+    "red": {
+      "1": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.995,
+            0.002,
             27
           ],
-          "hex": "#3b1c19"
+          "hex": "#fffdfd"
         },
-        "$description": "错误提示的底色。",
+        "$description": "页面背景。",
         "$extensions": {
           "local.katachi": {
             "status": "draft",
-            "source": "提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ]
-          }
-        }
-      },
-      "warning": {
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.82,
-            0.12,
-            85
-          ],
-          "hex": "#e8be62"
-        },
-        "$description": "警告。要同时有文字或图标。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "提案，见 standards/color.md",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
             "platforms": [
               "web"
             ],
-            "contrast": {
-              "floor": "text",
-              "against": [
-                "surface",
-                "surface-subtle",
-                "warning-subtle"
-              ]
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.2,
+                0.008,
+                27
+              ],
+              "hex": "#1a1514"
             }
           }
         }
       },
-      "warning-subtle": {
+      "2": {
         "$value": {
           "colorSpace": "oklch",
           "components": [
-            0.27,
-            0.035,
-            85
+            0.975,
+            0.012,
+            27
           ],
-          "hex": "#2e2511"
+          "hex": "#fff4f2"
         },
-        "$description": "警告提示的底色。",
+        "$description": "区块背景：代码块、表头、侧栏。",
         "$extensions": {
           "local.katachi": {
             "status": "draft",
-            "source": "提案，见 standards/color.md",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
             "platforms": [
               "web"
-            ]
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.23,
+                0.016,
+                27
+              ],
+              "hex": "#241a19"
+            }
           }
         }
       },
-      "success": {
+      "3": {
         "$value": {
           "colorSpace": "oklch",
           "components": [
-            0.79,
+            0.955,
+            0.022,
+            27
+          ],
+          "hex": "#ffebe8"
+        },
+        "$description": "控件底色；透明控件的悬停。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.26,
+                0.031,
+                27
+              ],
+              "hex": "#321e1c"
+            }
+          }
+        }
+      },
+      "4": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.93,
+            0.035,
+            27
+          ],
+          "hex": "#ffe0db"
+        },
+        "$description": "控件悬停。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.29,
+                0.044,
+                27
+              ],
+              "hex": "#3f221f"
+            }
+          }
+        }
+      },
+      "5": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.91,
+            0.046,
+            27
+          ],
+          "hex": "#ffd6d1"
+        },
+        "$description": "控件按下或选中。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.32,
+                0.057,
+                27
+              ],
+              "hex": "#4c2723"
+            }
+          }
+        }
+      },
+      "6": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.885,
+            0.06,
+            27
+          ],
+          "hex": "#ffcbc4"
+        },
+        "$description": "分割线，只是装饰。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.36,
+                0.078,
+                27
+              ],
+              "hex": "#602b26"
+            }
+          }
+        }
+      },
+      "7": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.61,
+            0.156,
+            27
+          ],
+          "hex": "#d0574d"
+        },
+        "$description": "控件边框。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.62,
+                0.13,
+                27
+              ],
+              "hex": "#c8645a"
+            }
+          }
+        }
+      },
+      "8": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.565,
+            0.169,
+            27
+          ],
+          "hex": "#c6423b"
+        },
+        "$description": "控件边框的悬停。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.68,
+                0.143,
+                27
+              ],
+              "hex": "#e37267"
+            }
+          }
+        }
+      },
+      "9": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.52,
+            0.182,
+            27
+          ],
+          "hex": "#bb2a27"
+        },
+        "$description": "实心底色：主按钮。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.72,
+                0.156,
+                27
+              ],
+              "hex": "#f7796e"
+            }
+          }
+        }
+      },
+      "10": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.48,
+            0.182,
+            27
+          ],
+          "hex": "#ad181b"
+        },
+        "$description": "实心底色的悬停。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.76,
+                0.143,
+                27
+              ],
+              "hex": "#ff8b7f"
+            }
+          }
+        }
+      },
+      "11": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.45,
+            0.169,
+            27
+          ],
+          "hex": "#9e1718"
+        },
+        "$description": "次要文字。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.8,
+                0.114,
+                27
+              ],
+              "hex": "#ffa196"
+            }
+          }
+        }
+      },
+      "12": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.22,
+            0.091,
+            27
+          ],
+          "hex": "#3b0001"
+        },
+        "$description": "正文。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.94,
+                0.03,
+                27
+              ],
+              "hex": "#ffe4e0"
+            }
+          }
+        }
+      },
+      "$type": "color",
+      "$description": "错误。"
+    },
+    "amber": {
+      "1": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.995,
+            0.007,
+            92
+          ],
+          "hex": "#fffdf8"
+        },
+        "$description": "页面背景。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.2,
+                0.007,
+                82
+              ],
+              "hex": "#181612"
+            }
+          }
+        }
+      },
+      "2": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.975,
+            0.025,
+            92
+          ],
+          "hex": "#fdf7e4"
+        },
+        "$description": "区块背景：代码块、表头、侧栏。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.23,
+                0.013,
+                82
+              ],
+              "hex": "#201c16"
+            }
+          }
+        }
+      },
+      "3": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.955,
+            0.05,
+            92
+          ],
+          "hex": "#fcf0cb"
+        },
+        "$description": "控件底色；透明控件的悬停。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.26,
+                0.026,
+                82
+              ],
+              "hex": "#2a2315"
+            }
+          }
+        }
+      },
+      "4": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.93,
+            0.07,
+            92
+          ],
+          "hex": "#f9e7b3"
+        },
+        "$description": "控件悬停。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.29,
+                0.037,
+                82
+              ],
+              "hex": "#352a15"
+            }
+          }
+        }
+      },
+      "5": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.91,
+            0.09,
+            92
+          ],
+          "hex": "#f7e09c"
+        },
+        "$description": "控件按下或选中。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.32,
+                0.048,
+                82
+              ],
+              "hex": "#3f3014"
+            }
+          }
+        }
+      },
+      "6": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.885,
+            0.11,
+            92
+          ],
+          "hex": "#f3d782"
+        },
+        "$description": "分割线，只是装饰。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.36,
+                0.066,
+                82
+              ],
+              "hex": "#4e390c"
+            }
+          }
+        }
+      },
+      "7": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.61,
+            0.102,
+            72
+          ],
+          "hex": "#a97837"
+        },
+        "$description": "控件边框。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.62,
+                0.085,
+                82
+              ],
+              "hex": "#a08147"
+            }
+          }
+        }
+      },
+      "8": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.565,
+            0.111,
+            72
+          ],
+          "hex": "#9e6a1b"
+        },
+        "$description": "控件边框的悬停。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.68,
+                0.094,
+                82
+              ],
+              "hex": "#b59351"
+            }
+          }
+        }
+      },
+      "9": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.52,
+            0.111,
+            72
+          ],
+          "hex": "#905c01"
+        },
+        "$description": "实心底色：主按钮。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.72,
+                0.102,
+                82
+              ],
+              "hex": "#c49e56"
+            }
+          }
+        }
+      },
+      "10": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.48,
+            0.103,
+            72
+          ],
+          "hex": "#815200"
+        },
+        "$description": "实心底色的悬停。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.76,
+                0.094,
+                82
+              ],
+              "hex": "#cfab6a"
+            }
+          }
+        }
+      },
+      "11": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.45,
+            0.097,
+            72
+          ],
+          "hex": "#764b00"
+        },
+        "$description": "次要文字。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.8,
+                0.085,
+                82
+              ],
+              "hex": "#d9b97e"
+            }
+          }
+        }
+      },
+      "12": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.22,
+            0.05,
+            72
+          ],
+          "hex": "#291600"
+        },
+        "$description": "正文。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.94,
+                0.026,
+                82
+              ],
+              "hex": "#f4ead8"
+            }
+          }
+        }
+      },
+      "$type": "color",
+      "$description": "警告。浅的几级更偏黄，才认得出是警告。"
+    },
+    "green": {
+      "1": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.995,
+            0.004,
+            150
+          ],
+          "hex": "#fcfefc"
+        },
+        "$description": "页面背景。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.2,
+                0.006,
+                150
+              ],
+              "hex": "#141715"
+            }
+          }
+        }
+      },
+      "2": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.975,
+            0.012,
+            150
+          ],
+          "hex": "#f1f9f3"
+        },
+        "$description": "区块背景：代码块、表头、侧栏。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.23,
+                0.012,
+                150
+              ],
+              "hex": "#191f1a"
+            }
+          }
+        }
+      },
+      "3": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.955,
+            0.024,
+            150
+          ],
+          "hex": "#e5f5e8"
+        },
+        "$description": "控件底色；透明控件的悬停。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.26,
+                0.024,
+                150
+              ],
+              "hex": "#1c271e"
+            }
+          }
+        }
+      },
+      "4": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.93,
+            0.038,
+            150
+          ],
+          "hex": "#d7f0db"
+        },
+        "$description": "控件悬停。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.29,
+                0.034,
+                150
+              ],
+              "hex": "#1f3022"
+            }
+          }
+        }
+      },
+      "5": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.91,
+            0.05,
+            150
+          ],
+          "hex": "#cbebd0"
+        },
+        "$description": "控件按下或选中。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.32,
+                0.044,
+                150
+              ],
+              "hex": "#223927"
+            }
+          }
+        }
+      },
+      "6": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.885,
+            0.07,
+            150
+          ],
+          "hex": "#b9e7c1"
+        },
+        "$description": "分割线，只是装饰。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.36,
+                0.06,
+                150
+              ],
+              "hex": "#24462c"
+            }
+          }
+        }
+      },
+      "7": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.61,
+            0.12,
+            150
+          ],
+          "hex": "#46975b"
+        },
+        "$description": "控件边框。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.62,
+                0.1,
+                150
+              ],
+              "hex": "#579766"
+            }
+          }
+        }
+      },
+      "8": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.565,
+            0.13,
+            150
+          ],
+          "hex": "#2f8b4b"
+        },
+        "$description": "控件边框的悬停。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.68,
+                0.11,
+                150
+              ],
+              "hex": "#63ab74"
+            }
+          }
+        }
+      },
+      "9": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.52,
             0.14,
             150
           ],
-          "hex": "#72d48a"
+          "hex": "#0a7e3a"
         },
-        "$description": "成功。要同时有文字或图标。",
+        "$description": "实心底色：主按钮。",
         "$extensions": {
           "local.katachi": {
             "status": "draft",
-            "source": "提案，见 standards/color.md",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
             "platforms": [
               "web"
             ],
-            "contrast": {
-              "floor": "text",
-              "against": [
-                "surface",
-                "surface-subtle",
-                "success-subtle"
-              ]
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.72,
+                0.12,
+                150
+              ],
+              "hex": "#69ba7c"
             }
           }
         }
       },
-      "success-subtle": {
+      "10": {
         "$value": {
           "colorSpace": "oklch",
           "components": [
-            0.27,
-            0.04,
+            0.48,
+            0.132,
             150
           ],
-          "hex": "#172c1c"
+          "hex": "#007132"
         },
-        "$description": "成功提示的底色。",
+        "$description": "实心底色的悬停。",
         "$extensions": {
           "local.katachi": {
             "status": "draft",
-            "source": "提案，见 standards/color.md",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
             "platforms": [
               "web"
-            ]
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.76,
+                0.11,
+                150
+              ],
+              "hex": "#7cc58c"
+            }
           }
         }
-      }
+      },
+      "11": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.45,
+            0.124,
+            150
+          ],
+          "hex": "#00672d"
+        },
+        "$description": "次要文字。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.8,
+                0.1,
+                150
+              ],
+              "hex": "#8ed09c"
+            }
+          }
+        }
+      },
+      "12": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.22,
+            0.063,
+            150
+          ],
+          "hex": "#002209"
+        },
+        "$description": "正文。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.94,
+                0.03,
+                150
+              ],
+              "hex": "#def1e1"
+            }
+          }
+        }
+      },
+      "$type": "color",
+      "$description": "成功。"
     },
     "paper": {
-      "$description": "纸和墨：只换表面和文字，状态色不变。只在文字本身就是产品时用。",
-      "light": {
-        "$type": "color",
-        "surface": {
-          "$value": {
-            "colorSpace": "oklch",
-            "components": [
-              0.972,
-              0.007,
-              85
+      "1": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.972,
+            0.007,
+            85
+          ],
+          "hex": "#f8f5f1"
+        },
+        "$description": "页面背景。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
             ],
-            "hex": "#f8f5f1"
-          },
-          "$description": "纸面：页面背景。",
-          "$extensions": {
-            "local.katachi": {
-              "status": "draft",
-              "source": "提案，见 standards/color.md",
-              "platforms": [
-                "web"
-              ]
-            }
-          }
-        },
-        "surface-subtle": {
-          "$value": {
-            "colorSpace": "oklch",
-            "components": [
-              0.945,
-              0.009,
-              85
-            ],
-            "hex": "#efece6"
-          },
-          "$description": "纸面：选中和当前项的底色、代码块、表头。",
-          "$extensions": {
-            "local.katachi": {
-              "status": "draft",
-              "source": "提案，见 standards/color.md",
-              "platforms": [
-                "web"
-              ]
-            }
-          }
-        },
-        "surface-raised": {
-          "$value": {
-            "colorSpace": "oklch",
-            "components": [
-              0.985,
-              0.005,
-              85
-            ],
-            "hex": "#fcfaf6"
-          },
-          "$description": "纸面：弹层和浮起的面。",
-          "$extensions": {
-            "local.katachi": {
-              "status": "draft",
-              "source": "提案，见 standards/color.md",
-              "platforms": [
-                "web"
-              ]
-            }
-          }
-        },
-        "ink": {
-          "$value": {
-            "colorSpace": "oklch",
-            "components": [
-              0.25,
-              0.012,
-              60
-            ],
-            "hex": "#26201c"
-          },
-          "$description": "墨：正文和标题。",
-          "$extensions": {
-            "local.katachi": {
-              "status": "draft",
-              "source": "提案，见 standards/color.md",
-              "platforms": [
-                "web"
-              ]
-            }
-          }
-        },
-        "ink-muted": {
-          "$value": {
-            "colorSpace": "oklch",
-            "components": [
-              0.46,
-              0.014,
-              60
-            ],
-            "hex": "#5e5650"
-          },
-          "$description": "墨：次要文字。",
-          "$extensions": {
-            "local.katachi": {
-              "status": "draft",
-              "source": "提案，见 standards/color.md",
-              "platforms": [
-                "web"
-              ]
-            }
-          }
-        },
-        "ink-disabled": {
-          "$value": {
-            "colorSpace": "oklch",
-            "components": [
-              0.63,
-              0.01,
-              60
-            ],
-            "hex": "#8e8883"
-          },
-          "$description": "墨：禁用的文字。",
-          "$extensions": {
-            "local.katachi": {
-              "status": "draft",
-              "source": "提案，见 standards/color.md",
-              "platforms": [
-                "web"
-              ]
-            }
-          }
-        },
-        "line": {
-          "$value": {
-            "colorSpace": "oklch",
-            "components": [
-              0.875,
-              0.012,
-              85
-            ],
-            "hex": "#d9d5cd"
-          },
-          "$description": "纸面上的分割线。",
-          "$extensions": {
-            "local.katachi": {
-              "status": "draft",
-              "source": "提案，见 standards/color.md",
-              "platforms": [
-                "web"
-              ]
-            }
-          }
-        },
-        "control": {
-          "$value": {
-            "colorSpace": "oklch",
-            "components": [
-              0.58,
-              0.012,
-              70
-            ],
-            "hex": "#7f7973"
-          },
-          "$description": "纸面上控件的边界。",
-          "$extensions": {
-            "local.katachi": {
-              "status": "draft",
-              "source": "提案，见 standards/color.md",
-              "platforms": [
-                "web"
-              ]
-            }
-          }
-        },
-        "accent": {
-          "$value": "{color.paper.light.ink}",
-          "$description": "纸面上能点的东西，等于墨。",
-          "$extensions": {
-            "local.katachi": {
-              "status": "draft",
-              "source": "提案，见 standards/color.md",
-              "platforms": [
-                "web"
-              ]
-            }
-          }
-        },
-        "on-accent": {
-          "$value": "{color.paper.light.surface}",
-          "$description": "纸面上主按钮的文字。",
-          "$extensions": {
-            "local.katachi": {
-              "status": "draft",
-              "source": "提案，见 standards/color.md",
-              "platforms": [
-                "web"
-              ]
-            }
-          }
-        },
-        "focus": {
-          "$value": "{color.paper.light.ink}",
-          "$description": "纸面上的焦点环。",
-          "$extensions": {
-            "local.katachi": {
-              "status": "draft",
-              "source": "提案，见 standards/color.md",
-              "platforms": [
-                "web"
-              ]
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.21,
+                0.006,
+                70
+              ],
+              "hex": "#1a1815"
             }
           }
         }
       },
-      "dark": {
-        "$type": "color",
-        "surface": {
-          "$value": {
-            "colorSpace": "oklch",
-            "components": [
-              0.21,
-              0.006,
-              70
+      "2": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.955,
+            0.008,
+            85
+          ],
+          "hex": "#f3f0ea"
+        },
+        "$description": "区块背景：代码块、表头、侧栏。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
             ],
-            "hex": "#1a1815"
-          },
-          "$description": "纸面：页面背景。",
-          "$extensions": {
-            "local.katachi": {
-              "status": "draft",
-              "source": "提案，见 standards/color.md",
-              "platforms": [
-                "web"
-              ]
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.24,
+                0.007,
+                70
+              ],
+              "hex": "#211f1c"
             }
           }
+        }
+      },
+      "3": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.94,
+            0.009,
+            85
+          ],
+          "hex": "#eeebe5"
         },
-        "surface-subtle": {
-          "$value": {
-            "colorSpace": "oklch",
-            "components": [
-              0.26,
-              0.007,
-              70
+        "$description": "控件底色；透明控件的悬停。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
             ],
-            "hex": "#262320"
-          },
-          "$description": "纸面：选中和当前项的底色、代码块、表头。",
-          "$extensions": {
-            "local.katachi": {
-              "status": "draft",
-              "source": "提案，见 standards/color.md",
-              "platforms": [
-                "web"
-              ]
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.27,
+                0.007,
+                70
+              ],
+              "hex": "#292623"
             }
           }
+        }
+      },
+      "4": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.92,
+            0.01,
+            85
+          ],
+          "hex": "#e8e4dd"
         },
-        "surface-raised": {
-          "$value": {
-            "colorSpace": "oklch",
-            "components": [
-              0.26,
-              0.007,
-              70
+        "$description": "控件悬停。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
             ],
-            "hex": "#262320"
-          },
-          "$description": "纸面：弹层和浮起的面。",
-          "$extensions": {
-            "local.katachi": {
-              "status": "draft",
-              "source": "提案，见 standards/color.md",
-              "platforms": [
-                "web"
-              ]
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.3,
+                0.008,
+                70
+              ],
+              "hex": "#302d2a"
             }
           }
+        }
+      },
+      "5": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.9,
+            0.011,
+            85
+          ],
+          "hex": "#e1ded6"
         },
-        "ink": {
-          "$value": {
-            "colorSpace": "oklch",
-            "components": [
-              0.9,
-              0.012,
-              85
+        "$description": "控件按下或选中。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
             ],
-            "hex": "#e2ded5"
-          },
-          "$description": "墨：正文和标题。",
-          "$extensions": {
-            "local.katachi": {
-              "status": "draft",
-              "source": "提案，见 standards/color.md",
-              "platforms": [
-                "web"
-              ]
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.33,
+                0.008,
+                70
+              ],
+              "hex": "#383531"
             }
           }
+        }
+      },
+      "6": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.875,
+            0.012,
+            85
+          ],
+          "hex": "#d9d5cd"
         },
-        "ink-muted": {
-          "$value": {
-            "colorSpace": "oklch",
-            "components": [
-              0.75,
-              0.014,
-              85
+        "$description": "分割线，只是装饰。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
             ],
-            "hex": "#b2ada4"
-          },
-          "$description": "墨：次要文字。",
-          "$extensions": {
-            "local.katachi": {
-              "status": "draft",
-              "source": "提案，见 standards/color.md",
-              "platforms": [
-                "web"
-              ]
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.37,
+                0.008,
+                70
+              ],
+              "hex": "#433f3b"
             }
           }
+        }
+      },
+      "7": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.6,
+            0.012,
+            70
+          ],
+          "hex": "#857f79"
         },
-        "ink-disabled": {
-          "$value": {
-            "colorSpace": "oklch",
-            "components": [
-              0.56,
-              0.01,
-              80
+        "$description": "控件边框。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
             ],
-            "hex": "#78746e"
-          },
-          "$description": "墨：禁用的文字。",
-          "$extensions": {
-            "local.katachi": {
-              "status": "draft",
-              "source": "提案，见 standards/color.md",
-              "platforms": [
-                "web"
-              ]
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.62,
+                0.01,
+                80
+              ],
+              "hex": "#898680"
             }
           }
+        }
+      },
+      "8": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.555,
+            0.012,
+            70
+          ],
+          "hex": "#78726c"
         },
-        "line": {
-          "$value": {
-            "colorSpace": "oklch",
-            "components": [
-              0.33,
-              0.008,
-              70
+        "$description": "控件边框的悬停。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
             ],
-            "hex": "#383531"
-          },
-          "$description": "纸面上的分割线。",
-          "$extensions": {
-            "local.katachi": {
-              "status": "draft",
-              "source": "提案，见 standards/color.md",
-              "platforms": [
-                "web"
-              ]
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.68,
+                0.011,
+                80
+              ],
+              "hex": "#9c9891"
             }
           }
+        }
+      },
+      "9": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.52,
+            0.012,
+            65
+          ],
+          "hex": "#6e6862"
         },
-        "control": {
-          "$value": {
-            "colorSpace": "oklch",
-            "components": [
-              0.62,
-              0.01,
-              80
+        "$description": "实心底色：主按钮。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
             ],
-            "hex": "#898680"
-          },
-          "$description": "纸面上控件的边界。",
-          "$extensions": {
-            "local.katachi": {
-              "status": "draft",
-              "source": "提案，见 standards/color.md",
-              "platforms": [
-                "web"
-              ]
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.72,
+                0.012,
+                85
+              ],
+              "hex": "#a8a49c"
             }
           }
+        }
+      },
+      "10": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.48,
+            0.013,
+            60
+          ],
+          "hex": "#635c56"
         },
-        "accent": {
-          "$value": "{color.paper.dark.ink}",
-          "$description": "纸面上能点的东西，等于墨。",
-          "$extensions": {
-            "local.katachi": {
-              "status": "draft",
-              "source": "提案，见 standards/color.md",
-              "platforms": [
-                "web"
-              ]
+        "$description": "实心底色的悬停。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.76,
+                0.012,
+                85
+              ],
+              "hex": "#b4b1a9"
             }
           }
+        }
+      },
+      "11": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.45,
+            0.014,
+            60
+          ],
+          "hex": "#5b544e"
         },
-        "on-accent": {
-          "$value": "{color.paper.dark.surface}",
-          "$description": "纸面上主按钮的文字。",
-          "$extensions": {
-            "local.katachi": {
-              "status": "draft",
-              "source": "提案，见 standards/color.md",
-              "platforms": [
-                "web"
-              ]
+        "$description": "次要文字。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.8,
+                0.014,
+                85
+              ],
+              "hex": "#c2bdb4"
             }
           }
+        }
+      },
+      "12": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.25,
+            0.012,
+            60
+          ],
+          "hex": "#26201c"
         },
-        "focus": {
-          "$value": "{color.paper.dark.ink}",
-          "$description": "纸面上的焦点环。",
-          "$extensions": {
-            "local.katachi": {
-              "status": "draft",
-              "source": "提案，见 standards/color.md",
-              "platforms": [
-                "web"
-              ]
+        "$description": "正文。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.9,
+                0.012,
+                85
+              ],
+              "hex": "#e2ded5"
             }
           }
+        }
+      },
+      "$type": "color",
+      "$description": "纸和墨：带一点暖色调的灰。只在文字本身就是产品时用。"
+    },
+    "hue": {
+      "1": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.995,
+            0.004,
+            255
+          ],
+          "hex": "#fcfeff"
+        },
+        "$description": "页面背景。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.2,
+                0.006,
+                255
+              ],
+              "hex": "#141619"
+            },
+            "hue": "--accent-hue"
+          }
+        }
+      },
+      "2": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.975,
+            0.012,
+            255
+          ],
+          "hex": "#f1f7ff"
+        },
+        "$description": "区块背景：代码块、表头、侧栏。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.23,
+                0.012,
+                255
+              ],
+              "hex": "#191d23"
+            },
+            "hue": "--accent-hue"
+          }
+        }
+      },
+      "3": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.955,
+            0.024,
+            255
+          ],
+          "hex": "#e6f1ff"
+        },
+        "$description": "控件底色；透明控件的悬停。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.26,
+                0.024,
+                255
+              ],
+              "hex": "#1c2530"
+            },
+            "hue": "--accent-hue"
+          }
+        }
+      },
+      "4": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.93,
+            0.038,
+            255
+          ],
+          "hex": "#d7eaff"
+        },
+        "$description": "控件悬停。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.29,
+                0.034,
+                255
+              ],
+              "hex": "#202c3c"
+            },
+            "hue": "--accent-hue"
+          }
+        }
+      },
+      "5": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.91,
+            0.05,
+            255
+          ],
+          "hex": "#cce4ff"
+        },
+        "$description": "控件按下或选中。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.32,
+                0.044,
+                255
+              ],
+              "hex": "#233449"
+            },
+            "hue": "--accent-hue"
+          }
+        }
+      },
+      "6": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.885,
+            0.07,
+            255
+          ],
+          "hex": "#bbdcff"
+        },
+        "$description": "分割线，只是装饰。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.36,
+                0.06,
+                255
+              ],
+              "hex": "#273e5c"
+            },
+            "hue": "--accent-hue"
+          }
+        }
+      },
+      "7": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.61,
+            0.12,
+            255
+          ],
+          "hex": "#4e85ca"
+        },
+        "$description": "控件边框。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.62,
+                0.1,
+                255
+              ],
+              "hex": "#5c88c1"
+            },
+            "hue": "--accent-hue"
+          }
+        }
+      },
+      "8": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.565,
+            0.13,
+            255
+          ],
+          "hex": "#3b77c0"
+        },
+        "$description": "控件边框的悬停。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.68,
+                0.11,
+                255
+              ],
+              "hex": "#689bdb"
+            },
+            "hue": "--accent-hue"
+          }
+        }
+      },
+      "9": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.52,
+            0.14,
+            255
+          ],
+          "hex": "#2769b7"
+        },
+        "$description": "实心底色：主按钮。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.72,
+                0.12,
+                255
+              ],
+              "hex": "#6fa7ee"
+            },
+            "hue": "--accent-hue"
+          }
+        }
+      },
+      "10": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.48,
+            0.14,
+            255
+          ],
+          "hex": "#195daa"
+        },
+        "$description": "实心底色的悬停。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.76,
+                0.11,
+                255
+              ],
+              "hex": "#81b4f6"
+            },
+            "hue": "--accent-hue"
+          }
+        }
+      },
+      "11": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.45,
+            0.13,
+            255
+          ],
+          "hex": "#17559b"
+        },
+        "$description": "次要文字。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.8,
+                0.1,
+                255
+              ],
+              "hex": "#92c1fd"
+            },
+            "hue": "--accent-hue"
+          }
+        }
+      },
+      "12": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.22,
+            0.07,
+            255
+          ],
+          "hex": "#011a3a"
+        },
+        "$description": "正文。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "draft",
+            "source": "12 级的用途来自 Radix Colors（MIT），数值是提案，见 standards/color.md",
+            "platforms": [
+              "web"
+            ],
+            "dark": {
+              "colorSpace": "oklch",
+              "components": [
+                0.94,
+                0.03,
+                255
+              ],
+              "hex": "#deedff"
+            },
+            "hue": "--accent-hue"
+          }
+        }
+      },
+      "$type": "color",
+      "$description": "强调色。产品只选一个色相，写在 --accent-hue，明度和彩度不变。"
+    },
+    "surface": {
+      "$value": "{color.gray.1}",
+      "$description": "页面背景。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ]
         }
       }
     },
-    "recipe": {
-      "$type": "number",
-      "$description": "强调色的配方：产品只选一个色相，明度和彩度用这里的，任何色相都过对比度下限。",
-      "light-l": {
-        "$value": 0.5,
-        "$description": "浅色模式下强调色的明度。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ]
-          }
+    "surface-subtle": {
+      "$value": "{color.gray.2}",
+      "$description": "区块背景：代码块、表头、侧栏。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ]
         }
-      },
-      "light-c": {
-        "$value": 0.13,
-        "$description": "浅色模式下强调色的彩度。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ]
-          }
+      }
+    },
+    "surface-raised": {
+      "$value": "{color.gray.1}",
+      "$description": "弹层和浮起的面。深色模式下比页面亮一级。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ],
+          "dark": "{color.gray.2}"
         }
-      },
-      "dark-l": {
-        "$value": 0.78,
-        "$description": "深色模式下强调色的明度。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ]
-          }
+      }
+    },
+    "fill": {
+      "$value": "{color.gray.3}",
+      "$description": "控件底色；透明控件的悬停。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ]
         }
-      },
-      "dark-c": {
-        "$value": 0.11,
-        "$description": "深色模式下强调色的彩度。",
-        "$extensions": {
-          "local.katachi": {
-            "status": "draft",
-            "source": "提案，见 standards/color.md",
-            "platforms": [
-              "web"
-            ]
-          }
+      }
+    },
+    "fill-hover": {
+      "$value": "{color.gray.4}",
+      "$description": "控件悬停。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ]
+        }
+      }
+    },
+    "fill-active": {
+      "$value": "{color.gray.5}",
+      "$description": "控件按下。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ]
+        }
+      }
+    },
+    "line": {
+      "$value": "{color.gray.6}",
+      "$description": "分割线，只是装饰，不靠它传达信息。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ]
+        }
+      }
+    },
+    "control": {
+      "$value": "{color.gray.7}",
+      "$description": "控件边框：输入框、次要按钮。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ],
+          "contrast": [
+            {
+              "floor": "non-text",
+              "against": [
+                "color.surface",
+                "color.surface-subtle",
+                "color.surface-raised",
+                "color.fill"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "control-hover": {
+      "$value": "{color.gray.8}",
+      "$description": "控件边框的悬停。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ],
+          "contrast": [
+            {
+              "floor": "non-text",
+              "against": [
+                "color.surface",
+                "color.surface-subtle",
+                "color.surface-raised",
+                "color.fill"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ink": {
+      "$value": "{color.gray.12}",
+      "$description": "正文和标题。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ],
+          "contrast": [
+            {
+              "floor": "text",
+              "against": [
+                "color.surface",
+                "color.surface-subtle",
+                "color.surface-raised",
+                "color.fill",
+                "color.fill-hover",
+                "color.fill-active",
+                "color.selected"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ink-muted": {
+      "$value": "{color.gray.11}",
+      "$description": "次要文字：时间、来源、提示。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ],
+          "contrast": [
+            {
+              "floor": "text",
+              "against": [
+                "color.surface",
+                "color.surface-subtle",
+                "color.surface-raised",
+                "color.fill",
+                "color.fill-hover",
+                "color.fill-active",
+                "color.selected"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ink-disabled": {
+      "$value": "{color.gray.7}",
+      "$description": "禁用的文字。WCAG 1.4.3 不要求对比度，但要读得出。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ]
+        }
+      }
+    },
+    "accent": {
+      "$value": "{color.gray.12}",
+      "$description": "文字里能点的东西：链接。默认等于 ink，选了色相后指向第 11 级。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ],
+          "accent": "{color.hue.11}",
+          "contrast": [
+            {
+              "floor": "text",
+              "against": [
+                "color.surface",
+                "color.surface-subtle",
+                "color.fill"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "accent-solid": {
+      "$value": "{color.gray.12}",
+      "$description": "主按钮的底色。默认等于 ink，选了色相后指向第 9 级。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ],
+          "accent": "{color.hue.9}"
+        }
+      }
+    },
+    "accent-solid-hover": {
+      "$value": "{color.gray.11}",
+      "$description": "主按钮底色的悬停。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ],
+          "accent": "{color.hue.10}"
+        }
+      }
+    },
+    "accent-fill": {
+      "$value": "{color.gray.3}",
+      "$description": "带强调的浅底。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ],
+          "accent": "{color.hue.3}"
+        }
+      }
+    },
+    "selected": {
+      "$value": "{color.gray.5}",
+      "$description": "选中项的底色。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ],
+          "accent": "{color.hue.4}"
+        }
+      }
+    },
+    "focus": {
+      "$value": "{color.gray.12}",
+      "$description": "焦点环。默认等于 ink，选了色相后指向第 9 级。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ],
+          "accent": "{color.hue.9}",
+          "contrast": [
+            {
+              "floor": "non-text",
+              "against": [
+                "color.surface",
+                "color.surface-subtle",
+                "color.surface-raised",
+                "color.fill"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "on-solid": {
+      "$value": "{color.gray.1}",
+      "$description": "实心底色上的文字。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ],
+          "contrast": [
+            {
+              "floor": "text",
+              "against": [
+                "color.accent-solid",
+                "color.accent-solid-hover",
+                "color.error-solid",
+                "color.error-solid-hover",
+                "color.warning-solid",
+                "color.warning-solid-hover",
+                "color.success-solid",
+                "color.success-solid-hover"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "error": {
+      "$value": "{color.red.11}",
+      "$description": "错误的文字和图标。要同时有文字或图标。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ],
+          "contrast": [
+            {
+              "floor": "text",
+              "against": [
+                "color.surface",
+                "color.surface-subtle",
+                "color.error-subtle"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "error-subtle": {
+      "$value": "{color.red.3}",
+      "$description": "错误提示的底色。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ]
+        }
+      }
+    },
+    "error-line": {
+      "$value": "{color.red.7}",
+      "$description": "错误的边框，比如出错的输入框。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ],
+          "contrast": [
+            {
+              "floor": "non-text",
+              "against": [
+                "color.surface",
+                "color.surface-subtle"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "error-solid": {
+      "$value": "{color.red.9}",
+      "$description": "错误的实心底色，比如删除按钮。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ]
+        }
+      }
+    },
+    "error-solid-hover": {
+      "$value": "{color.red.10}",
+      "$description": "错误实心底色的悬停。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ]
+        }
+      }
+    },
+    "warning": {
+      "$value": "{color.amber.11}",
+      "$description": "警告的文字和图标。要同时有文字或图标。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ],
+          "contrast": [
+            {
+              "floor": "text",
+              "against": [
+                "color.surface",
+                "color.surface-subtle",
+                "color.warning-subtle"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "warning-subtle": {
+      "$value": "{color.amber.3}",
+      "$description": "警告提示的底色。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ]
+        }
+      }
+    },
+    "warning-line": {
+      "$value": "{color.amber.7}",
+      "$description": "警告的边框，比如出错的输入框。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ],
+          "contrast": [
+            {
+              "floor": "non-text",
+              "against": [
+                "color.surface",
+                "color.surface-subtle"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "warning-solid": {
+      "$value": "{color.amber.9}",
+      "$description": "警告的实心底色，比如删除按钮。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ]
+        }
+      }
+    },
+    "warning-solid-hover": {
+      "$value": "{color.amber.10}",
+      "$description": "警告实心底色的悬停。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ]
+        }
+      }
+    },
+    "success": {
+      "$value": "{color.green.11}",
+      "$description": "成功的文字和图标。要同时有文字或图标。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ],
+          "contrast": [
+            {
+              "floor": "text",
+              "against": [
+                "color.surface",
+                "color.surface-subtle",
+                "color.success-subtle"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "success-subtle": {
+      "$value": "{color.green.3}",
+      "$description": "成功提示的底色。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ]
+        }
+      }
+    },
+    "success-line": {
+      "$value": "{color.green.7}",
+      "$description": "成功的边框，比如出错的输入框。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ],
+          "contrast": [
+            {
+              "floor": "non-text",
+              "against": [
+                "color.surface",
+                "color.surface-subtle"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "success-solid": {
+      "$value": "{color.green.9}",
+      "$description": "成功的实心底色，比如删除按钮。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ]
+        }
+      }
+    },
+    "success-solid-hover": {
+      "$value": "{color.green.10}",
+      "$description": "成功实心底色的悬停。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ]
         }
       }
     }

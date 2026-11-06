@@ -1,50 +1,25 @@
-/* katachi 颜色的 Web 实现，规则见 ../color.md。先引入 tokens/build/tokens.css。
-   可以整个复制进产品。默认跟随系统的明暗；要固定一种，在根元素上设 color-scheme。 */
+/* katachi 颜色的 Web 实现，规则见 ../color.md。先引入 tokens/build/tokens.css，色阶和角色都在那里。
+   可以整个复制进产品。默认跟随系统的明暗；要固定一种，在根元素上设 color-scheme。
+   选强调色：根元素加 data-accent，再设 --accent-hue。 */
 
 :root {
   color-scheme: light dark;
-  --color-surface: light-dark(var(--color-light-surface), var(--color-dark-surface));
-  --color-surface-subtle: light-dark(var(--color-light-surface-subtle), var(--color-dark-surface-subtle));
-  --color-surface-raised: light-dark(var(--color-light-surface-raised), var(--color-dark-surface-raised));
-  --color-ink: light-dark(var(--color-light-ink), var(--color-dark-ink));
-  --color-ink-muted: light-dark(var(--color-light-ink-muted), var(--color-dark-ink-muted));
-  --color-ink-disabled: light-dark(var(--color-light-ink-disabled), var(--color-dark-ink-disabled));
-  --color-line: light-dark(var(--color-light-line), var(--color-dark-line));
-  --color-control: light-dark(var(--color-light-control), var(--color-dark-control));
-  --color-accent: light-dark(var(--color-light-accent), var(--color-dark-accent));
-  --color-on-accent: light-dark(var(--color-light-on-accent), var(--color-dark-on-accent));
-  --color-focus: light-dark(var(--color-light-focus), var(--color-dark-focus));
-  --color-error: light-dark(var(--color-light-error), var(--color-dark-error));
-  --color-error-subtle: light-dark(var(--color-light-error-subtle), var(--color-dark-error-subtle));
-  --color-warning: light-dark(var(--color-light-warning), var(--color-dark-warning));
-  --color-warning-subtle: light-dark(var(--color-light-warning-subtle), var(--color-dark-warning-subtle));
-  --color-success: light-dark(var(--color-light-success), var(--color-dark-success));
-  --color-success-subtle: light-dark(var(--color-light-success-subtle), var(--color-dark-success-subtle));
 }
 
-/* 纸和墨：表面和文字带色调，状态色不变。只在文字本身就是产品时用。 */
+/* 纸和墨：灰换成带暖色调的那条。只在文字本身就是产品时用。 */
 :root[data-color="paper"] {
-  --color-surface: light-dark(var(--color-paper-light-surface), var(--color-paper-dark-surface));
-  --color-surface-subtle: light-dark(var(--color-paper-light-surface-subtle), var(--color-paper-dark-surface-subtle));
-  --color-surface-raised: light-dark(var(--color-paper-light-surface-raised), var(--color-paper-dark-surface-raised));
-  --color-ink: light-dark(var(--color-paper-light-ink), var(--color-paper-dark-ink));
-  --color-ink-muted: light-dark(var(--color-paper-light-ink-muted), var(--color-paper-dark-ink-muted));
-  --color-ink-disabled: light-dark(var(--color-paper-light-ink-disabled), var(--color-paper-dark-ink-disabled));
-  --color-line: light-dark(var(--color-paper-light-line), var(--color-paper-dark-line));
-  --color-control: light-dark(var(--color-paper-light-control), var(--color-paper-dark-control));
-  --color-accent: light-dark(var(--color-paper-light-accent), var(--color-paper-dark-accent));
-  --color-on-accent: light-dark(var(--color-paper-light-on-accent), var(--color-paper-dark-on-accent));
-  --color-focus: light-dark(var(--color-paper-light-focus), var(--color-paper-dark-focus));
-}
-
-/* 强调色：产品只选一个色相，写在 --accent-hue。明度和彩度照 token，任何色相都过对比度下限。 */
-:root[data-accent] {
-  --color-accent: light-dark(
-    oklch(var(--color-recipe-light-l) var(--color-recipe-light-c) var(--accent-hue)),
-    oklch(var(--color-recipe-dark-l) var(--color-recipe-dark-c) var(--accent-hue))
-  );
-  --color-on-accent: var(--color-surface);
-  --color-focus: var(--color-accent);
+  --color-gray-1: var(--color-paper-1);
+  --color-gray-2: var(--color-paper-2);
+  --color-gray-3: var(--color-paper-3);
+  --color-gray-4: var(--color-paper-4);
+  --color-gray-5: var(--color-paper-5);
+  --color-gray-6: var(--color-paper-6);
+  --color-gray-7: var(--color-paper-7);
+  --color-gray-8: var(--color-paper-8);
+  --color-gray-9: var(--color-paper-9);
+  --color-gray-10: var(--color-paper-10);
+  --color-gray-11: var(--color-paper-11);
+  --color-gray-12: var(--color-paper-12);
 }
 
 /* 读的人要更高的对比度时，次要文字和分割线都加深。 */
@@ -59,7 +34,7 @@
 body {
   background: var(--color-surface);
   color: var(--color-ink);
-  accent-color: var(--color-accent);
+  accent-color: var(--color-accent-solid);
 }
 
 /* 文字里的链接靠下划线认出来，不只靠颜色。 */
