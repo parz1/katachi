@@ -23,7 +23,6 @@ const section = (id, intro, body) => {
   const title = SECTIONS.find(([key]) => key === id)[1];
   return `<section id="${id}" aria-labelledby="${id}-title"><h2 id="${id}-title">${h(title)}</h2>${intro ? `<p class="intro">${intro}</p>` : ''}${body}</section>`;
 };
-const empty = (text) => `<p class="empty">${text}</p>`;
 const source = (path) => `<a href="/${h(encodeURI(path))}"><code>${h(path)}</code></a>`;
 
 function fields(values, order, base = '') {
@@ -216,7 +215,7 @@ function tokenSpecimens(lib) {
 
 function tokens(lib) {
   const rows = lib.tokens.map((item) => `<tr><th scope="row"><code>${h(item.name)}</code></th><td>${h(item.value)}</td><td>${h(item.description)}</td><td>${h(item.platforms.join('、') || '所有')}</td><td>${h(item.status)}</td><td>${h(item.source)}</td></tr>`).join('');
-  return section('tokens', `constraint 来自标准和平台规范。object 和 interaction 来自 Kotolog，状态是 draft。颜色、字体和间距还没定。来源：${source('tokens/katachi.tokens.json')}。`,
+  return section('tokens', `这些数值来自标准和平台规范，不是审美选择。字体、颜色和间距还没定。来源：${source('tokens/katachi.tokens.json')}。`,
     `${tokenSpecimens(lib)}<h3>全部 Tokens</h3>
     <div class="table-wrap" tabindex="0" role="region" aria-label="全部 Tokens"><table class="tokens-table"><thead><tr><th scope="col">名称</th><th scope="col">值</th><th scope="col">说明</th><th scope="col">平台</th><th scope="col">状态</th><th scope="col">来源</th></tr></thead><tbody>${rows}</tbody></table></div>`);
 }
@@ -233,7 +232,7 @@ function content(lib) {
   ].join('');
   const rows = Object.entries(text).map(([key, value]) => `<div class="stress-row"><code>${h(key)}</code><div class="stress-sample">${h(value)}</div></div>`).join('');
   const countRows = Object.entries(counts).map(([key, value]) => `<li><code>${h(key)}</code>：${h(value.join('、'))}</li>`).join('');
-  return section('content', `用这些内容检查界面会不会被破坏。优先用产品的真实内容。来源：${source('examples/content-stress.json')}。`,
+  return section('content', `用这些内容检查界面会不会被破坏。优先用产品的真实内容。来源：${source('standards/content-stress.json')}。`,
     `<div class="controls" role="group" aria-label="内容宽度和截断">${buttons}</div>
     <div class="stress" data-stress>${rows}</div>
     <h3>数量</h3><ul>${countRows}</ul>`);
@@ -244,7 +243,8 @@ export function renderPage() {
   const tokensCss = existsSync(OUTPUT) ? readFileSync(OUTPUT, 'utf8') : '';
   const css = readFileSync(join(HERE, 'app.css'), 'utf8');
   const js = readFileSync(join(HERE, 'app.js'), 'utf8');
-  const nav = SECTIONS.map(([id, title]) => `<li><a href="#${id}">${h(title)}</a></li>`).join('');
+  const present = SECTIONS.filter(([id]) => (id === 'patterns' ? lib.patterns.length : id === 'examples' ? lib.examples.length || exists('examples/README.md') : true));
+  const nav = present.map(([id, title]) => `<li><a href="#${id}">${h(title)}</a></li>`).join('');
   const version = lib.git
     ? `分支 ${h(lib.git.branch || '（游离）')}，提交 ${h(lib.git.commit)}${lib.git.dirty ? '，有未提交的改动' : ''}`
     : '不在 Git 仓库中';
@@ -252,9 +252,9 @@ export function renderPage() {
   const pages = (files) => files.map((file) => doc(file, lib, widths)).join('');
   const body = [
     section('design', '', doc('DESIGN.md', lib, widths)),
-    section('standards', '', doc('standards/interaction.md', lib, widths)),
-    section('patterns', '', lib.patterns.length ? pages(lib.patterns) : empty('还没有模式。')),
-    section('examples', '', `${exists('examples/README.md') ? doc('examples/README.md', lib, widths) : ''}${pages(lib.examples)}`),
+    section('standards', '', pages(lib.standards)),
+    lib.patterns.length ? section('patterns', '', pages(lib.patterns)) : '',
+    lib.examples.length || exists('examples/README.md') ? section('examples', '', `${exists('examples/README.md') ? doc('examples/README.md', lib, widths) : ''}${pages(lib.examples)}`) : '',
     platforms(lib),
     tokens(lib),
     content(lib),

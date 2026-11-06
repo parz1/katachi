@@ -2,7 +2,7 @@
 
 做界面时不用读这里。这里写怎么看、怎么检查、怎么改这个仓库。
 
-这是用户的设计和交互规范。这个仓库只放 agent 能直接拿来用的东西：规范、标准和样例。做界面时用不上的，不放进来。规范是主动定下来的，agent 默认照它做；用起来之后，按用户的反应修订。原始材料留在原处：Kotolog、claude.ai 和会话记录都不搬，需要时写链接或提交号。
+这是用户的设计和交互规范。这个仓库只放 agent 能直接拿来用的东西：规范、标准和样例。做界面时用不上的，不放进来。规范是主动定下来的，agent 默认照它做；用起来之后，按用户的反应修订。原始材料留在原处：产品仓库、claude.ai 和会话记录都不搬，需要时写链接或提交号。
 
 ## 产品怎么用
 
@@ -25,7 +25,7 @@ node tools/viewer/serve.mjs
 查看器的写法约定：
 
 - 连续几行只有图片时，排成带说明的图组，说明来自替代文字。图只能来自仓库内部。
-- 一段话只有一个指向 `.html` 的链接时，就地运行它，可以切换窗口宽度。不想就地运行，就把链接写在句子里。
+- 一段话只有一个指向 `.html` 的链接时，就地运行它，可以切换窗口宽度。默认用放得下的最大宽度，这样字是真实大小。不想就地运行，就把链接写在句子里。
 - 写成代码样式的 token 名，后面会显示当前的值。
 
 ## 检查
@@ -40,12 +40,16 @@ node tools/check.mjs
 
 - **修订规范**：按 [sediment.md](sediment.md)。
 - **数值**：改 `tokens/katachi.tokens.json`，运行 `node tools/build-tokens.mjs`，再检查。不要手改 `tokens/build/`。每个 token 要有 `$description`，以及 `$extensions` 里 `local.katachi` 的 `status` 和 `source`；只适用于部分平台时写 `platforms`。`status` 是 standard（来自标准）、draft（用户还没确认）、adopted（用户确认）、validated（第二个产品也用过）。
-- **根目录**：只放 `AGENTS.md`、`CLAUDE.md`、`DESIGN.md`、`standards/`、`patterns/`、`examples/`、`tokens/`、`platforms/`、`tools/`。校验脚本会拦住其他东西。
-- **入口**：规范、模式和平台都要从 `DESIGN.md` 能找到，新增的示例要从 `examples/README.md` 能找到，否则 agent 看不到。
+- **根目录**：只放 `AGENTS.md`、`CLAUDE.md`、`DESIGN.md`、`standards/`、`tokens/`、`platforms/`、`tools/`，有内容后再加 `patterns/` 和 `examples/`。校验脚本会拦住其他东西。
+- **入口**：规范、模式和平台都要从 `DESIGN.md` 能找到，示例要从 `examples/README.md` 能找到，否则 agent 看不到。
+
+### 一页规范
+
+放在 `standards/<名称>.md`，开头写状态和来源。还在比较时，候选放在同一名字的目录里，选定后删掉落选的。
 
 ### 一页模式
 
-放在 `patterns/<名称>.md`，不超过 180 行。能复制的例子放在 `patterns/<名称>/`，来源、认可记录和待判断的事放在同一目录的 `notes.md`。样板是 [object-forms.md](../patterns/object-forms.md)。
+放在 `patterns/<名称>.md`，不超过 180 行。能复制的例子放在 `patterns/<名称>/`，来源、认可记录和待判断的事放在同一目录的 `notes.md`。
 
 ```markdown
 # <做什么>：<模式名>
@@ -57,7 +61,7 @@ node tools/check.mjs
 
 ## 规则
 ## 操作、数值、动效（用到才写）
-## 状态（交互规范里的七种，每行都要回答，和规范一样就写明）
+## 状态（焦点、选中、禁用、加载、空状态、错误、成功，每行都要回答）
 ## 内容（长文本、混排、极端数量时怎么样）
 ## 平台
 ## 怎么实现

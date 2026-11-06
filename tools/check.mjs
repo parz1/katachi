@@ -3,7 +3,7 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { dirname, join, normalize } from 'node:path';
 import { OUTPUT, ROOT, loadTokens, renderCss } from './build-tokens.mjs';
-import { exists, findTable, read, stripFences, stripInlineCode, subdirectories, walk } from './library.mjs';
+import { exists, read, stripFences, stripInlineCode, subdirectories, walk } from './library.mjs';
 import { renderPage } from './viewer/build.mjs';
 
 const MB = 1024 * 1024;
@@ -12,6 +12,7 @@ const ROOT_ENTRIES = new Set(['AGENTS.md', 'CLAUDE.md', 'DESIGN.md', 'standards'
 const ROOT_IGNORED = new Set(['.git', '.claude', '.DS_Store', 'node_modules']);
 const DESIGN_SECTIONS = ['按任务找', '定了的', '底线', '没定的，别自己决定', '交付前'];
 const PATTERN_STATUS = new Set(['draft', 'adopted', 'validated']);
+const STATES = ['焦点', '选中', '禁用', '加载', '空状态', '错误', '成功'];
 const PATTERN_SECTIONS = ['规则', '状态', '做完检查'];
 const PLATFORM_SECTIONS = ['能力', '平台要求', '必查', '验证'];
 const PLATFORM_FIELDS = ['单位', '显示', '输入', '场景', '先用什么查', '最终验证'];
@@ -19,6 +20,7 @@ const PLATFORM_FIELDS = ['单位', '显示', '输入', '场景', '先用什么�
 const files = walk();
 const markdownFiles = files.filter((file) => file.endsWith('.md'));
 const patternFiles = files.filter((file) => /^patterns\/[^/]+\.md$/.test(file));
+const standardFiles = files.filter((file) => /^standards\/[^/]+\.md$/.test(file));
 const platformFiles = files.filter((file) => /^platforms\/[^/]+\.md$/.test(file));
 const lineCount = (text) => text.trimEnd().split('\n').length;
 const hasSection = (text, title) => new RegExp(`^## ${title}[ \\t]*$`, 'm').test(text);
@@ -49,7 +51,8 @@ function checkEntries() {
 function checkFindable() {
   const errors = [];
   const design = read('DESIGN.md');
-  const required = ['standards/interaction.md', ...patternFiles, ...platformFiles, 'tokens/README.md', 'examples/README.md', 'tools/sediment.md'];
+  const examplesIndex = exists('examples/README.md') ? ['examples/README.md'] : [];
+  const required = [...standardFiles, ...patternFiles, ...platformFiles, ...examplesIndex, 'tokens/README.md', 'tools/sediment.md'];
   for (const file of required) {
     if (!design.includes(`(${file})`)) errors.push(`DESIGN.md 没有链接 ${file}`);
   }
@@ -113,8 +116,11 @@ function checkLinks() {
 
 function checkPatterns() {
   const errors = [];
-  const states = findTable(read('standards/interaction.md'), '状态')?.rows.map((row) => row[0]) ?? [];
-  if (!states.length) errors.push('standards/interaction.md 缺少状态表');
+  for (const file of standardFiles) {
+    const text = stripFences(read(file));
+    if (!PATTERN_STATUS.has(text.match(/^- 状态：[ \t]*(\S*)/m)?.[1])) errors.push(`${file}：状态只能是 ${[...PATTERN_STATUS].join('、')}`);
+    if (!/^- 来源：[ \t]*\S/m.test(text)) errors.push(`${file}：缺少「来源」`);
+  }
   for (const file of patternFiles) {
     const raw = read(file);
     const text = stripFences(raw);
@@ -125,13 +131,13 @@ function checkPatterns() {
       if (!hasSection(text, title)) errors.push(`${file}：缺少「${title}」一节`);
     }
     const answers = text.split(/^## 状态[ \t]*$/m)[1]?.split(/^## /m)[0] ?? '';
-    for (const state of states) {
+    for (const state of STATES) {
       if (hasSection(text, '状态') && !new RegExp(`^\\|\\s*${state}\\s*\\|`, 'm').test(answers)) {
         errors.push(`${file}：状态一节没有回答「${state}」，没定义也要写明`);
       }
     }
   }
-  return { errors, note: `${patternFiles.length} 个模式` };
+  return { errors, note: `${standardFiles.length} 个规范，${patternFiles.length} 个模式` };
 }
 
 function checkPlatforms() {
@@ -178,8 +184,8 @@ function checkExamples() {
     if (!/^- 来源：[ \t]*\S/m.test(text)) errors.push(`${dir}/README.md：缺少「来源」`);
     if (!hasSection(text, '学什么')) errors.push(`${dir}/README.md：缺少「学什么」`);
   }
-  const stress = JSON.parse(read('examples/content-stress.json'));
-  if (!stress.text || !stress.counts) errors.push('examples/content-stress.json 应包含 text 和 counts');
+  const stress = JSON.parse(read('standards/content-stress.json'));
+  if (!stress.text || !stress.counts) errors.push('standards/content-stress.json 应包含 text 和 counts');
   return { errors, note: `${examples.length} 个示例` };
 }
 
@@ -188,7 +194,7 @@ function checkViewer() {
   const title = (file) => read(file).match(/^# (.+)$/m)?.[1] ?? file;
   const expected = [
     title('DESIGN.md'),
-    title('standards/interaction.md'),
+    ...standardFiles.map(title),
     ...patternFiles.map(title),
     ...subdirectories('examples').map((dir) => title(`${dir}/README.md`)),
     ...loadTokens().tokens.keys(),
@@ -217,7 +223,7 @@ const checks = [
   ['tokens', checkTokens],
   ['token 引用', checkTokenReferences],
   ['Markdown 链接', checkLinks],
-  ['模式', checkPatterns],
+  ['规范和模式', checkPatterns],
   ['平台', checkPlatforms],
   ['示例', checkExamples],
   ['查看器', checkViewer],

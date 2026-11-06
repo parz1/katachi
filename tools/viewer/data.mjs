@@ -64,6 +64,11 @@ function readGit() {
   }
 }
 
+// 只取目录第一层的 Markdown，子目录放的是页面引用的东西。
+const pagesIn = (dir) => (exists(dir)
+  ? walk(dir).filter((file) => file.endsWith('.md') && !file.slice(dir.length + 1).includes('/'))
+  : []);
+
 // 示例按 examples/README.md 里的先后排列。
 function readExamples() {
   const index = exists('examples/README.md') ? read('examples/README.md') : '';
@@ -79,8 +84,9 @@ export function readLibrary() {
     git: readGit(),
     tokens: readTokens(),
     platforms: readPlatforms(),
-    patterns: walk('patterns').filter((file) => /^patterns\/[^/]+\.md$/.test(file)),
+    standards: pagesIn('standards'),
+    patterns: pagesIn('patterns'),
     examples: readExamples(),
-    contentStress: JSON.parse(read('examples/content-stress.json')),
+    contentStress: JSON.parse(read('standards/content-stress.json')),
   };
 }

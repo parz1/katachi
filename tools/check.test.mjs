@@ -9,8 +9,9 @@ import { fileURLToPath } from 'node:url';
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), '..');
 const META = { 'local.katachi': { status: 'draft', source: 'test' } };
-const PATTERN = 'patterns/object-forms.md';
-const EXAMPLE = 'examples/kotolog-cli/README.md';
+const PATTERN = 'patterns/x.md';
+const EXAMPLE = 'examples/new/README.md';
+const STANDARD = 'standards/typography.md';
 
 const copyRepo = (dir) => cpSync(REPO, dir, { recursive: true, filter: (src) => basename(src) !== '.git' });
 const edit = (dir, rel, fn) => writeFileSync(join(dir, rel), fn(readFileSync(join(dir, rel), 'utf8')));
@@ -27,6 +28,17 @@ const tokens = (dir, fn) => edit(dir, 'tokens/katachi.tokens.json', (text) => {
 const build = (dir) => spawnSync(process.execPath, ['tools/build-tokens.mjs'], { cwd: dir, encoding: 'utf8' });
 const WATCH = '# watch 手表\n\n## 能力\n\n- 单位：pt\n- 显示：很小\n- 输入：触摸\n- 场景：一瞥\n\n## 平台要求\n\n暂无。\n\n## 必查\n\n- 小屏\n\n## 验证\n\n- 先用什么查：模拟器\n- 最终验证：真机\n';
 const NEW_EXAMPLE = '# 新示例\n\n- 来源：某处\n\n## 学什么\n\n- 一点\n';
+const STATE_ROWS = ['焦点', '选中', '禁用', '加载', '空状态', '错误', '成功'].map((state) => `| ${state} | 做法 |`).join('\n');
+const NEW_PATTERN = `# 测试模式\n\n- 状态：draft\n- 来源：测试\n\n## 规则\n\n- 一条\n\n## 状态\n\n| 状态 | 做法 |\n|---|---|\n${STATE_ROWS}\n\n## 做完检查\n\n- 一条\n`;
+const addPattern = (d) => {
+  put(d, PATTERN, NEW_PATTERN);
+  append(d, 'DESIGN.md', `\n[测试模式](${PATTERN})\n`);
+};
+const addExample = (d) => {
+  put(d, EXAMPLE, NEW_EXAMPLE);
+  put(d, 'examples/README.md', '# 示例\n\n[新示例](new/README.md)\n');
+  append(d, 'DESIGN.md', '\n[示例](examples/README.md)\n');
+};
 
 // [名称, 修改方法, 预期：'pass' 或错误信息片段]
 const cases = [
@@ -46,14 +58,12 @@ const cases = [
   ['pattern not linked from the entry', (d) => put(d, 'patterns/x.md', '# X\n'), 'DESIGN.md 没有链接 patterns/x.md'],
   ['platform not linked from the entry', (d) => put(d, 'platforms/watch.md', WATCH), 'DESIGN.md 没有链接 platforms/watch.md'],
   ['sediment steps not linked from the entry', (d) => edit(d, 'DESIGN.md', (t) => t.replace('[沉淀步骤](tools/sediment.md)', '沉淀步骤')), 'DESIGN.md 没有链接 tools/sediment.md'],
-  ['example not linked from the index', (d) => put(d, 'examples/new/README.md', NEW_EXAMPLE), 'examples/README.md 没有链接 new/README.md'],
-  ['linked example passes', (d) => {
-    put(d, 'examples/new/README.md', NEW_EXAMPLE);
-    append(d, 'examples/README.md', '\n[新示例](new/README.md)\n');
-  }, 'pass'],
+  ['examples index not linked from the entry', (d) => put(d, 'examples/README.md', '# 示例\n'), 'DESIGN.md 没有链接 examples/README.md'],
+  ['example not linked from the index', (d) => { addExample(d); put(d, 'examples/other/README.md', NEW_EXAMPLE); }, 'examples/README.md 没有链接 other/README.md'],
+  ['linked example passes', addExample, 'pass'],
 
   ['broken link', (d) => append(d, 'DESIGN.md', '\n[x](nope.md)\n'), '链接失效'],
-  ['broken image', (d) => append(d, PATTERN, '\n![x](object-forms/nope.png)\n'), '链接失效'],
+  ['broken image', (d) => append(d, STANDARD, '\n![x](typography/nope.png)\n'), '链接失效'],
   ['absolute link', (d) => append(d, 'DESIGN.md', '\n[x](/etc/passwd)\n'), '应使用相对路径'],
   ['link inside code fence is ignored', (d) => append(d, 'DESIGN.md', '\n```markdown\n[x](nope.md)\n```\n'), 'pass'],
   ['link inside inline code is ignored', (d) => append(d, 'DESIGN.md', '\n`[x](nope.md)`\n'), 'pass'],
@@ -84,19 +94,20 @@ const cases = [
   ['malformed token JSON', (d) => put(d, 'tokens/katachi.tokens.json', '{ nope'), '检查时出错'],
 
   ['doc names a missing token', (d) => append(d, 'DESIGN.md', '\n`constraint.contrast.nope`\n'), 'token 不存在'],
-  ['pattern names a missing token', (d) => append(d, PATTERN, '\n`object.radius.nope`\n'), 'token 不存在：object.radius.nope'],
+  ['standard names a missing token', (d) => append(d, STANDARD, '\n`constraint.nope`\n'), 'token 不存在：constraint.nope'],
   ['doc names a token group', (d) => append(d, 'DESIGN.md', '\n`constraint.contrast`\n'), 'pass'],
   ['file name in code is not a token', (d) => append(d, 'DESIGN.md', '\n`tokens.css`\n'), 'pass'],
 
-  ['pattern with an unknown status', (d) => edit(d, PATTERN, (t) => t.replace('- 状态：draft', '- 状态：done')), '状态只能是'],
-  ['pattern without a source', (d) => edit(d, PATTERN, (t) => t.replace(/^- 来源：.*$/m, '- 来源：')), '缺少「来源」'],
-  ['pattern too long', (d) => append(d, PATTERN, '\n行'.repeat(200)), '超过 180 行'],
-  ['pattern must answer every state', (d) => edit(d, PATTERN, (t) => t.replace('| 禁用 |', '| 停用 |')), '没有回答「禁用」'],
-  ['pattern without a state section', (d) => edit(d, PATTERN, (t) => t.replace('## 状态\n', '## 情况\n')), '缺少「状态」一节'],
-  ['pattern without a final check', (d) => edit(d, PATTERN, (t) => t.replace('## 做完检查', '## 收尾')), '缺少「做完检查」一节'],
-  ['state table removed from the standard', (d) => edit(d, 'standards/interaction.md', (t) => t.replace('| 状态 | 默认怎么做 |', '| 情况 | 默认怎么做 |')), '缺少状态表'],
-  ['standard not linked from the entry', (d) => edit(d, 'DESIGN.md', (t) => t.replaceAll('(standards/interaction.md)', '(examples/README.md)')), 'DESIGN.md 没有链接 standards/interaction.md'],
-  ['standard names a missing token', (d) => append(d, 'standards/interaction.md', '\n`interaction.nope`\n'), 'token 不存在：interaction.nope'],
+  ['complete pattern passes', addPattern, 'pass'],
+  ['pattern with an unknown status', (d) => { addPattern(d); edit(d, PATTERN, (t) => t.replace('- 状态：draft', '- 状态：done')); }, '状态只能是'],
+  ['pattern without a source', (d) => { addPattern(d); edit(d, PATTERN, (t) => t.replace(/^- 来源：.*$/m, '- 来源：')); }, '缺少「来源」'],
+  ['pattern too long', (d) => { addPattern(d); append(d, PATTERN, '\n行'.repeat(200)); }, '超过 180 行'],
+  ['pattern must answer every state', (d) => { addPattern(d); edit(d, PATTERN, (t) => t.replace('| 禁用 |', '| 停用 |')); }, '没有回答「禁用」'],
+  ['pattern without a state section', (d) => { addPattern(d); edit(d, PATTERN, (t) => t.replace('## 状态\n', '## 情况\n')); }, '缺少「状态」一节'],
+  ['pattern without a final check', (d) => { addPattern(d); edit(d, PATTERN, (t) => t.replace('## 做完检查', '## 收尾')); }, '缺少「做完检查」一节'],
+  ['standard with an unknown status', (d) => edit(d, STANDARD, (t) => t.replace('- 状态：draft', '- 状态：done')), '状态只能是'],
+  ['standard without a source', (d) => edit(d, STANDARD, (t) => t.replace(/^- 来源：.*$/m, '- 来源：')), '缺少「来源」'],
+  ['standard not linked from the entry', (d) => edit(d, 'DESIGN.md', (t) => t.replaceAll('(standards/typography.md)', '(tokens/README.md)')), 'DESIGN.md 没有链接 standards/typography.md'],
 
   ['token for an unknown platform', (d) => tokens(d, (t) => { t.constraint.reflow.width.$extensions['local.katachi'].platforms = ['tv']; }), '未知平台 tv'],
   ['token platforms is not an array', (d) => tokens(d, (t) => { t.constraint.reflow.width.$extensions['local.katachi'].platforms = 'web'; }), 'platforms 应为'],
@@ -112,18 +123,18 @@ const cases = [
   }, '缺少 platforms/web.md'],
   ['complete new platform passes', (d) => {
     put(d, 'platforms/watch.md', WATCH);
-    edit(d, 'DESIGN.md', (t) => t.replace('| 尺寸、圆角', '| 手表 | [watch](platforms/watch.md) |\n| 尺寸、圆角'));
+    edit(d, 'DESIGN.md', (t) => t.replace('| 数值 |', '| 手表 | [watch](platforms/watch.md) |\n| 数值 |'));
   }, 'pass'],
 
-  ['example without README', (d) => put(d, 'examples/new/a.png', 'x'), '缺少 README.md'],
-  ['example without a source', (d) => edit(d, EXAMPLE, (t) => t.replace(/^- 来源：.*$/m, '- 来源：')), '缺少「来源」'],
-  ['example without what to learn', (d) => edit(d, EXAMPLE, (t) => t.replace('## 学什么', '## 说明')), '缺少「学什么」'],
-  ['malformed content stress file', (d) => put(d, 'examples/content-stress.json', '{ nope'), '检查时出错'],
-  ['content stress file without counts', (d) => put(d, 'examples/content-stress.json', '{"text":{}}'), '应包含 text 和 counts'],
+  ['example without README', (d) => { addExample(d); put(d, 'examples/other/a.png', 'x'); }, '缺少 README.md'],
+  ['example without a source', (d) => { addExample(d); edit(d, EXAMPLE, (t) => t.replace(/^- 来源：.*$/m, '- 来源：')); }, '缺少「来源」'],
+  ['example without what to learn', (d) => { addExample(d); edit(d, EXAMPLE, (t) => t.replace('## 学什么', '## 说明')); }, '缺少「学什么」'],
+  ['malformed content stress file', (d) => put(d, 'standards/content-stress.json', '{ nope'), '检查时出错'],
+  ['content stress file without counts', (d) => put(d, 'standards/content-stress.json', '{"text":{}}'), '应包含 text 和 counts'],
 
   ['viewer that cannot render fails the check', (d) => rmSync(join(d, 'tools/viewer/app.css')), '检查时出错'],
-  ['file over the hard limit', (d) => put(d, 'examples/kotolog-cli/big.bin', Buffer.alloc(11 * 1024 * 1024)), '超过 10 MB'],
-  ['file over the soft limit only warns', (d) => put(d, 'examples/kotolog-cli/mid.png', Buffer.alloc(2 * 1024 * 1024)), 'pass'],
+  ['file over the hard limit', (d) => put(d, 'standards/typography/big.bin', Buffer.alloc(11 * 1024 * 1024)), '超过 10 MB'],
+  ['file over the soft limit only warns', (d) => put(d, 'standards/typography/mid.png', Buffer.alloc(2 * 1024 * 1024)), 'pass'],
 ];
 
 const base = mkdtempSync(join(tmpdir(), 'katachi-check-'));
@@ -189,12 +200,9 @@ const webCss = readFileSync(join(REPO, 'tokens/build/tokens.css'), 'utf8');
 const webExpectations = [
   ['--constraint-target-web-min', true],
   ['--constraint-contrast-text', true],
-  ['--object-radius-bar', true],
   ['--constraint-target-ios-default', false],
   ['--constraint-window-width-medium-min', false],
   ['--constraint-terminal-columns-default', false],
-  ['--interaction-drag-long-press', false],
-  ['--interaction-feedback-undo', true],
 ];
 for (const [name, shouldExist] of webExpectations) {
   if (webCss.includes(name) !== shouldExist) {
@@ -207,19 +215,16 @@ for (const [name, shouldExist] of webExpectations) {
 const viewerDir = join(base, 'viewer-page');
 copyRepo(viewerDir);
 edit(viewerDir, 'DESIGN.md', (t) => t.replace('写给正在做界面的 agent。', '写给 <img src=x onerror=alert(1)> 的 agent。'));
-put(viewerDir, 'patterns/probe.md', '# 探针\n\n![外部](https://evil.example/x.png)\n\n![跳出](../../../secret.png)\n\n![引号"><script>](probe/a.png)\n\n[跳出的例子](../../../secret.html)\n');
+put(viewerDir, 'patterns/probe.md', '# 探针\n\n![外部](https://evil.example/x.png)\n\n![跳出](../../../secret.png)\n\n![引号"><script>](probe/a.png)\n\n![好图](probe/good.png)\n\n[跳出的例子](../../../secret.html)\n');
 const viewerRun = spawnSync(process.execPath, ['--input-type=module', '-e', "const { renderPage } = await import('./tools/viewer/build.mjs'); process.stdout.write(renderPage());"], { cwd: viewerDir, encoding: 'utf8', maxBuffer: 1 << 26 });
 const viewerExpectations = [
   ['没定的，别自己决定', true],
-  ['列表里的对象怎么打开', true],
-  ['Kotolog：桌面工作台', true],
-  ['交互规范', true],
-  ['方向 B：线和密度', true],
-  ['<img src="/examples/kotolog-object-forms/bar.png"', true],
-  ['<span class="token-value">40px</span>', true],
-  ['条卡页窗：最小参考实现', true],
+  ['探针', true],
+  ['<img src="/patterns/probe/good.png"', true],
+  ['<span class="token-value">4.5</span>', true],
+  ['方案 B：宋体标题', true],
   ['srcdoc="', true],
-  ['&lt;base href=&quot;/patterns/object-forms/&quot;&gt;', true],
+  ['&lt;base href=&quot;/standards/typography/&quot;&gt;', true],
   ['&lt;img src=x onerror', true],
   ['<img src=x onerror', false],
   ['evil.example/x.png"', false],

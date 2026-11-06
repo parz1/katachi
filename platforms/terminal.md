@@ -30,7 +30,7 @@
 - 默认列宽和更窄的窗口，以及运行时调整窗口。
 - 浅色和深色主题；设置 `NO_COLOR` 后。
 - 管道输出：没有颜色、动画和控制字符。
-- 中文、英文、混排和 emoji 的对齐和截断，用 [content-stress.json](../examples/content-stress.json)。
+- 中文、英文、混排和 emoji 的对齐和截断，用 [content-stress.json](../standards/content-stress.json)。
 - 表格和长输出的机器可读格式。
 - 读屏走一遍。做不到就列入「未覆盖」。
 

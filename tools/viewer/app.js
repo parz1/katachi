@@ -49,13 +49,13 @@
     for (const button of buttons) button.setAttribute('aria-pressed', String(button === active));
   };
 
-  // 比较方案：把页面按选定宽度渲染，再缩放到可用空间。
+  // 比较方案：把页面按选定宽度渲染，放不下时缩放到可用空间。
   function layoutBench(bench) {
     const width = Number(bench.dataset.width);
     const height = Number(bench.dataset.height) || 800;
     for (const box of bench.querySelectorAll('.frame-box')) {
       const frame = box.querySelector('iframe');
-      box.style.maxWidth = `${width}px`;
+      box.style.maxWidth = `${width + box.offsetWidth - box.clientWidth}px`;
       const scale = Math.min(1, box.clientWidth / width);
       frame.style.width = `${width}px`;
       frame.style.height = `${height}px`;
@@ -64,10 +64,23 @@
     }
   }
 
+  // 没选过宽度时，用放得下的最大宽度：缩放后的字不是真实大小，比不了字体和排版。按钮是从宽到窄排的。
+  function fitBench(bench, buttons) {
+    const box = bench.querySelector('.frame-box');
+    const room = bench.clientWidth - (box.offsetWidth - box.clientWidth);
+    const fit = [...buttons].find((button) => Number(button.dataset.width) <= room) ?? buttons[buttons.length - 1];
+    if (!fit) return;
+    bench.dataset.width = fit.dataset.width;
+    bench.dataset.height = fit.dataset.height;
+    press(buttons, fit);
+  }
+
   for (const bench of document.querySelectorAll('[data-bench]')) {
     const widthButtons = bench.querySelectorAll('[data-width]:not([data-bench])');
+    let chosen = false;
     for (const button of widthButtons) {
       button.addEventListener('click', () => {
+        chosen = true;
         bench.dataset.width = button.dataset.width;
         bench.dataset.height = button.dataset.height;
         press(widthButtons, button);
@@ -82,8 +95,12 @@
         bench.classList.toggle('is-gray', on);
       });
     }
-    layoutBench(bench);
-    new ResizeObserver(() => layoutBench(bench)).observe(bench);
+    const refresh = () => {
+      if (!chosen) fitBench(bench, widthButtons);
+      layoutBench(bench);
+    };
+    refresh();
+    new ResizeObserver(refresh).observe(bench);
   }
 
   // 内容压力：切换宽度和单行截断。
