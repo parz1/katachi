@@ -28,7 +28,7 @@
       <p class="notice success t-ui">${icon('success')}<span>发布成功，共 12 项。</span></p>
     </section>
     <section>
-      <p class="mode t-caption">操作：主按钮靠填充，边框过对比度，禁用可以更淡</p>
+      <p class="mode t-caption">操作：主按钮靠填充，边框对比度不低于 3:1，禁用可以更淡</p>
       <label class="t-ui" for="field"><strong>仅在连接到受信任的无线网络时自动同步附件</strong></label>
       <input class="t-ui" id="field" lang="en" aria-invalid="true" aria-describedby="field-error" value="Automatically sync attachments only when connected to a trusted wireless network">
       <p class="error t-caption" id="field-error">这个设置和当前的存储方案冲突，请先修改存储方案。</p>

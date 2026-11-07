@@ -198,7 +198,7 @@
   --color-fill-active: var(--color-gray-5);
   /* 分割线，只是装饰，不靠它传达信息。 [draft] */
   --color-line: var(--color-gray-6);
-  /* 控件边框：输入框、次要按钮。Radix 的第 7 级只有 1.53，到不了 3:1，所以用第 10 级。 [draft] */
+  /* 控件边框：输入框、次要按钮。用第 10 级，不用 Radix 原本的第 7 级，它只有 1.53，到不了 3:1。 [adopted] */
   --color-control: var(--color-gray-10);
   /* 控件边框的悬停。 [draft] */
   --color-control-hover: var(--color-gray-11);

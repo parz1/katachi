@@ -1,5 +1,5 @@
 {
-  "$description": "katachi 设计数值的唯一来源，格式为 DTCG Format Module 2025.10。constraint 来自标准和平台规范；type 是提案；color 的色阶是用户选定的 Radix Colors 原值，角色是提案。dark 写在 local.katachi 里，生成 CSS 时变成 light-dark()。",
+  "$description": "katachi 设计数值的唯一来源，格式为 DTCG Format Module 2025.10。constraint 来自标准和平台规范；type 是提案；color 的色阶是用户选定的 Radix Colors 原值，角色除了 color.control 都是提案。dark 写在 local.katachi 里，生成 CSS 时变成 light-dark()。",
   "constraint": {
     "$description": "外部标准或平台规范给出的数值，用于检查和判断，不代表审美偏好。",
     "contrast": {
@@ -2663,11 +2663,11 @@
     },
     "control": {
       "$value": "{color.gray.10}",
-      "$description": "控件边框：输入框、次要按钮。Radix 的第 7 级只有 1.53，到不了 3:1，所以用第 10 级。",
+      "$description": "控件边框：输入框、次要按钮。用第 10 级，不用 Radix 原本的第 7 级，它只有 1.53，到不了 3:1。",
       "$extensions": {
         "local.katachi": {
-          "status": "draft",
-          "source": "提案，见 standards/color.md",
+          "status": "adopted",
+          "source": "用户 2026-11-07 选定，见 standards/color.md",
           "platforms": [
             "web"
           ],
