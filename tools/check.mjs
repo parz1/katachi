@@ -190,6 +190,49 @@ function checkColors() {
   return { errors, note: `${situations.length - 2} 条强调色，${pairs} 组配对` };
 }
 
+// 间距的角色都指向阶梯上的某一级，这样换疏密时样式不用改。每种疏密下组和组都要明显比项和项远，控件不能小于目标尺寸。
+function checkSpace() {
+  const { tokens } = loadTokens();
+  const errors = [];
+  if (!tokens.has('space.item')) return { errors: ['缺少 space 这组 token'] };
+  const DENSITIES = [['compact', '紧'], [undefined, '常规'], ['loose', '松']];
+  const raw = (name, density) => {
+    const modes = tokens.get(name)?.node.$extensions?.['local.katachi']?.modes?.density;
+    return (density && modes?.[density]) ?? tokens.get(name)?.node.$value;
+  };
+  const toPx = (value) => {
+    let current = value;
+    for (let hops = 0; typeof current === 'string' && hops < 20; hops += 1) current = tokens.get(current.slice(1, -1))?.node.$value;
+    if (current?.unit === 'rem') return current.value * 16;
+    return typeof current === 'number' ? current : current?.value;
+  };
+  const names = [...tokens.keys()].filter((name) => name.startsWith('space.'));
+  const steps = names.filter((name) => /^space\.\d+$/.test(name));
+  const roles = names.filter((name) => !steps.includes(name));
+  steps.map((name) => toPx(raw(name))).forEach((value, index, all) => {
+    if (index && value <= all[index - 1]) errors.push(`${steps[index]}：阶梯要从小到大`);
+  });
+  for (const name of roles) {
+    const sizes = DENSITIES.map(([density, label]) => {
+      if (!/^\{space\.\d+\}$/.test(raw(name, density))) errors.push(`${name}（${label}）：角色要指向阶梯上的某一级，不写数值`);
+      return toPx(raw(name, density));
+    });
+    if (!(sizes[0] <= sizes[1] && sizes[1] <= sizes[2])) errors.push(`${name}：紧、常规、松要从小到大，现在是 ${sizes.join('、')}`);
+  }
+  for (const [density, label] of DENSITIES) {
+    const item = toPx(raw('space.item', density));
+    const group = toPx(raw('space.group', density));
+    if (group < item * 2) errors.push(`space.group（${label}）是 ${group}，至少是 space.item 的两倍（${item * 2}），不然看不出是两层`);
+    const control = toPx(raw('size.control', density));
+    const floor = toPx(raw('constraint.target.web-min'));
+    if (control < floor) errors.push(`size.control（${label}）是 ${control}，低于 constraint.target.web-min（${floor}）`);
+  }
+  const touch = toPx(raw('size.control-touch'));
+  const touchFloor = toPx(raw('constraint.target.ios-default'));
+  if (touch < touchFloor) errors.push(`size.control-touch 是 ${touch}，低于 constraint.target.ios-default（${touchFloor}）`);
+  return { errors, note: `${steps.length} 级阶梯，${roles.length} 个角色，3 种疏密` };
+}
+
 function checkTokenReferences() {
   const { tokens } = loadTokens();
   const names = [...tokens.keys()];
@@ -335,6 +378,7 @@ const checks = [
   ['能从入口找到', checkFindable],
   ['tokens', checkTokens],
   ['颜色对比度', checkColors],
+  ['间距', checkSpace],
   ['token 引用', checkTokenReferences],
   ['Markdown 链接', checkLinks],
   ['规范和模式', checkPatterns],

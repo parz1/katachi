@@ -123,6 +123,17 @@ const cases = [
   ['dark alias to a missing token', (d) => tokens(d, (t) => { t.color['surface-raised'].$extensions['local.katachi'].dark = '{color.nope}'; }), '引用的 token 不存在'],
   ['paper does not replace every gray step', (d) => edit(d, 'standards/color/color.css', (t) => t.replace('--color-gray-7: var(--color-sand-7);', '')), '没有把 color.gray.7 换成'],
 
+  ['spacing role with a raw value', (d) => tokens(d, (t) => { t.space.item.$value = { value: 1, unit: 'rem' }; }), '要指向阶梯'],
+  ['spacing mode with a raw value', (d) => tokens(d, (t) => { t.space.item.$extensions['local.katachi'].modes.density.compact = { value: 0.75, unit: 'rem' }; }), '（紧）：角色要指向阶梯'],
+  ['spacing role out of order across densities', (d) => tokens(d, (t) => { t.space.item.$extensions['local.katachi'].modes.density.compact = '{space.8}'; }), '要从小到大'],
+  ['spacing steps out of order', (d) => tokens(d, (t) => { t.space['3'].$value.value = 9; }), '阶梯要从小到大'],
+  ['groups too close to items', (d) => tokens(d, (t) => { t.space.group.$value = '{space.5}'; }), '至少是 space.item 的两倍'],
+  ['control below the target', (d) => tokens(d, (t) => { t.size.control.$extensions['local.katachi'].modes.density.compact = { value: 1, unit: 'rem' }; }), '低于 constraint.target.web-min'],
+  ['touch control below the target', (d) => tokens(d, (t) => { t.size['control-touch'].$value.value = 2; }), '低于 constraint.target.ios-default'],
+  ['mode aliases a missing token', (d) => tokens(d, (t) => { t.space.item.$extensions['local.katachi'].modes.density.compact = '{space.nope}'; }), '引用的 token 不存在'],
+  ['malformed modes', (d) => tokens(d, (t) => { t.space.item.$extensions['local.katachi'].modes = { density: 'x' }; }), 'modes 应为'],
+  ['mode name that is unsafe in a selector', (d) => tokens(d, (t) => { t.space.item.$extensions['local.katachi'].modes = { 'a"]': { b: '{space.1}' } }; }), 'modes 应为'],
+
   ['token for an unknown platform', (d) => tokens(d, (t) => { t.constraint.reflow.width.$extensions['local.katachi'].platforms = ['tv']; }), '未知平台 tv'],
   ['token platforms is not an array', (d) => tokens(d, (t) => { t.constraint.reflow.width.$extensions['local.katachi'].platforms = 'web'; }), 'platforms 应为'],
   ['web token aliases a non-web token', (d) => tokens(d, (t) => { t.a = { $value: '{constraint.terminal.columns-default}', $description: 'x', $extensions: META }; }), 'Web 输出'],
@@ -188,6 +199,7 @@ tokens(dir, (t) => {
     modes: { $type: 'color', $value: { colorSpace: 'oklch', components: [0.5, 0, 0] }, $description: 'x', $extensions: { 'local.katachi': { status: 'draft', source: 'test', dark: { colorSpace: 'oklch', components: [0.8, 0, 0] } } } },
     aliased: { $value: '{sample.srgb}', $description: 'x', $extensions: { 'local.katachi': { status: 'draft', source: 'test', dark: '{sample.alias}' } } },
     remapped: { $value: '{sample.srgb}', $description: 'x', $extensions: { 'local.katachi': { status: 'draft', source: 'test', accent: 11 } } },
+    moded: { $type: 'dimension', $value: { value: 1, unit: 'rem' }, $description: 'x', $extensions: { 'local.katachi': { status: 'draft', source: 'test', modes: { density: { compact: { value: 0.5, unit: 'rem' }, loose: '{sample.gap}' }, radius: { none: { value: 0, unit: 'px' } } } } } },
   };
 });
 const built = build(dir);
@@ -207,6 +219,13 @@ const expectedCss = [
   '--sample-modes: light-dark(oklch(0.5 0 0), oklch(0.8 0 0));',
   '--sample-aliased: light-dark(var(--sample-srgb), var(--sample-alias));',
   '--sample-remapped: var(--color-hue-11);',
+  '--sample-moded: 1rem;',
+  '--sample-moded: 0.5rem;',
+  '--sample-moded: var(--sample-gap);',
+  '--sample-moded: 0px;',
+  '[data-density="compact"] {',
+  '[data-density="loose"] {',
+  '[data-radius="none"] {',
 ];
 for (const line of expectedCss) {
   if (built.status !== 0 || !css.includes(line)) {
@@ -227,6 +246,12 @@ const webExpectations = [
   ['--color-gray-1', true],
   ['--color-hue-11', true],
   [':root[data-accent]', true],
+  ['--space-item', true],
+  ['--size-control', true],
+  ['--radius-panel', true],
+  ['--stroke-thick', true],
+  ['[data-density="compact"]', true],
+  ['[data-radius="large"]', true],
 ];
 for (const [name, shouldExist] of webExpectations) {
   if (webCss.includes(name) !== shouldExist) {
@@ -249,6 +274,7 @@ const viewerExpectations = [
   ['文档：像书一样', true],
   ['强调色：能点的才有颜色', true],
   ['class="swatch"', true],
+  ['style="background:var(--space-', false],
   ['srcdoc="', true],
   ['&lt;base href=&quot;/standards/typography/&quot;&gt;', true],
   ['&lt;img src=x onerror', true],

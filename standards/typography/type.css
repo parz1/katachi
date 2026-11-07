@@ -1,5 +1,5 @@
 /* katachi 排版的 Web 实现，规则见 ../typography.md。先引入 tokens/build/tokens.css。
-   这里只管字，可以整个复制进产品。颜色和间距还没定，不在这里。 */
+   这里只管字，可以整个复制进产品。颜色见 ../color.md，间距见 ../space.md。 */
 
 :root {
   --font-title: var(--type-family-sans);

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN" data-density="compact">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>线：靠分割线分开</title>
+<link rel="stylesheet" href="../../tokens/build/tokens.css">
+<link rel="stylesheet" href="../typography/type.css">
+<link rel="stylesheet" href="../color/color.css">
+<link rel="stylesheet" href="space.css">
+<link rel="stylesheet" href="sample.css">
+<style>
+/* 线替留白做了分组，距离可以省一些，所以默认配「紧」。线都是装饰，用 color.line。 */
+.app {
+  gap: var(--space-item);
+}
+
+.side {
+  padding-block-end: var(--space-item);
+  border-block-end: var(--stroke-thin) solid var(--color-line);
+}
+
+@media (min-width: 840px) {
+  .side {
+    padding-block-end: 0;
+    padding-inline-end: var(--space-item);
+    border-block-end: 0;
+    border-inline-end: var(--stroke-thin) solid var(--color-line);
+  }
+}
+
+.head {
+  margin-block-end: 0;
+  padding-block-end: var(--space-item);
+}
+
+/* 线和行的线一样长，都比文字往外多出一段。 */
+.group {
+  margin-inline: calc(var(--space-inset) * -1);
+  padding: var(--space-item) var(--space-inset) 0;
+  border-block-start: var(--stroke-thin) solid var(--color-line);
+}
+
+.group + .group {
+  margin-block-start: var(--space-item);
+}
+
+.rows li {
+  border-block-end: var(--stroke-thin) solid var(--color-line);
+  border-radius: 0;
+}
+
+.rows li:last-child {
+  border-block-end: 0;
+}
+
+th,
+td {
+  border-block-end: var(--stroke-thin) solid var(--color-line);
+}
+
+tfoot td {
+  border-block-end: 0;
+}
+</style>
+</head>
+<body>
+<script src="../color/controls.js"></script>
+<script src="controls.js"></script>
+<script src="sample.js"></script>
+</body>
+</html>

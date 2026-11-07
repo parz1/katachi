@@ -1,5 +1,5 @@
 {
-  "$description": "katachi 设计数值的唯一来源，格式为 DTCG Format Module 2025.10。constraint 来自标准和平台规范；type 是提案；color 的色阶是用户选定的 Radix Colors 原值，角色除了 color.control 都是提案。dark 写在 local.katachi 里，生成 CSS 时变成 light-dark()。",
+  "$description": "katachi 设计数值的唯一来源，格式为 DTCG Format Module 2025.10。constraint 来自标准和平台规范；type 是提案；color 的色阶是用户选定的 Radix Colors 原值，角色除了 color.control 都是提案；space、size、radius、stroke 是提案。dark 写在 local.katachi 里，生成 CSS 时变成 light-dark()。",
   "constraint": {
     "$description": "外部标准或平台规范给出的数值，用于检查和判断，不代表审美偏好。",
     "contrast": {
@@ -2609,6 +2609,34 @@
         }
       }
     },
+    "backdrop": {
+      "$value": "{color.gray.3}",
+      "$description": "面后面的底，见 standards/space.md。浅色灰 3，深色灰 1。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ],
+          "dark": "{color.gray.1}"
+        }
+      }
+    },
+    "panel": {
+      "$value": "{color.gray.1}",
+      "$description": "面的底色：比后面的底亮一层，浅色和深色都是。浅色灰 1，深色灰 3。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ],
+          "dark": "{color.gray.3}"
+        }
+      }
+    },
     "fill": {
       "$value": "{color.gray.3}",
       "$description": "控件底色；透明控件的悬停。",
@@ -2678,7 +2706,9 @@
                 "color.surface",
                 "color.surface-subtle",
                 "color.surface-raised",
-                "color.fill"
+                "color.fill",
+                "color.panel",
+                "color.backdrop"
               ]
             }
           ]
@@ -2702,7 +2732,9 @@
                 "color.surface",
                 "color.surface-subtle",
                 "color.surface-raised",
-                "color.fill"
+                "color.fill",
+                "color.panel",
+                "color.backdrop"
               ]
             }
           ]
@@ -2729,7 +2761,9 @@
                 "color.fill",
                 "color.fill-hover",
                 "color.fill-active",
-                "color.selected"
+                "color.selected",
+                "color.panel",
+                "color.backdrop"
               ]
             }
           ]
@@ -2755,7 +2789,9 @@
                 "color.surface-raised",
                 "color.fill",
                 "color.fill-hover",
-                "color.selected"
+                "color.selected",
+                "color.panel",
+                "color.backdrop"
               ]
             }
           ]
@@ -2791,7 +2827,8 @@
               "floor": "text",
               "against": [
                 "color.surface",
-                "color.surface-subtle"
+                "color.surface-subtle",
+                "color.panel"
               ]
             }
           ]
@@ -2872,7 +2909,9 @@
                 "color.surface",
                 "color.surface-subtle",
                 "color.surface-raised",
-                "color.fill"
+                "color.fill",
+                "color.panel",
+                "color.backdrop"
               ]
             }
           ]
@@ -2923,7 +2962,8 @@
               "against": [
                 "color.surface",
                 "color.surface-subtle",
-                "color.error-subtle"
+                "color.error-subtle",
+                "color.panel"
               ]
             }
           ]
@@ -2958,7 +2998,8 @@
               "floor": "non-text",
               "against": [
                 "color.surface",
-                "color.surface-subtle"
+                "color.surface-subtle",
+                "color.panel"
               ]
             }
           ]
@@ -3007,7 +3048,8 @@
               "against": [
                 "color.surface",
                 "color.surface-subtle",
-                "color.warning-subtle"
+                "color.warning-subtle",
+                "color.panel"
               ]
             }
           ]
@@ -3042,7 +3084,8 @@
               "floor": "non-text",
               "against": [
                 "color.surface",
-                "color.surface-subtle"
+                "color.surface-subtle",
+                "color.panel"
               ]
             }
           ]
@@ -3091,7 +3134,8 @@
               "against": [
                 "color.surface",
                 "color.surface-subtle",
-                "color.success-subtle"
+                "color.success-subtle",
+                "color.panel"
               ]
             }
           ]
@@ -3126,7 +3170,8 @@
               "floor": "non-text",
               "against": [
                 "color.surface",
-                "color.surface-subtle"
+                "color.surface-subtle",
+                "color.panel"
               ]
             }
           ]
@@ -3153,6 +3198,431 @@
         "local.katachi": {
           "status": "draft",
           "source": "提案，见 standards/color.md",
+          "platforms": [
+            "web"
+          ]
+        }
+      }
+    }
+  },
+  "space": {
+    "1": {
+      "$value": {
+        "value": 0.25,
+        "unit": "rem"
+      },
+      "$description": "间距阶梯第 1 级。样式里写角色，不写第几级。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "@radix-ui/themes 3.3.0（MIT）的 space 阶梯，单位换成 rem；提案，见 standards/space.md",
+          "platforms": [
+            "web"
+          ]
+        }
+      }
+    },
+    "2": {
+      "$value": {
+        "value": 0.5,
+        "unit": "rem"
+      },
+      "$description": "间距阶梯第 2 级。样式里写角色，不写第几级。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "@radix-ui/themes 3.3.0（MIT）的 space 阶梯，单位换成 rem；提案，见 standards/space.md",
+          "platforms": [
+            "web"
+          ]
+        }
+      }
+    },
+    "3": {
+      "$value": {
+        "value": 0.75,
+        "unit": "rem"
+      },
+      "$description": "间距阶梯第 3 级。样式里写角色，不写第几级。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "@radix-ui/themes 3.3.0（MIT）的 space 阶梯，单位换成 rem；提案，见 standards/space.md",
+          "platforms": [
+            "web"
+          ]
+        }
+      }
+    },
+    "4": {
+      "$value": {
+        "value": 1,
+        "unit": "rem"
+      },
+      "$description": "间距阶梯第 4 级。样式里写角色，不写第几级。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "@radix-ui/themes 3.3.0（MIT）的 space 阶梯，单位换成 rem；提案，见 standards/space.md",
+          "platforms": [
+            "web"
+          ]
+        }
+      }
+    },
+    "5": {
+      "$value": {
+        "value": 1.5,
+        "unit": "rem"
+      },
+      "$description": "间距阶梯第 5 级。样式里写角色，不写第几级。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "@radix-ui/themes 3.3.0（MIT）的 space 阶梯，单位换成 rem；提案，见 standards/space.md",
+          "platforms": [
+            "web"
+          ]
+        }
+      }
+    },
+    "6": {
+      "$value": {
+        "value": 2,
+        "unit": "rem"
+      },
+      "$description": "间距阶梯第 6 级。样式里写角色，不写第几级。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "@radix-ui/themes 3.3.0（MIT）的 space 阶梯，单位换成 rem；提案，见 standards/space.md",
+          "platforms": [
+            "web"
+          ]
+        }
+      }
+    },
+    "7": {
+      "$value": {
+        "value": 2.5,
+        "unit": "rem"
+      },
+      "$description": "间距阶梯第 7 级。样式里写角色，不写第几级。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "@radix-ui/themes 3.3.0（MIT）的 space 阶梯，单位换成 rem；提案，见 standards/space.md",
+          "platforms": [
+            "web"
+          ]
+        }
+      }
+    },
+    "8": {
+      "$value": {
+        "value": 3,
+        "unit": "rem"
+      },
+      "$description": "间距阶梯第 8 级。样式里写角色，不写第几级。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "@radix-ui/themes 3.3.0（MIT）的 space 阶梯，单位换成 rem；提案，见 standards/space.md",
+          "platforms": [
+            "web"
+          ]
+        }
+      }
+    },
+    "9": {
+      "$value": {
+        "value": 4,
+        "unit": "rem"
+      },
+      "$description": "间距阶梯第 9 级。样式里写角色，不写第几级。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "@radix-ui/themes 3.3.0（MIT）的 space 阶梯，单位换成 rem；提案，见 standards/space.md",
+          "platforms": [
+            "web"
+          ]
+        }
+      }
+    },
+    "$type": "dimension",
+    "$description": "间距，规则见 standards/space.md。阶梯 9 级，角色指向某一级，样式里只写角色。写 data-density 时角色改指向别的级。",
+    "part": {
+      "$value": "{space.1}",
+      "$description": "一个东西的几部分：图标和文字、标题和说明、标签和输入框、字段和它的提示。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/space.md",
+          "platforms": [
+            "web"
+          ],
+          "modes": {
+            "density": {
+              "compact": "{space.1}",
+              "loose": "{space.2}"
+            }
+          }
+        }
+      }
+    },
+    "near": {
+      "$value": "{space.2}",
+      "$description": "挨着的小东西：并排的按钮、页签；列表行和表格行的上下留白。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/space.md",
+          "platforms": [
+            "web"
+          ],
+          "modes": {
+            "density": {
+              "compact": "{space.1}",
+              "loose": "{space.3}"
+            }
+          }
+        }
+      }
+    },
+    "inset": {
+      "$value": "{space.3}",
+      "$description": "控件和行的左右留白。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/space.md",
+          "platforms": [
+            "web"
+          ],
+          "modes": {
+            "density": {
+              "compact": "{space.2}",
+              "loose": "{space.4}"
+            }
+          }
+        }
+      }
+    },
+    "item": {
+      "$value": "{space.4}",
+      "$description": "一组里的项：字段和字段、面和面；面里面的留白。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/space.md",
+          "platforms": [
+            "web"
+          ],
+          "modes": {
+            "density": {
+              "compact": "{space.3}",
+              "loose": "{space.5}"
+            }
+          }
+        }
+      }
+    },
+    "group": {
+      "$value": "{space.6}",
+      "$description": "组和组：表单的分组、页面里的小节。至少是 space.item 的两倍，才看得出是两层。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/space.md",
+          "platforms": [
+            "web"
+          ],
+          "modes": {
+            "density": {
+              "compact": "{space.5}",
+              "loose": "{space.8}"
+            }
+          }
+        }
+      }
+    },
+    "section": {
+      "$value": "{space.8}",
+      "$description": "大区块：页头和内容、页面的主要区域。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/space.md",
+          "platforms": [
+            "web"
+          ],
+          "modes": {
+            "density": {
+              "compact": "{space.6}",
+              "loose": "{space.9}"
+            }
+          }
+        }
+      }
+    },
+    "page": {
+      "$value": "{space.5}",
+      "$description": "内容到窗口边缘。窗口窄于 constraint.window.width-medium-min 时不管哪种疏密都用第 4 级，见 standards/space/space.css。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/space.md",
+          "platforms": [
+            "web"
+          ],
+          "modes": {
+            "density": {
+              "compact": "{space.4}",
+              "loose": "{space.6}"
+            }
+          }
+        }
+      }
+    }
+  },
+  "size": {
+    "$type": "dimension",
+    "$description": "控件尺寸，规则见 standards/space.md。写 min-block-size，不写死 height。",
+    "control": {
+      "$value": {
+        "value": 2,
+        "unit": "rem"
+      },
+      "$description": "按钮、输入框、可点的行的最小高度。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/space.md",
+          "platforms": [
+            "web"
+          ],
+          "modes": {
+            "density": {
+              "compact": {
+                "value": 1.75,
+                "unit": "rem"
+              },
+              "loose": {
+                "value": 2.5,
+                "unit": "rem"
+              }
+            }
+          }
+        }
+      }
+    },
+    "control-touch": {
+      "$value": {
+        "value": 2.75,
+        "unit": "rem"
+      },
+      "$description": "触屏上的 size.control，不管哪种疏密。不低于 constraint.target.ios-default，也是 WCAG 2.5.5（AAA）的尺寸。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/space.md",
+          "platforms": [
+            "web"
+          ]
+        }
+      }
+    }
+  },
+  "radius": {
+    "$type": "dimension",
+    "$description": "圆角，规则见 standards/space.md。写 data-radius 时整体换。圆角和描边用 px，不跟字号变。",
+    "control": {
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      },
+      "$description": "控件和页内的小东西：按钮、输入框、徽标、可点的行。和 Windows 11 的 ControlCornerRadius 相同。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/space.md",
+          "platforms": [
+            "web"
+          ],
+          "modes": {
+            "radius": {
+              "none": {
+                "value": 0,
+                "unit": "px"
+              },
+              "large": {
+                "value": 8,
+                "unit": "px"
+              }
+            }
+          }
+        }
+      }
+    },
+    "panel": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      },
+      "$description": "面和弹层。和 Windows 11 的 OverlayCornerRadius 相同。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/space.md",
+          "platforms": [
+            "web"
+          ],
+          "modes": {
+            "radius": {
+              "none": {
+                "value": 0,
+                "unit": "px"
+              },
+              "large": {
+                "value": 16,
+                "unit": "px"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "stroke": {
+    "$type": "dimension",
+    "$description": "描边，规则见 standards/space.md。",
+    "thin": {
+      "$value": {
+        "value": 1,
+        "unit": "px"
+      },
+      "$description": "分割线和控件边框。不用 0.5px：不同屏幕和浏览器画出来的粗细不一样，对比度也就没法保证。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/space.md",
+          "platforms": [
+            "web"
+          ]
+        }
+      }
+    },
+    "thick": {
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      },
+      "$description": "焦点环、当前项的标记。焦点环的 2px 来自 WCAG 2.4.13（AAA）。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "提案，见 standards/space.md",
           "platforms": [
             "web"
           ]

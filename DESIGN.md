@@ -8,7 +8,7 @@
 
 这套规范从基础往上建：排版 → 颜色 → 间距和形状 → 交互 → 模式 → 样例。字体属于排版。
 
-现在有两步：[排版](standards/typography.md)，「字默认不出声」用户确认了，其余还是提案；[颜色](standards/color.md)，12 级色阶、Radix 原值和控件边框用第 10 级是用户定的，其余还是提案。后面的都还没有。
+现在有三步：[排版](standards/typography.md)，「字默认不出声」用户确认了，其余还是提案；[颜色](standards/color.md)，12 级色阶、Radix 原值和控件边框用第 10 级是用户定的，其余还是提案；[间距和形状](standards/space.md)，都是提案。后面的都还没有。
 
 ## 按任务找
 
@@ -16,6 +16,7 @@
 |---|---|
 | 任何有文字的界面：选字体、定字号和行高、中英文混排 | [排版](standards/typography.md) |
 | 任何有颜色的界面：色阶、文字和背景、状态、选中、强调色、明暗模式 | [颜色](standards/color.md) |
+| 任何要排布的界面：疏密、留白、分割线、面、圆角、控件尺寸 | [间距和形状](standards/space.md) |
 | Web 页面，包括手机和折叠屏宽度 | [web](platforms/web.md)；要按窗口宽度换布局时加上 [adaptive](platforms/adaptive.md) |
 | 桌面应用 | [desktop](platforms/desktop.md) |
 | 手机应用 | [mobile](platforms/mobile.md)；要适配折叠屏或平板时加上 [adaptive](platforms/adaptive.md) |
@@ -62,9 +63,9 @@
 
 ## 没定的，别自己决定
 
-间距和密度、圆角和描边、动效、交互的默认做法、不同平台之间该有多像、终端的框线。
+动效、阴影和浮层、交互的默认做法、不同平台之间该有多像。
 
-排版和颜色是提案，默认照[排版](standards/typography.md)和[颜色](standards/color.md)做，用到时说明这是提案。这两页最后列的问题还没有答案。
+排版、颜色、间距和形状是提案，默认照[排版](standards/typography.md)、[颜色](standards/color.md)和[间距和形状](standards/space.md)做，用到时说明这是提案。这三页最后列的问题还没有答案。
 
 遇到时按这个顺序：
 

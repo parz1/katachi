@@ -41,15 +41,15 @@ body {
 a {
   color: var(--color-accent);
   text-decoration: underline;
-  text-decoration-thickness: 1px;
+  text-decoration-thickness: var(--stroke-thin);
   text-underline-offset: 0.2em;
 }
 
 a:hover {
-  text-decoration-thickness: 2px;
+  text-decoration-thickness: var(--stroke-thick);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-focus);
-  outline-offset: 2px;
+  outline: var(--stroke-thick) solid var(--color-focus);
+  outline-offset: var(--stroke-thick);
 }

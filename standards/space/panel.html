@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>面：靠底色分开</title>
+<link rel="stylesheet" href="../../tokens/build/tokens.css">
+<link rel="stylesheet" href="../typography/type.css">
+<link rel="stylesheet" href="../color/color.css">
+<link rel="stylesheet" href="space.css">
+<link rel="stylesheet" href="sample.css">
+<style>
+/* 每组放在一块面上，面和面之间的距离可以比留白那一版小。面是装饰，控件的边框还是 color.control。
+   深色下 color.fill 和面同色，所以悬停和按下都往深一级。 */
+:root {
+  --hover: var(--color-fill-hover);
+  --press: var(--color-fill-active);
+}
+
+body {
+  background: var(--color-backdrop);
+}
+
+.bar {
+  background: transparent;
+}
+
+.head {
+  margin-block-end: var(--space-group);
+}
+
+.group {
+  padding: var(--space-item);
+  border-radius: var(--radius-panel);
+  background: var(--color-panel);
+}
+
+.group + .group {
+  margin-block-start: var(--space-item);
+}
+</style>
+</head>
+<body>
+<script src="../color/controls.js"></script>
+<script src="controls.js"></script>
+<script src="sample.js"></script>
+</body>
+</html>

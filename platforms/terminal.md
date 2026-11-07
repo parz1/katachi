@@ -18,6 +18,7 @@
 - 窗口变窄时内容不丢失。表格放不下时可以把单元格拆成多行。依据 clig.dev。
 - 输出不是终端时不显示动画，也不输出颜色。依据 clig.dev。
 - 按显示列宽对齐和截断，不按字符数。
+- 分组默认靠空行和缩进，框线的用法见[间距和形状](../standards/space.md)。框线字符大多属于宽度模糊，东亚环境里可能按 2 列画。
 - 机器可读：人类友好的排版会妨碍脚本时，提供 `--plain` 或 `--json`。依据 clig.dev。
 - 读屏：CLI 的输出对读屏来说没有结构。依据 [Accessibility of Command Line Interfaces](https://research.google/pubs/accessibility-of-command-line-interfaces/)（CHI 2021）：
   - 表格和长输出要能转成其他格式，比如 CSV、HTML 或文本。

@@ -190,6 +190,10 @@
   --color-surface-subtle: var(--color-gray-2);
   /* 弹层和浮起的面。深色模式下比页面亮一级。 [draft] */
   --color-surface-raised: light-dark(var(--color-gray-1), var(--color-gray-2));
+  /* 面后面的底，见 standards/space.md。浅色灰 3，深色灰 1。 [draft] */
+  --color-backdrop: light-dark(var(--color-gray-3), var(--color-gray-1));
+  /* 面的底色：比后面的底亮一层，浅色和深色都是。浅色灰 1，深色灰 3。 [draft] */
+  --color-panel: light-dark(var(--color-gray-1), var(--color-gray-3));
   /* 控件底色；透明控件的悬停。 [draft] */
   --color-fill: var(--color-gray-3);
   /* 控件悬停。 [draft] */
@@ -252,6 +256,50 @@
   --color-success-solid: var(--color-green-11);
   /* 成功实心底色的悬停。 [draft] */
   --color-success-solid-hover: var(--color-green-12);
+  /* 间距阶梯第 1 级。样式里写角色，不写第几级。 [draft] */
+  --space-1: 0.25rem;
+  /* 间距阶梯第 2 级。样式里写角色，不写第几级。 [draft] */
+  --space-2: 0.5rem;
+  /* 间距阶梯第 3 级。样式里写角色，不写第几级。 [draft] */
+  --space-3: 0.75rem;
+  /* 间距阶梯第 4 级。样式里写角色，不写第几级。 [draft] */
+  --space-4: 1rem;
+  /* 间距阶梯第 5 级。样式里写角色，不写第几级。 [draft] */
+  --space-5: 1.5rem;
+  /* 间距阶梯第 6 级。样式里写角色，不写第几级。 [draft] */
+  --space-6: 2rem;
+  /* 间距阶梯第 7 级。样式里写角色，不写第几级。 [draft] */
+  --space-7: 2.5rem;
+  /* 间距阶梯第 8 级。样式里写角色，不写第几级。 [draft] */
+  --space-8: 3rem;
+  /* 间距阶梯第 9 级。样式里写角色，不写第几级。 [draft] */
+  --space-9: 4rem;
+  /* 一个东西的几部分：图标和文字、标题和说明、标签和输入框、字段和它的提示。 [draft] */
+  --space-part: var(--space-1);
+  /* 挨着的小东西：并排的按钮、页签；列表行和表格行的上下留白。 [draft] */
+  --space-near: var(--space-2);
+  /* 控件和行的左右留白。 [draft] */
+  --space-inset: var(--space-3);
+  /* 一组里的项：字段和字段、面和面；面里面的留白。 [draft] */
+  --space-item: var(--space-4);
+  /* 组和组：表单的分组、页面里的小节。至少是 space.item 的两倍，才看得出是两层。 [draft] */
+  --space-group: var(--space-6);
+  /* 大区块：页头和内容、页面的主要区域。 [draft] */
+  --space-section: var(--space-8);
+  /* 内容到窗口边缘。窗口窄于 constraint.window.width-medium-min 时不管哪种疏密都用第 4 级，见 standards/space/space.css。 [draft] */
+  --space-page: var(--space-5);
+  /* 按钮、输入框、可点的行的最小高度。 [draft] */
+  --size-control: 2rem;
+  /* 触屏上的 size.control，不管哪种疏密。不低于 constraint.target.ios-default，也是 WCAG 2.5.5（AAA）的尺寸。 [draft] */
+  --size-control-touch: 2.75rem;
+  /* 控件和页内的小东西：按钮、输入框、徽标、可点的行。和 Windows 11 的 ControlCornerRadius 相同。 [draft] */
+  --radius-control: 4px;
+  /* 面和弹层。和 Windows 11 的 OverlayCornerRadius 相同。 [draft] */
+  --radius-panel: 8px;
+  /* 分割线和控件边框。不用 0.5px：不同屏幕和浏览器画出来的粗细不一样，对比度也就没法保证。 [draft] */
+  --stroke-thin: 1px;
+  /* 焦点环、当前项的标记。焦点环的 2px 来自 WCAG 2.4.13（AAA）。 [draft] */
+  --stroke-thick: 2px;
 }
 
 /* 选了强调色（根元素上有 data-accent，还要引入 standards/color/accents.css）时，这些角色改指向那条色阶。 */
@@ -262,4 +310,37 @@
   --color-accent-fill: var(--color-hue-3);
   --color-selected: var(--color-hue-4);
   --color-focus: var(--color-hue-11);
+}
+
+/* 在任何元素上写这些属性，它里面的角色改指向这些值。规则见 standards/space.md。 */
+[data-density="compact"] {
+  --space-part: var(--space-1);
+  --space-near: var(--space-1);
+  --space-inset: var(--space-2);
+  --space-item: var(--space-3);
+  --space-group: var(--space-5);
+  --space-section: var(--space-6);
+  --space-page: var(--space-4);
+  --size-control: 1.75rem;
+}
+
+[data-density="loose"] {
+  --space-part: var(--space-2);
+  --space-near: var(--space-3);
+  --space-inset: var(--space-4);
+  --space-item: var(--space-5);
+  --space-group: var(--space-8);
+  --space-section: var(--space-9);
+  --space-page: var(--space-6);
+  --size-control: 2.5rem;
+}
+
+[data-radius="none"] {
+  --radius-control: 0px;
+  --radius-panel: 0px;
+}
+
+[data-radius="large"] {
+  --radius-control: 8px;
+  --radius-panel: 16px;
 }

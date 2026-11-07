@@ -3,6 +3,7 @@
 //   node tools/build-tokens.mjs --check   只比较，生成物过期时退出码为 1
 // 只支持基本类型。组合类型（typography、shadow 等）等到真正用到时再加。
 // 颜色可以在 local.katachi 里写 dark，生成 light-dark()；写 accent（第几级），选了强调色时改指向 --color-hue 那一级。
+// 任何 token 都可以写 modes（{ density: { compact: 值 } }），生成 [data-density="compact"] 里的改指向，可以用在任何元素上。
 import { mkdirSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -21,6 +22,7 @@ const FONT_WEIGHTS = {
   bold: 700, 'extra-bold': 800, 'ultra-bold': 800, black: 900, heavy: 900,
   'extra-black': 950, 'ultra-black': 950,
 };
+const CSS_ATTRIBUTE = /^[a-z][a-z-]*$/;
 const CSS_COLOR_FUNCTIONS = new Set(['hsl', 'hwb', 'lab', 'lch', 'oklab', 'oklch']);
 const CSS_COLOR_SPACES = new Set([
   'srgb', 'srgb-linear', 'display-p3', 'a98-rgb', 'prophoto-rgb', 'rec2020', 'xyz-d65', 'xyz-d50',
@@ -157,6 +159,13 @@ export function collectTokens(tree) {
       const light = toCss(node.$value);
       token.css = meta?.dark === undefined ? light : `light-dark(${light}, ${toCss(meta.dark)})`;
       if (meta?.accent !== undefined) token.accentCss = `var(--color-hue-${meta.accent})`;
+      if (meta?.modes !== undefined) {
+        const entries = meta.modes !== null && typeof meta.modes === 'object' ? Object.entries(meta.modes) : [];
+        const shaped = entries.length > 0 && entries.every(([mode, variants]) => CSS_ATTRIBUTE.test(mode)
+          && variants !== null && typeof variants === 'object' && Object.keys(variants).every((variant) => CSS_ATTRIBUTE.test(variant)));
+        if (!shaped) throw new Error(`${EXTENSION_KEY}.modes 应为 { 模式: { 取值: 值 } }，名称只用小写字母和连字符`);
+        token.modes = entries.map(([mode, variants]) => [mode, Object.entries(variants).map(([variant, value]) => [variant, toCss(value)])]);
+      }
     } catch (error) {
       problems.push(`${name}：${error.message}`);
     }
@@ -198,6 +207,21 @@ export function renderCss(tokens) {
     lines.push('/* 选了强调色（根元素上有 data-accent，还要引入 standards/color/accents.css）时，这些角色改指向那条色阶。 */', ':root[data-accent] {');
     for (const token of accent) lines.push(`  ${token.cssName}: ${token.accentCss};`);
     lines.push('}', '');
+  }
+  const modes = new Map();
+  for (const token of tokens.values()) {
+    if (!inWebCss(token)) continue;
+    for (const [mode, variants] of token.modes ?? []) {
+      for (const [variant, css] of variants) {
+        const selector = `[data-${mode}="${variant}"]`;
+        if (!modes.has(selector)) modes.set(selector, []);
+        modes.get(selector).push(`  ${token.cssName}: ${css};`);
+      }
+    }
+  }
+  if (modes.size) {
+    lines.push('/* 在任何元素上写这些属性，它里面的角色改指向这些值。规则见 standards/space.md。 */');
+    for (const [selector, declarations] of modes) lines.push(`${selector} {`, ...declarations, '}', '');
   }
   return lines.join('\n');
 }
