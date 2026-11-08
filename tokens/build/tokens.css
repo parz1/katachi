@@ -16,6 +16,8 @@
   --type-family-sans: "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans CJK SC", "Noto Sans SC", system-ui, sans-serif;
   /* 比对和纯英文用。西文字体排在前面，数字才能等宽。 [draft] */
   --type-family-latin: "Segoe UI", system-ui, Roboto, "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans CJK SC", "Noto Sans SC", sans-serif;
+  /* 日文内容用。系统的日文字体排在前面，汉字才是日文的字形，假名也由日文字体来画。 [adopted] */
+  --type-family-ja: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Noto Sans CJK JP", "Noto Sans JP", system-ui, sans-serif;
   /* 代码和校验值。 [draft] */
   --type-family-mono: ui-monospace, "SF Mono", Menlo, Consolas, "Noto Sans Mono CJK SC", monospace;
   /* 文字本身就是产品时用。没有加载网页字体时回退到系统宋体。 [draft] */

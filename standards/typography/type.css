@@ -9,6 +9,9 @@
   --font-title-en: var(--type-family-latin);
   --font-read-en: var(--type-family-latin);
   --font-ui-en: var(--type-family-latin);
+  --font-title-ja: var(--type-family-ja);
+  --font-read-ja: var(--type-family-ja);
+  --font-ui-ja: var(--type-family-ja);
   font-synthesis: none;
   text-autospace: normal;
   -webkit-text-size-adjust: 100%;
@@ -20,6 +23,13 @@
   --font-title: var(--font-title-en);
   --font-read: var(--font-read-en);
   --font-ui: var(--font-ui-en);
+}
+
+/* 日文内容标 lang="ja"，换成系统的日文字体，汉字才是日文的字形。 */
+:lang(ja) {
+  --font-title: var(--font-title-ja);
+  --font-read: var(--font-read-ja);
+  --font-ui: var(--font-ui-ja);
 }
 
 body,
@@ -95,6 +105,36 @@ strong {
   font-size: var(--type-size-caption);
   font-weight: var(--type-weight-regular);
   line-height: var(--type-line-caption);
+}
+
+/* 标了语言的元素要自己重新取字体，不然会沿用外层已经算好的中文字体。
+   取外层读法在这种语言下的字体：在正文里用正文的，在界面里用界面的。 */
+:root,
+.t-ui,
+.t-caption {
+  --font-now-en: var(--font-ui-en);
+  --font-now-ja: var(--font-ui-ja);
+}
+
+.t-title-l,
+.t-title-m,
+.t-title-s {
+  --font-now-en: var(--font-title-en);
+  --font-now-ja: var(--font-title-ja);
+}
+
+.t-read,
+.t-read-large {
+  --font-now-en: var(--font-read-en);
+  --font-now-ja: var(--font-read-ja);
+}
+
+[lang|="en"] {
+  font-family: var(--font-now-en);
+}
+
+[lang|="ja"] {
+  font-family: var(--font-now-ja);
 }
 
 .t-data {

@@ -215,7 +215,7 @@ function tokenSpecimens(lib) {
 
 function tokens(lib) {
   const rows = lib.tokens.map((item) => `<tr><th scope="row"><code>${h(item.name)}</code></th><td>${swatch(item.value)}${h(item.value)}</td><td>${h(item.description)}</td><td>${h(item.platforms.join('、') || '所有')}</td><td>${h(item.status)}</td><td>${h(item.source)}</td></tr>`).join('');
-  return section('tokens', `constraint 来自标准和平台规范，不是审美选择。type 是提案；color 的色阶是用户选定的 Radix Colors 原值，角色除了 color.control 都是提案；space、size、radius、stroke 是提案。来源：${source('tokens/katachi.tokens.json')}。`,
+  return section('tokens', `constraint 来自标准和平台规范，不是审美选择。type 除了日文字体 type.family.ja 都是提案；color 的色阶是用户选定的 Radix Colors 原值，角色除了 color.control 都是提案；space、size、radius、stroke 是提案。来源：${source('tokens/katachi.tokens.json')}。`,
     `${tokenSpecimens(lib)}<h3>全部 Tokens</h3>
     <div class="table-wrap" tabindex="0" role="region" aria-label="全部 Tokens"><table class="tokens-table"><thead><tr><th scope="col">名称</th><th scope="col">值</th><th scope="col">说明</th><th scope="col">平台</th><th scope="col">状态</th><th scope="col">来源</th></tr></thead><tbody>${rows}</tbody></table></div>`);
 }

@@ -337,6 +337,27 @@
           }
         }
       },
+      "ja": {
+        "$value": [
+          "Hiragino Sans",
+          "Hiragino Kaku Gothic ProN",
+          "Yu Gothic UI",
+          "Noto Sans CJK JP",
+          "Noto Sans JP",
+          "system-ui",
+          "sans-serif"
+        ],
+        "$description": "日文内容用。系统的日文字体排在前面，汉字才是日文的字形，假名也由日文字体来画。",
+        "$extensions": {
+          "local.katachi": {
+            "status": "adopted",
+            "source": "用户 2026-11-08 选定用系统的日文字体，见 standards/typography.md",
+            "platforms": [
+              "web"
+            ]
+          }
+        }
+      },
       "mono": {
         "$value": [
           "ui-monospace",
