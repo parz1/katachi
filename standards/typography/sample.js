@@ -21,13 +21,13 @@
     <section>
       <p class="mode t-caption">操作</p>
       <label class="t-ui" for="field"><strong>仅在连接到受信任的无线网络时自动同步附件</strong></label>
-      <input class="t-ui" id="field" lang="en" value="Automatically sync attachments only when connected to a trusted wireless network">
+      <input class="input t-ui" id="field" lang="en" value="Automatically sync attachments only when connected to a trusted wireless network">
       <p class="hint t-caption">3 分钟前 · 2026 年 11 月 5 日 14:30</p>
       <p class="error t-ui">无法保存：网络连接已断开。你的修改仍保留在本页，恢复连接后可以重试。</p>
       <div class="controls">
-        <button class="t-ui primary" type="button">保存修改</button>
-        <button class="t-ui" type="button">取消</button>
-        <button class="t-ui" type="button" lang="en">Settings</button>
+        <button class="btn primary t-ui" type="button">保存修改</button>
+        <button class="btn t-ui" type="button">取消</button>
+        <button class="btn t-ui" type="button" lang="en">Settings</button>
       </div>
     </section>
     <section>
@@ -50,7 +50,7 @@
         </tbody>
         <tfoot><tr><td>合计 Total</td><td class="num">16</td><td class="num">¥1,234,567.89</td><td class="num"></td></tr></tfoot>
       </table>
-      <p class="check t-caption">校验值 <code class="t-mono">a3f9c2e87b1d4f60a3f9c2e87b1d4f60</code></p>
+      <p class="checksum t-caption">校验值 <code class="t-mono">a3f9c2e87b1d4f60a3f9c2e87b1d4f60</code></p>
     </section>`;
   document.body.append(main);
 
@@ -78,8 +78,8 @@
     等宽: { family: '--type-family-mono' },
   };
   const label = document.createElement('label');
-  label.style.margin = '0';
-  label.innerHTML = `换字体试试 <select class="t-caption" id="swap">${Object.keys(CHOICES).map((name) => `<option>${name}</option>`).join('')}</select>`;
+  label.className = 'select small';
+  label.innerHTML = `<span class="select-label">换字体试试</span><select id="swap">${Object.keys(CHOICES).map((name) => `<option>${name}</option>`).join('')}</select><svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 6.25L8 9.75l3.5-3.5"/></svg>`;
   bar.append(label);
   const root = document.documentElement.style;
   const ROLES = ['--font-title', '--font-read', '--font-ui', '--font-data', '--font-title-en', '--font-read-en', '--font-ui-en'];

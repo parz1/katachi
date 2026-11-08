@@ -1,12 +1,11 @@
 /* 间距和形状样例的页面。间距、尺寸、圆角和描边都来自角色，3 种分法共用这些，不同的写在各自的页面里。
-   按钮和输入框的外观还是临时的，等交互那一轮再定。 */
+   控件的样子来自 ../controls/controls.css。 */
 * {
   box-sizing: border-box;
 }
 
 :root {
   --hover: var(--color-fill);
-  --press: var(--color-fill-hover);
 }
 
 body {
@@ -33,15 +32,6 @@ ul {
   padding: var(--space-2) var(--space-page);
   background: var(--color-surface);
   color: var(--color-ink-muted);
-}
-
-.bar select {
-  min-block-size: var(--constraint-target-web-min);
-  border: var(--stroke-thin) solid var(--color-control);
-  border-radius: var(--radius-control);
-  background: transparent;
-  color: inherit;
-  font: inherit;
 }
 
 .app {
@@ -238,96 +228,18 @@ main {
   margin-block-end: var(--space-part);
 }
 
-input[type="text"] {
-  display: block;
-  inline-size: 100%;
-  min-block-size: var(--size-control);
-  padding-inline: var(--space-inset);
-  border: var(--stroke-thin) solid var(--color-control);
-  border-radius: var(--radius-control);
-  background: transparent;
-  color: inherit;
-}
-
-input[type="text"]:hover {
-  border-color: var(--color-control-hover);
-}
-
-input[aria-invalid="true"],
-input[aria-invalid="true"]:hover {
-  border-color: var(--color-error-line);
-}
-
-.hint,
-.error {
-  margin-block-start: var(--space-part);
-}
-
 .hint {
-  color: var(--color-ink-muted);
-}
-
-.error {
-  color: var(--color-error);
+  margin-block-start: var(--space-part);
 }
 
 .check {
   display: flex;
-  align-items: baseline;
-  gap: var(--space-near);
-  min-block-size: var(--constraint-target-web-min);
-}
-
-.check input {
-  flex: none;
-  margin: 0;
 }
 
 .actions {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-near);
-}
-
-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-block-size: var(--size-control);
-  padding-inline: var(--space-inset);
-  border: var(--stroke-thin) solid var(--color-control);
-  border-radius: var(--radius-control);
-  background: transparent;
-  color: inherit;
-}
-
-button:hover {
-  border-color: var(--color-control-hover);
-  background: var(--hover);
-}
-
-button:active {
-  background: var(--press);
-}
-
-button.primary {
-  border-color: var(--color-accent-solid);
-  background: var(--color-accent-solid);
-  color: var(--color-on-solid);
-  font-weight: var(--type-weight-strong);
-}
-
-button.primary:hover {
-  border-color: var(--color-accent-solid-hover);
-  background: var(--color-accent-solid-hover);
-}
-
-button:disabled,
-button:disabled:hover {
-  border-color: var(--color-line);
-  background: transparent;
-  color: var(--color-ink-disabled);
-  cursor: not-allowed;
 }
 
 .table-wrap {

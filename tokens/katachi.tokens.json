@@ -2660,7 +2660,7 @@
     },
     "fill": {
       "$value": "{color.gray.3}",
-      "$description": "控件底色；透明控件的悬停。",
+      "$description": "能点的控件的底色：按钮、下拉、分段选择；透明控件的悬停。",
       "$extensions": {
         "local.katachi": {
           "status": "draft",
@@ -2712,11 +2712,11 @@
     },
     "control": {
       "$value": "{color.gray.10}",
-      "$description": "控件边框：输入框、次要按钮。用第 10 级，不用 Radix 原本的第 7 级，它只有 1.53，到不了 3:1。",
+      "$description": "要打字的地方的边框：输入框、多行输入，还有勾选框。按钮不画框。用第 10 级，不用 Radix 原本的第 7 级，它只有 1.53，到不了 3:1。",
       "$extensions": {
         "local.katachi": {
           "status": "adopted",
-          "source": "用户 2026-11-07 选定，见 standards/color.md",
+          "source": "用户 2026-11-07 选定第 10 级，2026-11-08 定了只给要打字的地方画框，见 standards/color.md 和 standards/controls.md",
           "platforms": [
             "web"
           ],
@@ -2858,7 +2858,7 @@
     },
     "accent-solid": {
       "$value": "{color.gray.12}",
-      "$description": "主按钮的底色。默认等于 ink，选了强调色后指向第 11 级。Radix 的第 9 级配白字大多不到 4.5。",
+      "$description": "主按钮、勾上的勾选框、分段选择里选中的一段。默认等于 ink，选了强调色后指向第 11 级。Radix 的第 9 级配白字大多不到 4.5。",
       "$extensions": {
         "local.katachi": {
           "status": "draft",
@@ -2866,7 +2866,20 @@
           "platforms": [
             "web"
           ],
-          "accent": 11
+          "accent": 11,
+          "contrast": [
+            {
+              "floor": "non-text",
+              "against": [
+                "color.surface",
+                "color.surface-subtle",
+                "color.surface-raised",
+                "color.fill",
+                "color.panel",
+                "color.backdrop"
+              ]
+            }
+          ]
         }
       }
     },
@@ -2900,7 +2913,7 @@
     },
     "selected": {
       "$value": "{color.gray.4}",
-      "$description": "选中项的底色。不用第 5 级，ink-muted 在第 5 级上只有 4.48。",
+      "$description": "选中项的底色，要配竖线、勾或加粗，不能单独用：它和悬停是同一级。分段选择里选中的一段用 accent-solid。不用第 5 级，ink-muted 在第 5 级上只有 4.48。",
       "$extensions": {
         "local.katachi": {
           "status": "draft",
@@ -3553,6 +3566,38 @@
           ]
         }
       }
+    },
+    "check": {
+      "$value": {
+        "value": 1.125,
+        "unit": "rem"
+      },
+      "$description": "勾选框的方框。能点的范围不跟着它：带文字时是整个标签，至少 size.control 高；不带文字时是 size.control 见方。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "从「现在」页试做原型来的提案，见 standards/controls.md",
+          "platforms": [
+            "web"
+          ]
+        }
+      }
+    },
+    "input-max": {
+      "$value": {
+        "value": 16,
+        "unit": "rem"
+      },
+      "$description": "多行输入跟着内容长高，最多到这么高，再长就在框里滚动。",
+      "$extensions": {
+        "local.katachi": {
+          "status": "draft",
+          "source": "从「现在」页试做原型来的提案，见 standards/controls.md",
+          "platforms": [
+            "web"
+          ]
+        }
+      }
     }
   },
   "radius": {
@@ -3560,14 +3605,14 @@
     "$description": "圆角，规则见 standards/space.md。写 data-radius 时整体换。圆角和描边用 px，不跟字号变。",
     "control": {
       "$value": {
-        "value": 4,
+        "value": 8,
         "unit": "px"
       },
-      "$description": "控件和页内的小东西：按钮、输入框、徽标、可点的行。和 Windows 11 的 ControlCornerRadius 相同。",
+      "$description": "控件和页内的小东西：按钮、输入框、徽标、可点的行。默认用大的，是用户定的；小的一档和 Windows 11 的 ControlCornerRadius 相同。",
       "$extensions": {
         "local.katachi": {
-          "status": "draft",
-          "source": "提案，见 standards/space.md",
+          "status": "adopted",
+          "source": "用户 2026-11-08 看过直角、小、大三档的对照后选了大，见 standards/space.md",
           "platforms": [
             "web"
           ],
@@ -3577,8 +3622,8 @@
                 "value": 0,
                 "unit": "px"
               },
-              "large": {
-                "value": 8,
+              "small": {
+                "value": 4,
                 "unit": "px"
               }
             }
@@ -3588,14 +3633,14 @@
     },
     "panel": {
       "$value": {
-        "value": 8,
+        "value": 16,
         "unit": "px"
       },
-      "$description": "面和弹层。和 Windows 11 的 OverlayCornerRadius 相同。",
+      "$description": "面和弹层。默认用大的，是用户定的；小的一档和 Windows 11 的 OverlayCornerRadius 相同。",
       "$extensions": {
         "local.katachi": {
-          "status": "draft",
-          "source": "提案，见 standards/space.md",
+          "status": "adopted",
+          "source": "用户 2026-11-08 看过直角、小、大三档的对照后选了大，见 standards/space.md",
           "platforms": [
             "web"
           ],
@@ -3605,8 +3650,8 @@
                 "value": 0,
                 "unit": "px"
               },
-              "large": {
-                "value": 16,
+              "small": {
+                "value": 8,
                 "unit": "px"
               }
             }

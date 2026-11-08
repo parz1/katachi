@@ -1,6 +1,6 @@
 /* katachi 间距和形状的 Web 实现，规则见 ../space.md。先引入 tokens/build/tokens.css，阶梯和角色都在那里。
    可以整个复制进产品。默认是常规；要换，在任何元素上写 data-density="compact" 或 "loose"，只影响它里面。
-   圆角同样，写 data-radius="none" 或 "large"。 */
+   圆角同样，默认是大的，写 data-radius="small" 或 "none"。 */
 
 /* 窗口窄于 constraint.window.width-medium-min 时页边收窄，不管哪种疏密。 */
 @media (max-width: 599.98px) {

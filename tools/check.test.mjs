@@ -109,6 +109,7 @@ const cases = [
   ['standard with an unknown status', (d) => edit(d, STANDARD, (t) => t.replace('- 状态：draft', '- 状态：done')), '状态只能是'],
   ['standard without a source', (d) => edit(d, STANDARD, (t) => t.replace(/^- 来源：.*$/m, '- 来源：')), '缺少「来源」'],
   ['standard not linked from the entry', (d) => edit(d, 'DESIGN.md', (t) => t.replaceAll('(standards/typography.md)', '(tokens/README.md)')), 'DESIGN.md 没有链接 standards/typography.md'],
+  ['standard with a state section must answer every state', (d) => edit(d, 'standards/controls.md', (t) => t.replace('| 加载 |', '| 等待 |')), 'standards/controls.md：状态一节没有回答「加载」'],
 
   ['colour below the floor', (d) => tokens(d, (t) => { t.color.gray['11'].$value.components = [0.8, 0.8, 0.8]; }), '对比度是'],
   ['dark colour below the floor', (d) => tokens(d, (t) => { t.color.gray['11'].$extensions['local.katachi'].dark.components = [0.2, 0.2, 0.2]; }), '深色'],
@@ -116,7 +117,8 @@ const cases = [
   ['hex out of step with components', (d) => tokens(d, (t) => { t.color.gray['12'].$value.components[0] = 0.3; }), 'components 算出来是'],
   ['colour outside sRGB', (d) => tokens(d, (t) => { t.color.green['3'].$value.components = [1.2, 0.2, 0.2]; }), '超出 sRGB'],
   ['colour not in sRGB space', (d) => tokens(d, (t) => { t.color.green['3'].$value = { colorSpace: 'oklch', components: [0.9, 0.02, 150] }; }), '颜色要用 srgb'],
-  ['contrast against a missing role', (d) => tokens(d, (t) => { t.color.ink.$extensions['local.katachi'].contrast[0].against.push('color.nope'); }), '要比较的 color.nope 不存在'],
+  ['selected segment too close to its track', (d) => tokens(d, (t) => { t.color.fill.$value = '{color.gray.11}'; }), 'color.accent-solid 在 color.fill 上'],
+  ['contrast against a missing role',(d) => tokens(d, (t) => { t.color.ink.$extensions['local.katachi'].contrast[0].against.push('color.nope'); }), '要比较的 color.nope 不存在'],
   ['accent below the floor', (d) => edit(d, 'standards/color/accents.css', (t) => t.replace('--color-hue-11: light-dark(#0d74ce', '--color-hue-11: light-dark(#80b0e0')), '强调色 blue'],
   ['accent exception below the floor', (d) => edit(d, 'standards/color/accents.css', (t) => t.replace(/(data-accent="amber"[\s\S]*?--color-accent: light-dark\()#[0-9a-f]{6}/, '$1#c8c8c8')), '强调色 amber'],
   ['accent missing a step', (d) => edit(d, 'standards/color/accents.css', (t) => t.replace(/  --color-hue-4: light-dark\([^)]*\);\n/, '')), '缺第 4 级'],
@@ -251,7 +253,7 @@ const webExpectations = [
   ['--radius-panel', true],
   ['--stroke-thick', true],
   ['[data-density="compact"]', true],
-  ['[data-radius="large"]', true],
+  ['[data-radius="small"]', true],
 ];
 for (const [name, shouldExist] of webExpectations) {
   if (webCss.includes(name) !== shouldExist) {
@@ -273,6 +275,7 @@ const viewerExpectations = [
   ['<span class="token-value">4.5</span>', true],
   ['文档：像书一样', true],
   ['强调色：能点的才有颜色', true],
+  ['控件一览：每种控件的七种状态', true],
   ['class="swatch"', true],
   ['style="background:var(--space-', false],
   ['srcdoc="', true],

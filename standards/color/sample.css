@@ -1,9 +1,9 @@
-/* 颜色样例的组件。颜色和间距都来自角色；控件的外观还是临时的，只为了看颜色，不是规范。 */
+/* 颜色样例的组件。颜色和间距都来自角色，控件的样子来自 ../controls/controls.css。 */
 .bar select {
   font: inherit;
 }
 
-.bar .note {
+.bar-note {
   flex-basis: 100%;
 }
 
@@ -48,57 +48,6 @@
   margin-block-start: var(--space-part);
   padding-inline: var(--space-part);
   border-radius: var(--radius-control);
-}
-
-input:hover {
-  border-color: var(--color-control-hover);
-}
-
-input[aria-invalid="true"] {
-  border-color: var(--color-error-line);
-}
-
-button:hover,
-button.is-hover {
-  border-color: var(--color-control-hover);
-  background: var(--color-fill);
-}
-
-button:active,
-button.is-active {
-  background: var(--color-fill-hover);
-}
-
-button.primary:hover,
-button.primary.is-hover {
-  border-color: var(--color-accent-solid-hover);
-  background: var(--color-accent-solid-hover);
-}
-
-button.danger {
-  border-color: var(--color-error-solid);
-  background: var(--color-error-solid);
-  color: var(--color-on-solid);
-  font-weight: var(--type-weight-strong);
-}
-
-button.danger:hover,
-button.danger.is-hover {
-  border-color: var(--color-error-solid-hover);
-  background: var(--color-error-solid-hover);
-}
-
-button:disabled,
-button:disabled:hover {
-  border-color: var(--color-line);
-  background: transparent;
-  color: var(--color-ink-disabled);
-  cursor: not-allowed;
-}
-
-.show-focus {
-  outline: var(--stroke-thick) solid var(--color-focus);
-  outline-offset: var(--stroke-thick);
 }
 
 .states-title {
@@ -149,10 +98,6 @@ button:disabled:hover {
   border-radius: var(--radius-control);
   background: var(--color-surface-subtle);
   white-space: pre-wrap;
-}
-
-.check {
-  margin-block-start: var(--space-3);
 }
 
 /* 色阶页。 */

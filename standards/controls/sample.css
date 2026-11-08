@@ -1,0 +1,199 @@
+/* 控件一览这一页自己的排法，只为了把控件和状态摆出来看。控件本身的样子都在 controls.css。 */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+h2,
+h3,
+p,
+ol,
+ul {
+  margin: 0;
+}
+
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-near) var(--space-item);
+  padding: var(--space-near) var(--space-page);
+  background: var(--color-surface-subtle);
+  color: var(--color-ink-muted);
+}
+
+.bar-note {
+  flex-basis: 100%;
+}
+
+.bar-note:empty {
+  display: none;
+}
+
+.sheet {
+  max-inline-size: 64rem;
+  padding: var(--space-group) var(--space-page) var(--space-section);
+}
+
+.sheet > .lead {
+  margin-block-end: var(--space-section);
+}
+
+.sheet section + section {
+  margin-block-start: var(--space-section);
+}
+
+.sheet h2 {
+  margin-block-end: var(--space-near);
+}
+
+.subhead {
+  margin-block: var(--space-group) var(--space-near);
+  font-weight: var(--type-weight-strong);
+}
+
+.lead {
+  max-inline-size: calc(var(--type-measure-read) * 1em);
+  margin-block-end: var(--space-item);
+  color: var(--color-ink-muted);
+}
+
+.rules {
+  display: grid;
+  gap: var(--space-item);
+  padding-inline-start: 1.5em;
+}
+
+.rules > li > * + * {
+  margin-block-start: var(--space-near);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-near);
+}
+
+.input.wide {
+  inline-size: auto;
+  flex: 1 1 14rem;
+  max-inline-size: 20rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.table-wrap:focus-visible {
+  outline-offset: calc(var(--stroke-thick) * -1);
+}
+
+.states {
+  border-collapse: collapse;
+}
+
+.states th,
+.states td {
+  padding-block: var(--space-near);
+  padding-inline: 0 var(--space-item);
+  text-align: start;
+  vertical-align: middle;
+}
+
+.states th {
+  color: var(--color-ink-muted);
+  font-size: var(--type-size-caption);
+  font-weight: var(--type-weight-regular);
+  line-height: var(--type-line-caption);
+  white-space: nowrap;
+}
+
+.states td {
+  white-space: nowrap;
+}
+
+/* 表格按最窄的内容排列宽，分段选择在这里不换行，表格自己横向滚动。 */
+.states .segmented {
+  flex-wrap: nowrap;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: var(--space-item) var(--space-group);
+  margin-block-start: var(--space-item);
+}
+
+.grid.two {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+}
+
+.cell,
+.field {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-part);
+  align-content: start;
+  min-inline-size: 0;
+}
+
+.cell > .label {
+  color: var(--color-ink-muted);
+  font-size: var(--type-size-caption);
+  line-height: var(--type-line-caption);
+}
+
+form.cell {
+  gap: var(--space-item);
+}
+
+form.cell > .label {
+  margin-block-end: calc(var(--space-part) - var(--space-item));
+}
+
+.field > label {
+  display: block;
+}
+
+/* 别这样：选中和悬停都用灰 4，看不出哪个是选中的。 */
+.segmented.wrong > span {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: calc(var(--size-control) - var(--stroke-thick) * 2);
+  padding-inline: var(--space-inset);
+  border-radius: max(0px, calc(var(--radius-control) - var(--stroke-thick)));
+  color: var(--color-ink-muted);
+}
+
+.segmented.wrong > .picked {
+  background: var(--color-selected);
+  color: var(--color-ink);
+}
+
+.segmented.wrong > .hovered {
+  background: var(--color-fill-hover);
+  color: var(--color-ink);
+}
+
+.todo {
+  display: grid;
+  padding: 0;
+  list-style: none;
+}
+
+.todo li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-near);
+}
+
+.empty {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-near);
+  color: var(--color-ink-muted);
+}

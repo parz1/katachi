@@ -270,12 +270,22 @@ function checkLinks() {
   return { errors, note: `${count} 个相对链接` };
 }
 
+// 写了「状态」一节的页面，七种状态每行都要回答，没定义也要写明。
+function unansweredStates(file, text) {
+  if (!hasSection(text, '状态')) return [];
+  const answers = text.split(/^## 状态[ \t]*$/m)[1]?.split(/^## /m)[0] ?? '';
+  return STATES
+    .filter((state) => !new RegExp(`^\\|\\s*${state}\\s*\\|`, 'm').test(answers))
+    .map((state) => `${file}：状态一节没有回答「${state}」，没定义也要写明`);
+}
+
 function checkPatterns() {
   const errors = [];
   for (const file of standardFiles) {
     const text = stripFences(read(file));
     if (!PATTERN_STATUS.has(text.match(/^- 状态：[ \t]*(\S*)/m)?.[1])) errors.push(`${file}：状态只能是 ${[...PATTERN_STATUS].join('、')}`);
     if (!/^- 来源：[ \t]*\S/m.test(text)) errors.push(`${file}：缺少「来源」`);
+    errors.push(...unansweredStates(file, text));
   }
   for (const file of patternFiles) {
     const raw = read(file);
@@ -286,12 +296,7 @@ function checkPatterns() {
     for (const title of PATTERN_SECTIONS) {
       if (!hasSection(text, title)) errors.push(`${file}：缺少「${title}」一节`);
     }
-    const answers = text.split(/^## 状态[ \t]*$/m)[1]?.split(/^## /m)[0] ?? '';
-    for (const state of STATES) {
-      if (hasSection(text, '状态') && !new RegExp(`^\\|\\s*${state}\\s*\\|`, 'm').test(answers)) {
-        errors.push(`${file}：状态一节没有回答「${state}」，没定义也要写明`);
-      }
-    }
+    errors.push(...unansweredStates(file, text));
   }
   return { errors, note: `${standardFiles.length} 个规范，${patternFiles.length} 个模式` };
 }

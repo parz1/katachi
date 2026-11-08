@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>控件一览：每种控件的七种状态</title>
+<link rel="stylesheet" href="../../tokens/build/tokens.css">
+<link rel="stylesheet" href="../typography/type.css">
+<link rel="stylesheet" href="../color/color.css">
+<link rel="stylesheet" href="../color/accents.css">
+<link rel="stylesheet" href="../space/space.css">
+<link rel="stylesheet" href="controls.css">
+<link rel="stylesheet" href="sample.css">
+</head>
+<body>
+<div class="bar t-caption" id="bar"><span>控件一览</span></div>
+<main class="sheet t-ui">
+  <p class="lead">每种控件都过一遍七种状态：焦点、选中、禁用、加载、空状态、错误、成功。悬停、按下和焦点那几格是画出来的静态样子，真的去点、用 Tab 走一遍也是一样的。「空着的提交按钮」那一节可以操作。</p>
+
+  <section aria-labelledby="rules">
+    <h2 class="t-title-s" id="rules">三条规则</h2>
+    <ol class="rules">
+      <li>
+        <p><strong>框给要打字的地方。</strong>勾选框本身就是一个框。</p>
+        <div class="row">
+          <input class="input wide" type="text" placeholder="项目名称，比如「设计资产」" aria-label="规则示例：项目名称">
+          <label class="check"><input type="checkbox" checked><span>发布后通知所有人</span></label>
+        </div>
+      </li>
+      <li>
+        <p><strong>底色给能点的东西。</strong>主按钮实心，一组只放一个。</p>
+        <div class="row">
+          <button type="button" class="btn primary">保存修改</button>
+          <button type="button" class="btn">取消</button>
+          <label class="select"><span class="select-label">排序</span><select><option>最近修改</option><option>名称</option><option>创建时间</option></select><span data-icon="chevron"></span></label>
+          <div class="segmented" role="radiogroup" aria-label="规则示例：筛选">
+            <label><input type="radio" name="rule-filter" checked>全部</label>
+            <label><input type="radio" name="rule-filter">进行中</label>
+            <label><input type="radio" name="rule-filter">已归档</label>
+          </div>
+        </div>
+      </li>
+      <li>
+        <p><strong>下划线只给链接。</strong>点了会跳到别处的文字才有。</p>
+        <p>改动记录在<a href="#">同步设置</a>里能看到，<a href="#" lang="en">Settings</a> 也可以。</p>
+      </li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="buttons">
+    <h2 class="t-title-s" id="buttons">按钮</h2>
+    <p class="lead">主按钮是一组里最常做的那一个；次按钮是同一组的其他操作；小按钮跟着某一条，放在说明那一行；危险按钮给不能撤销的操作。禁用时主次一个样。加载时样子不变，前面加转圈，字换成「……中」，焦点不丢。</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="按钮的状态">
+      <table class="states">
+        <thead><tr><th scope="col"></th><th scope="col">默认</th><th scope="col">悬停</th><th scope="col">按下</th><th scope="col">焦点</th><th scope="col">禁用</th><th scope="col">加载</th></tr></thead>
+        <tbody>
+          <tr>
+            <th scope="row">主</th>
+            <td><button type="button" class="btn primary">保存修改</button></td>
+            <td><button type="button" class="btn primary is-hover">保存修改</button></td>
+            <td><button type="button" class="btn primary is-active">保存修改</button></td>
+            <td><button type="button" class="btn primary is-focus">保存修改</button></td>
+            <td><button type="button" class="btn primary" disabled>保存修改</button></td>
+            <td><button type="button" class="btn primary" aria-disabled="true"><span data-icon="spinner" data-spin></span>保存中</button></td>
+          </tr>
+          <tr>
+            <th scope="row">次</th>
+            <td><button type="button" class="btn">导出</button></td>
+            <td><button type="button" class="btn is-hover">导出</button></td>
+            <td><button type="button" class="btn is-active">导出</button></td>
+            <td><button type="button" class="btn is-focus">导出</button></td>
+            <td><button type="button" class="btn" disabled>导出</button></td>
+            <td><button type="button" class="btn" aria-disabled="true"><span data-icon="spinner" data-spin></span>导出中</button></td>
+          </tr>
+          <tr>
+            <th scope="row">小</th>
+            <td><button type="button" class="btn small">撤销</button></td>
+            <td><button type="button" class="btn small is-hover">撤销</button></td>
+            <td><button type="button" class="btn small is-active">撤销</button></td>
+            <td><button type="button" class="btn small is-focus">撤销</button></td>
+            <td><button type="button" class="btn small" disabled>撤销</button></td>
+            <td><button type="button" class="btn small" aria-disabled="true"><span data-icon="spinner" data-spin></span>撤销中</button></td>
+          </tr>
+          <tr>
+            <th scope="row">危险</th>
+            <td><button type="button" class="btn danger">删除项目</button></td>
+            <td><button type="button" class="btn danger is-hover">删除项目</button></td>
+            <td><button type="button" class="btn danger is-active">删除项目</button></td>
+            <td><button type="button" class="btn danger is-focus">删除项目</button></td>
+            <td><button type="button" class="btn danger" disabled>删除项目</button></td>
+            <td><button type="button" class="btn danger" aria-disabled="true"><span data-icon="spinner" data-spin></span>删除中</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid">
+      <div class="cell"><span class="label">字太长时换行</span>
+        <div class="row"><button type="button" class="btn primary" lang="en">Automatically sync attachments only when connected to a trusted wireless network</button></div>
+      </div>
+      <div class="cell"><span class="label">放的是用户的内容时单行省略，全名在别处看得到</span>
+        <p class="hint">附件：2026年11月产品评审_最终版_final_v3_修订_不要再改了.pdf</p>
+        <div class="row"><button type="button" class="btn small" title="2026年11月产品评审_最终版_final_v3_修订_不要再改了.pdf"><span class="truncate">打开 2026年11月产品评审_最终版_final_v3_修订_不要再改了.pdf</span></button></div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="inputs">
+    <h2 class="t-title-s" id="inputs">输入框</h2>
+    <p class="lead">提示文字只说该打什么，不代替标签。出错时框变红，说明写在下面，连到输入框上。</p>
+    <div class="grid">
+      <div class="cell field">
+        <label for="input-empty">空着</label>
+        <input class="input" id="input-empty" type="text" placeholder="项目名称">
+      </div>
+      <div class="cell field">
+        <label for="input-filled">有字</label>
+        <input class="input" id="input-filled" type="text" lang="en" value="Automatically sync attachments only when connected to a trusted wireless network">
+      </div>
+      <div class="cell field">
+        <label for="input-hover">悬停</label>
+        <input class="input is-hover" id="input-hover" type="text" value="设计资产">
+      </div>
+      <div class="cell field">
+        <label for="input-focus">焦点</label>
+        <input class="input is-focus" id="input-focus" type="text" value="设计资产">
+      </div>
+      <div class="cell field">
+        <label for="input-error">出错</label>
+        <input class="input" id="input-error" type="text" value="设计资产" aria-invalid="true" aria-describedby="input-error-hint">
+        <p class="hint is-error" id="input-error-hint">已经有一个叫「设计资产」的项目了，换一个名字。</p>
+      </div>
+      <div class="cell field">
+        <label for="input-disabled">禁用</label>
+        <input class="input" id="input-disabled" type="text" value="设计资产" disabled aria-describedby="input-disabled-hint">
+        <p class="hint" id="input-disabled-hint">项目名称由管理员设置。</p>
+      </div>
+    </div>
+
+    <h3 class="t-ui subhead" id="box-title">带按钮的输入框</h3>
+    <p class="lead">一个输入框自己的按钮和选项放进框里，框外只放说明。多行的跟着内容长高，不露拖拽角。</p>
+    <div class="grid">
+      <div class="cell"><span class="label">空着：只有一个输入框，提交按钮禁用</span>
+        <div class="input-box"><textarea class="input" rows="1" placeholder="加一条备注" aria-label="示例：空着"></textarea><div class="input-foot"><span class="hint shortcut">⌘ Enter 记下</span><button type="button" class="btn primary small" disabled>记下</button></div></div>
+      </div>
+      <div class="cell"><span class="label">有字</span>
+        <div class="input-box"><textarea class="input" rows="1" aria-label="示例：有字">升级到 v2.4.0 后，API 的默认超时从 30 秒改为 10 秒。如果你在 CI 中调用 /v1/sync，请检查 retry 配置。</textarea><div class="input-foot"><span class="hint shortcut">⌘ Enter 记下</span><button type="button" class="btn primary small">记下</button></div></div>
+      </div>
+      <div class="cell"><span class="label">保存中</span>
+        <div class="input-box"><textarea class="input" rows="1" readonly aria-label="示例：保存中">迁移期间可以继续浏览，但暂时不能编辑。</textarea><div class="input-foot"><span class="hint shortcut">⌘ Enter 记下</span><button type="button" class="btn primary small" aria-disabled="true"><span data-icon="spinner" data-spin></span>记下中</button></div></div>
+      </div>
+      <div class="cell"><span class="label">出错：字还在</span>
+        <div class="input-box"><textarea class="input" rows="1" aria-label="示例：出错" aria-invalid="true" aria-describedby="box-error">迁移期间可以继续浏览，但暂时不能编辑。</textarea><div class="input-foot"><span class="hint shortcut">⌘ Enter 记下</span><button type="button" class="btn primary small">记下</button></div></div>
+        <p class="note is-error" id="box-error"><span data-icon="alert"></span><span>无法保存：网络连接已断开。你的修改仍保留在本页，恢复连接后可以重试。</span><button type="button" class="btn small">再试一次</button></p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="selects">
+    <h2 class="t-title-s" id="selects">下拉和分段选择</h2>
+    <p class="lead">都是能点的东西，用底色。2–4 个短选项、选了马上生效的用分段选择，选中的一段实心；更多的或者地方不够时用下拉，宽度跟着选中的那一项。</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="下拉和分段选择的状态">
+      <table class="states">
+        <thead><tr><th scope="col"></th><th scope="col">默认</th><th scope="col">悬停</th><th scope="col">焦点</th><th scope="col">禁用</th></tr></thead>
+        <tbody>
+          <tr>
+            <th scope="row">下拉</th>
+            <td><label class="select"><span class="select-label">负责人</span><select><option>李雷</option><option>阿依古丽·买买提艾力</option></select><span data-icon="chevron"></span></label></td>
+            <td><label class="select is-hover"><span class="select-label">负责人</span><select><option>李雷</option></select><span data-icon="chevron"></span></label></td>
+            <td><label class="select is-focus"><span class="select-label">负责人</span><select><option>李雷</option></select><span data-icon="chevron"></span></label></td>
+            <td><label class="select"><span class="select-label">负责人</span><select disabled><option>李雷</option></select><span data-icon="chevron"></span></label></td>
+          </tr>
+          <tr>
+            <th scope="row">小下拉</th>
+            <td><label class="select small"><span class="select-label">日期</span><select><option>没有日期</option><option>今天</option><option>明天</option></select><span data-icon="chevron"></span></label></td>
+            <td><label class="select small is-hover"><span class="select-label">日期</span><select><option>没有日期</option></select><span data-icon="chevron"></span></label></td>
+            <td><label class="select small is-focus"><span class="select-label">日期</span><select><option>没有日期</option></select><span data-icon="chevron"></span></label></td>
+            <td><label class="select small"><span class="select-label">日期</span><select disabled><option>没有日期</option></select><span data-icon="chevron"></span></label></td>
+          </tr>
+          <tr>
+            <th scope="row">分段</th>
+            <td><div class="segmented" role="radiogroup" aria-label="示例：默认"><label><input type="radio" name="seg-a" checked>全部</label><label><input type="radio" name="seg-a">进行中</label><label><input type="radio" name="seg-a">已归档</label></div></td>
+            <td><div class="segmented" role="radiogroup" aria-label="示例：悬停"><label><input type="radio" name="seg-b" checked>全部</label><label class="is-hover"><input type="radio" name="seg-b">进行中</label><label><input type="radio" name="seg-b">已归档</label></div></td>
+            <td><div class="segmented" role="radiogroup" aria-label="示例：焦点"><label class="is-focus"><input type="radio" name="seg-c" checked>全部</label><label><input type="radio" name="seg-c">进行中</label><label><input type="radio" name="seg-c">已归档</label></div></td>
+            <td><div class="segmented" role="radiogroup" aria-label="示例：禁用"><label><input type="radio" name="seg-d" checked disabled>全部</label><label><input type="radio" name="seg-d" disabled>进行中</label><label><input type="radio" name="seg-d" disabled>已归档</label></div></td>
+          </tr>
+          <tr>
+            <th scope="row">小分段</th>
+            <td><div class="segmented small" role="radiogroup" aria-label="示例：小的分段选择"><label><input type="radio" name="seg-e" checked>今天</label><label><input type="radio" name="seg-e">这周</label></div></td>
+            <td><div class="segmented small" role="radiogroup" aria-label="示例：小的悬停"><label><input type="radio" name="seg-f" checked>今天</label><label class="is-hover"><input type="radio" name="seg-f">这周</label></div></td>
+            <td><div class="segmented small" role="radiogroup" aria-label="示例：小的焦点"><label class="is-focus"><input type="radio" name="seg-g" checked>今天</label><label><input type="radio" name="seg-g">这周</label></div></td>
+            <td><div class="segmented small" role="radiogroup" aria-label="示例：小的禁用"><label><input type="radio" name="seg-h" checked disabled>今天</label><label><input type="radio" name="seg-h" disabled>这周</label></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid">
+      <div class="cell"><span class="label">选项的名字很长</span>
+        <div class="row"><label class="select"><span class="select-label">文档</span><select><option>关于调整第四季度跨部门协作流程以及相关审批权限的补充说明（第二次修订）</option><option>设置</option></select><span data-icon="chevron"></span></label></div>
+      </div>
+      <div class="cell"><span class="label">别这样：选中只用 color.selected 的灰 4</span>
+        <div class="row"><div class="segmented wrong" aria-hidden="true"><span class="picked">全部</span><span class="hovered">进行中</span><span>已归档</span></div></div>
+        <p class="hint">选中的是「全部」，鼠标停在「进行中」上。两个是同一级灰，转成灰阶也分不开。</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="checks">
+    <h2 class="t-title-s" id="checks">勾选框</h2>
+    <p class="lead">方框小，能点的范围是整个标签，至少一个控件那么高。文字换行时，方框对着第一行。清单里不带文字的勾选框，能点的范围是一个控件见方，名字写在 aria-label 里。</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="勾选框的状态">
+      <table class="states">
+        <thead><tr><th scope="col">没勾</th><th scope="col">勾上</th><th scope="col">悬停</th><th scope="col">焦点</th><th scope="col">保存中</th><th scope="col">禁用</th><th scope="col">禁用，勾上</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><label class="check"><input type="checkbox"><span>归档</span></label></td>
+            <td><label class="check"><input type="checkbox" checked><span>归档</span></label></td>
+            <td><label class="check is-hover"><input type="checkbox"><span>归档</span></label></td>
+            <td><label class="check is-focus"><input type="checkbox"><span>归档</span></label></td>
+            <td><label class="check"><input type="checkbox" checked aria-disabled="true"><span>归档</span></label></td>
+            <td><label class="check"><input type="checkbox" disabled><span>归档</span></label></td>
+            <td><label class="check"><input type="checkbox" checked disabled><span>归档</span></label></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid">
+      <div class="cell"><span class="label">文字很长</span>
+        <label class="check"><input type="checkbox" checked><span>仅在连接到受信任的无线网络时自动同步附件，<span lang="en">Automatically sync attachments only when connected to a trusted wireless network</span></span></label>
+      </div>
+      <div class="cell"><span class="label">清单里不带文字</span>
+        <ul class="todo">
+          <li><label class="check alone"><input type="checkbox" aria-label="做完了：整理第四季度的审批流程"></label><span>整理第四季度的审批流程</span></li>
+          <li><label class="check alone"><input type="checkbox" checked aria-label="做完了：Supplementary Notes on Q4"></label><span lang="en">Supplementary Notes on Q4</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="submit">
+    <h2 class="t-title-s" id="submit">空着的提交按钮</h2>
+    <p class="lead">只有一个输入框时，空着就禁用，打了字才能点，一看就知道差什么。要填好几项的表单，按钮一直能点，点了再说缺哪项，焦点移到第一个没填的地方。这一节可以操作，保存是假的，等一会儿就成功。</p>
+    <div class="grid two">
+      <form class="cell" id="note-form" novalidate>
+        <span class="label">只有一个输入框</span>
+        <div class="input-box"><textarea class="input" rows="1" id="note-text" placeholder="加一条备注" aria-label="备注"></textarea><div class="input-foot"><span class="hint shortcut" id="note-shortcut">⌘ Enter 记下</span><button type="submit" class="btn primary small" id="note-submit" disabled>记下</button></div></div>
+        <div id="note-status" role="status"></div>
+      </form>
+      <form class="cell" id="project-form" novalidate>
+        <span class="label">要填好几项</span>
+        <div class="field">
+          <label for="project-name">项目名称</label>
+          <input class="input" id="project-name" type="text" data-missing="还没填项目名称。" aria-describedby="project-name-hint">
+          <p class="hint" id="project-name-hint" hidden></p>
+        </div>
+        <div class="field">
+          <label for="project-owner">负责人</label>
+          <input class="input" id="project-owner" type="text" data-missing="还没填负责人。" aria-describedby="project-owner-hint">
+          <p class="hint" id="project-owner-hint" hidden></p>
+        </div>
+        <div class="field">
+          <label for="project-note">说明（可以不填）</label>
+          <textarea class="input" id="project-note" rows="1"></textarea>
+        </div>
+        <div class="row"><button type="submit" class="btn primary">创建项目</button><button type="reset" class="btn">清空</button></div>
+        <div id="project-status" role="status"></div>
+      </form>
+    </div>
+  </section>
+
+  <section aria-labelledby="notes">
+    <h2 class="t-title-s" id="notes">提示</h2>
+    <p class="lead">放在出事的地方旁边：图标、一句话，能撤销或能重试的跟一个小按钮。提示放在哪、留多久还没定。</p>
+    <div class="grid">
+      <div class="cell"><span class="label">成功</span><p class="note is-success"><span data-icon="done"></span><span>已删除「2026年11月产品评审_最终版_final_v3_修订_不要再改了.pdf」</span><button type="button" class="btn small">撤销</button></p></div>
+      <div class="cell"><span class="label">出错</span><p class="note is-error"><span data-icon="alert"></span><span>无法保存：网络连接已断开。你的修改仍保留在本页，恢复连接后可以重试。</span><button type="button" class="btn small">再试一次</button></p></div>
+      <div class="cell"><span class="label">保存中</span><p class="note is-pending"><span data-icon="spinner" data-spin></span><span>保存中</span></p></div>
+      <div class="cell"><span class="label">警告</span><p class="note is-warning"><span data-icon="alert"></span><span>这个设置和当前的存储方案冲突，请先修改存储方案。</span></p></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="empty">
+    <h2 class="t-title-s" id="empty">空状态</h2>
+    <p class="lead">先说现在是空的，再说接下来能做什么，给一个能直接做的操作。</p>
+    <div class="grid">
+      <div class="cell"><span class="label">还没有内容</span><div class="empty"><p>还没有文档。</p><button type="button" class="btn primary"><span data-icon="plus"></span>新建文档</button></div></div>
+      <div class="cell"><span class="label">筛选后没有结果</span><div class="empty"><p>没有符合「已归档」的文档。</p><button type="button" class="btn small">清除筛选</button></div></div>
+    </div>
+  </section>
+</main>
+<script src="../color/controls.js"></script>
+<script src="../space/controls.js"></script>
+<script src="sample.js"></script>
+</body>
+</html>

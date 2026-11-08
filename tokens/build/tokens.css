@@ -196,7 +196,7 @@
   --color-backdrop: light-dark(var(--color-gray-3), var(--color-gray-1));
   /* 面的底色：比后面的底亮一层，浅色和深色都是。浅色灰 1，深色灰 3。 [draft] */
   --color-panel: light-dark(var(--color-gray-1), var(--color-gray-3));
-  /* 控件底色；透明控件的悬停。 [draft] */
+  /* 能点的控件的底色：按钮、下拉、分段选择；透明控件的悬停。 [draft] */
   --color-fill: var(--color-gray-3);
   /* 控件悬停。 [draft] */
   --color-fill-hover: var(--color-gray-4);
@@ -204,7 +204,7 @@
   --color-fill-active: var(--color-gray-5);
   /* 分割线，只是装饰，不靠它传达信息。 [draft] */
   --color-line: var(--color-gray-6);
-  /* 控件边框：输入框、次要按钮。用第 10 级，不用 Radix 原本的第 7 级，它只有 1.53，到不了 3:1。 [adopted] */
+  /* 要打字的地方的边框：输入框、多行输入，还有勾选框。按钮不画框。用第 10 级，不用 Radix 原本的第 7 级，它只有 1.53，到不了 3:1。 [adopted] */
   --color-control: var(--color-gray-10);
   /* 控件边框的悬停。 [draft] */
   --color-control-hover: var(--color-gray-11);
@@ -216,13 +216,13 @@
   --color-ink-disabled: var(--color-gray-9);
   /* 文字里能点的东西：链接。默认等于 ink，选了强调色后指向第 11 级。 [draft] */
   --color-accent: var(--color-gray-12);
-  /* 主按钮的底色。默认等于 ink，选了强调色后指向第 11 级。Radix 的第 9 级配白字大多不到 4.5。 [draft] */
+  /* 主按钮、勾上的勾选框、分段选择里选中的一段。默认等于 ink，选了强调色后指向第 11 级。Radix 的第 9 级配白字大多不到 4.5。 [draft] */
   --color-accent-solid: var(--color-gray-12);
   /* 主按钮底色的悬停。 [draft] */
   --color-accent-solid-hover: var(--color-gray-11);
   /* 带强调的浅底。 [draft] */
   --color-accent-fill: var(--color-gray-3);
-  /* 选中项的底色。不用第 5 级，ink-muted 在第 5 级上只有 4.48。 [draft] */
+  /* 选中项的底色，要配竖线、勾或加粗，不能单独用：它和悬停是同一级。分段选择里选中的一段用 accent-solid。不用第 5 级，ink-muted 在第 5 级上只有 4.48。 [draft] */
   --color-selected: var(--color-gray-4);
   /* 焦点环。默认等于 ink，选了强调色后指向第 11 级。 [draft] */
   --color-focus: var(--color-gray-12);
@@ -294,10 +294,14 @@
   --size-control: 2rem;
   /* 触屏上的 size.control，不管哪种疏密。不低于 constraint.target.ios-default，也是 WCAG 2.5.5（AAA）的尺寸。 [draft] */
   --size-control-touch: 2.75rem;
-  /* 控件和页内的小东西：按钮、输入框、徽标、可点的行。和 Windows 11 的 ControlCornerRadius 相同。 [draft] */
-  --radius-control: 4px;
-  /* 面和弹层。和 Windows 11 的 OverlayCornerRadius 相同。 [draft] */
-  --radius-panel: 8px;
+  /* 勾选框的方框。能点的范围不跟着它：带文字时是整个标签，至少 size.control 高；不带文字时是 size.control 见方。 [draft] */
+  --size-check: 1.125rem;
+  /* 多行输入跟着内容长高，最多到这么高，再长就在框里滚动。 [draft] */
+  --size-input-max: 16rem;
+  /* 控件和页内的小东西：按钮、输入框、徽标、可点的行。默认用大的，是用户定的；小的一档和 Windows 11 的 ControlCornerRadius 相同。 [adopted] */
+  --radius-control: 8px;
+  /* 面和弹层。默认用大的，是用户定的；小的一档和 Windows 11 的 OverlayCornerRadius 相同。 [adopted] */
+  --radius-panel: 16px;
   /* 分割线和控件边框。不用 0.5px：不同屏幕和浏览器画出来的粗细不一样，对比度也就没法保证。 [draft] */
   --stroke-thin: 1px;
   /* 焦点环、当前项的标记。焦点环的 2px 来自 WCAG 2.4.13（AAA）。 [draft] */
@@ -342,7 +346,7 @@
   --radius-panel: 0px;
 }
 
-[data-radius="large"] {
-  --radius-control: 8px;
-  --radius-panel: 16px;
+[data-radius="small"] {
+  --radius-control: 4px;
+  --radius-panel: 8px;
 }

@@ -1,7 +1,7 @@
 # 间距和形状
 
 - 状态：draft
-- 来源：agent 起草的提案。用户定的有两点：控件边框用灰的第 10 级（见[颜色](color.md)），默认靠留白分开（2026-11-07）。写明 WCAG、W3C、Apple、Microsoft 的有出处，写明实测的是这里量出来的，其余都是提案，用户还没确认
+- 来源：agent 起草的提案。用户定的有三点：控件边框用灰的第 10 级（见[颜色](color.md)），默认靠留白分开（2026-11-07），圆角默认用大的（2026-11-08，看过直角、小、大三档的对照后选的）。写明 WCAG、W3C、Apple、Microsoft 的有出处，写明实测的是这里量出来的，其余都是提案，用户还没确认
 
 界面上的距离、线和面，都在回答同一个问题：哪些东西是一起的。这一页先说为什么这样排，再说默认怎么做、什么时候换。字号和行高见[排版](typography.md)，颜色见[颜色](color.md)。
 
@@ -11,11 +11,11 @@
 
 **2. 疏密跟着读法走，不是一个全局值。** 和排版一样先看人怎么读：上下对数字要一屏多放，照着操作要点得准。同一页里可以有不同的疏密。疏密只改间距和控件高度，不改字号。
 
-**3. 形状默认不出声。** 和字、颜色一样：先靠距离分开，不够才加线或面，它们都要读的人多看一眼。框留给控件：控件边框用灰的第 10 级，已经比较深，内容再到处画框会很吵。用户已确认默认靠留白。
+**3. 形状默认不出声。** 和字、颜色一样：先靠距离分开，不够才加线或面，它们都要读的人多看一眼。框留给要打字的地方：输入框的边框用灰的第 10 级，已经比较深，别的地方再画框会很吵；按钮靠底色，见[控件](controls.md)。用户已确认默认靠留白。
 
 **4. 中文先对。** 汉字撑满方框。实测 14px 的苹方，「永」高 12.9px，小写 x 只有 7.2px，同样高的控件，中文比英文挤。所以尺寸按中文定，不照搬英文系统的紧凑尺寸。
 
-这四条的代价：留白占地方，一屏放得少；靠距离分组要求间距和对齐都准，乱一点就看不出分组；默认没有形状上的面貌，产品要被一眼认出来时，面貌要从别处来，或者换圆角和面。
+这四条的代价：留白占地方，一屏放得少；靠距离分组要求间距和对齐都准，乱一点就看不出分组；形状上的面貌主要来自圆角，默认用大的；产品要被一眼认出来时，面貌要从别处来，或者换面。
 
 ## 间距在说什么
 
@@ -65,6 +65,7 @@ Windows 的[内容布局指南](https://learn.microsoft.com/en-us/windows/apps/d
 
 - 可以混用：页面靠留白，表格里用线。
 - 面已经分开了，不要再加框，也不要面上再放面。
+- 控件的底色要和下面那一层分得开。浅色下面后面的底、深色下的面都是灰 3，和 `color.fill` 同色，放在那里的控件要换底色，见[控件](controls.md)的「尺寸和形状」，面的样例里有写法。
 
 | 疏密 | 适合 | 什么时候不用 | 代价 |
 |---|---|---|---|
@@ -72,7 +73,7 @@ Windows 的[内容布局指南](https://learn.microsoft.com/en-us/windows/apps/d
 | 常规（默认） | 操作和扫读：大多数工具和设置 | 要上下对很多数字时 | |
 | 松 | 低频的操作：引导、首次设置；内容很少的页面 | 比对 | 一屏放得少 |
 
-实测 800px 高的窗口里，紧、常规、松分别能放 16、14、12 个两行的列表行，或者 26、20、17 个一行的表格行。同样的内容在 1280px 宽的窗口里，留白（常规）高 1558px，面（常规）高 1620px，线（紧）高 1353px，留白（紧）高 1350px。
+实测 800px 高的窗口里，紧、常规、松分别能放 16、14、12 个两行的列表行，或者 26、20、17 个一行的表格行。同样的内容在 1280px 宽的窗口里，留白（常规）高 1566px，面（常规）高 1628px，线（紧）高 1357px，留白（紧）高 1354px。
 
 下面 3 个样例内容完全相同，不同的只有组和行怎么分开。留白和面默认常规，线默认紧，因为它们通常这样配。每个都可以切换疏密、圆角和明暗。窗口窄于 `constraint.window.width-expanded-min` 时，侧栏移到上面。
 
@@ -106,7 +107,7 @@ Windows 的[内容布局指南](https://learn.microsoft.com/en-us/windows/apps/d
 
 ## 形状
 
-**圆角**默认小：`radius.control` 给控件和页内的小东西，`radius.panel` 给面和弹层，和 [Windows 11](https://learn.microsoft.com/en-us/windows/apps/design/signature-experiences/geometry) 的两档相同。圆角是最容易换面貌的地方，产品想换时整体换：写 `data-radius="none"` 或 `data-radius="large"`，不要一个个改。
+**圆角**默认用大的，这是用户定的：`radius.control` 给控件和页内的小东西，8px；`radius.panel` 给面和弹层，16px。圆角是最容易换面貌的地方，产品已有自己的形状时跟着产品，要换时整体换：写 `data-radius="small"`（4px 和 8px，和 [Windows 11](https://learn.microsoft.com/en-us/windows/apps/design/signature-experiences/geometry) 的两档相同）或 `data-radius="none"`（直角），不要一个个改。
 
 - 外层大，里层小。里层贴近外层时（两层之间的距离比外层圆角小），里层圆角等于外层圆角减去这个距离，小于 0 就用 0。
 - 两个东西相接的地方不做圆角，比如分段按钮的中间；窗口贴边或铺满时，贴边的角也不做（Microsoft）。
@@ -115,7 +116,7 @@ Windows 的[内容布局指南](https://learn.microsoft.com/en-us/windows/apps/d
 **线**：`stroke.thin` 给分割线和控件边框，`stroke.thick` 给焦点环和当前项的标记。焦点环的 2px 来自 WCAG 2.4.13（AAA）。
 
 - 分割线用 `color.line`，只是装饰。控件边框用 `color.control`。不要混用。
-- 只靠边框才认得出的控件，比如输入框，一定要有边框，对比度不低于 `constraint.contrast.non-text`。有文字的按钮可以不要边框，文字本身认得出（WCAG 1.4.11）；有边框时用 `color.control`。
+- 要打字的地方靠边框认出来，一定要有边框，对比度不低于 `constraint.contrast.non-text`。按钮靠底色，不画边框，见[控件](controls.md)；有文字的按钮不画边框也认得出（WCAG 1.4.11）。
 - 面的底色是装饰，不算控件的边界。面上的输入框照样要边框。
 - 不用 0.5px：不同屏幕和浏览器画出来的粗细不一样，对比度也就没法保证。
 
@@ -139,7 +140,7 @@ Windows 的[内容布局指南](https://learn.microsoft.com/en-us/windows/apps/d
 | Web | 上面的 token | `size.control`，触屏 `size.control-touch` | 上面的 token |
 | macOS | 系统的布局指南和安全区。Apple 的 Layout 指南没有给具体数字 | 默认 `constraint.target.macos-default`，不低于 `constraint.target.macos-min` | 系统控件的形状 |
 | iOS | 系统的布局边距和安全区。Apple 的 Layout 指南没有给具体数字 | 默认 `constraint.target.ios-default`，不低于 `constraint.target.ios-min` | 系统控件和列表的形状 |
-| Windows | 尺寸和间距取 4 epx 的倍数；窄窗口页边 12 epx，宽窗口 24 epx（[Microsoft](https://learn.microsoft.com/en-us/windows/apps/develop/ui/alignment-margin-padding)） | 触摸目标 `constraint.target.windows-touch` | 资源 ControlCornerRadius 和 OverlayCornerRadius，默认值和上面相同 |
+| Windows | 尺寸和间距取 4 epx 的倍数；窄窗口页边 12 epx，宽窗口 24 epx（[Microsoft](https://learn.microsoft.com/en-us/windows/apps/develop/ui/alignment-margin-padding)） | 触摸目标 `constraint.target.windows-touch` | 资源 ControlCornerRadius 和 OverlayCornerRadius，默认值是 4 和 8，和这里小的一档相同；跟着系统走 |
 | Android | Material 的布局和窗口尺寸类 | 不低于 `constraint.target.android-min` | `MaterialTheme.shapes`；Material 的形状比这里圆，跟着系统走 |
 | 终端 | 单位是字符单元：组和组之间空一行，组里缩进两列 | 不适用 | 默认不画框线，见下面 |
 
@@ -183,4 +184,3 @@ node standards/space/terminal.mjs --split=box
 ## 还没定，问用户
 
 1. 疏密只改间距和控件高度，不改字号，对吗？这也回答排版页的 `type.size.ui`：紧的时候字号不变。建议这样，中文字再小就难读了。代价是紧的时候还是比英文工具松。
-2. 控件和面的圆角默认用小的，对吗？样例里可以切到直角和大圆角比。建议先这样，产品要换面貌时整体换。

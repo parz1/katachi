@@ -1,0 +1,602 @@
+/* katachi 控件的 Web 实现，规则见 ../controls.md。只写角色，可以整个复制进产品。
+   先引入 tokens/build/tokens.css、type.css、color.css 和 space.css。
+
+   样子跟着「它是什么」走，这三条是用户定的：
+   1. 框给要打字的地方：输入框和多行输入画框，用 color.control。勾选框本身就是一个框。
+   2. 底色给能点的东西：按钮、下拉、分段选择靠底色认出来，不画框。主按钮实心，一组只放一个。
+   3. 下划线只给链接：写在 color.css 里，按钮和下拉都不加。
+
+   .is-hover、.is-active、.is-focus 只给控件一览画静态的样子，产品里用不到。 */
+
+:root {
+  --control-spin: 0.9s; /* 临时的：动效还没定，转圈多快等动效那一轮再定。 */
+}
+
+/* ---------- 图标 ---------- */
+/* 跟着字号和字的颜色，和文字的中线对齐。 */
+.icon {
+  display: inline-block;
+  flex: none;
+  inline-size: 1em;
+  block-size: 1em;
+  vertical-align: -0.125em;
+}
+
+/* 减少动态时不转，旁边的「……中」照样说明在做什么。 */
+@media (prefers-reduced-motion: no-preference) {
+  .spin {
+    animation: control-spin var(--control-spin) linear infinite;
+  }
+}
+
+@keyframes control-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+/* 只给读屏软件看的文字。 */
+.visually-hidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* 尺寸算到边框外沿，不管产品自己的 box-sizing。 */
+.btn,
+.input,
+.input-box,
+.select,
+.segmented,
+.segmented > label,
+.check,
+.check input {
+  box-sizing: border-box;
+}
+
+/* ---------- 按钮：底色 ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-part);
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  min-block-size: var(--size-control);
+  padding-inline: var(--space-inset);
+  border: 0;
+  border-radius: var(--radius-control);
+  background: var(--color-fill);
+  color: var(--color-ink);
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn:hover,
+.btn.is-hover {
+  background: var(--color-fill-hover);
+}
+
+.btn:active,
+.btn.is-active {
+  background: var(--color-fill-active);
+}
+
+/* 主按钮：一组操作里最常做的那一个。 */
+.btn.primary {
+  background: var(--color-accent-solid);
+  color: var(--color-on-solid);
+  font-weight: var(--type-weight-strong);
+}
+
+.btn.primary:hover,
+.btn.primary.is-hover,
+.btn.primary:active,
+.btn.primary.is-active {
+  background: var(--color-accent-solid-hover);
+}
+
+/* 危险按钮：不能撤销的操作，比如删除。 */
+.btn.danger {
+  background: var(--color-error-solid);
+  color: var(--color-on-solid);
+  font-weight: var(--type-weight-strong);
+}
+
+.btn.danger:hover,
+.btn.danger.is-hover,
+.btn.danger:active,
+.btn.danger.is-active {
+  background: var(--color-error-solid-hover);
+}
+
+/* 焦点环来自 color.css 的 :focus-visible。 */
+.btn.is-focus {
+  outline: var(--stroke-thick) solid var(--color-focus);
+  outline-offset: var(--stroke-thick);
+}
+
+/* 禁用：主次一个样，「现在点不了」不分主次。底色和形状不变，看得出是同一个按钮。 */
+.btn:disabled,
+.btn:disabled:hover {
+  background: var(--color-fill);
+  color: var(--color-ink-disabled);
+  cursor: not-allowed;
+}
+
+/* 加载：写 aria-disabled="true"，样子不变，前面加转圈，字换成「……中」。
+   不用 disabled，免得正在按的按钮把焦点弄丢；重复点击由脚本拦住。 */
+.btn[aria-disabled="true"] {
+  cursor: progress;
+}
+
+/* 小按钮：跟着某一条的操作，放在说明那一行，比如撤销、展开、再试一次。 */
+.btn.small {
+  min-block-size: var(--constraint-target-web-min);
+  padding-inline: var(--space-near);
+  font-size: var(--type-size-caption);
+  line-height: var(--type-line-caption);
+}
+
+/* 放进按钮的是用户的内容（文件名、任务名）时，单行省略，全名要在别处看得到。 */
+.btn .truncate {
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- 输入框：框 ---------- */
+.input {
+  display: block;
+  inline-size: 100%;
+  min-inline-size: 0;
+  min-block-size: var(--size-control);
+  margin: 0;
+  padding-inline: var(--space-inset);
+  border: var(--stroke-thin) solid var(--color-control);
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: inherit;
+}
+
+.input:hover,
+.input.is-hover {
+  border-color: var(--color-control-hover);
+}
+
+.input.is-focus {
+  outline: var(--stroke-thick) solid var(--color-focus);
+  outline-offset: var(--stroke-thick);
+}
+
+.input[aria-invalid="true"],
+.input[aria-invalid="true"]:hover {
+  border-color: var(--color-error-line);
+}
+
+.input:disabled,
+.input:disabled:hover {
+  border-color: var(--color-line);
+  color: var(--color-ink-disabled);
+  cursor: not-allowed;
+}
+
+/* 提示文字只说该打什么，不代替标签：打了字它就看不到了。 */
+.input::placeholder {
+  color: var(--color-ink-muted);
+  opacity: 1;
+}
+
+/* 多行输入：跟着内容长高，最高 size.input-max，再长就在框里滚动；不露拖拽角。
+   第一行的位置和单行的输入框一样。不支持 field-sizing 的浏览器停在两行高，在框里滚动。 */
+textarea.input {
+  min-block-size: calc(var(--size-control) + var(--type-line-ui));
+  max-block-size: var(--size-input-max);
+  padding-block: calc((var(--size-control) - var(--type-line-ui)) / 2 - var(--stroke-thin));
+  field-sizing: content;
+  resize: none;
+}
+
+/* 带按钮的输入框：框画在外面这一层，里面放没有框的 .input，以及这个输入框自己的按钮和选项。 */
+.input-box {
+  display: grid;
+  gap: var(--space-near);
+  padding: var(--space-near) var(--space-inset);
+  border: var(--stroke-thin) solid var(--color-control);
+  border-radius: var(--radius-control);
+  cursor: text;
+}
+
+.input-box:hover,
+.input-box.is-hover {
+  border-color: var(--color-control-hover);
+}
+
+.input-box:has(.input:focus-visible),
+.input-box.is-focus {
+  outline: var(--stroke-thick) solid var(--color-focus);
+  outline-offset: var(--stroke-thick);
+}
+
+.input-box:has(.input[aria-invalid="true"]) {
+  border-color: var(--color-error-line);
+}
+
+.input-box:has(.input:disabled) {
+  border-color: var(--color-line);
+  color: var(--color-ink-disabled);
+  cursor: not-allowed;
+}
+
+.input-box .input {
+  min-block-size: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+}
+
+.input-box .input:focus-visible {
+  outline: none;
+}
+
+.input-box textarea.input {
+  min-block-size: calc(var(--type-line-ui) * 2);
+}
+
+/* 框里最下面一行：左边是提示，右边是按钮。 */
+.input-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-near);
+  cursor: default;
+}
+
+/* 输入框下面的说明。出错时用 .hint.is-error，再用 aria-describedby 连到输入框。 */
+.hint {
+  color: var(--color-ink-muted);
+  font-size: var(--type-size-caption);
+  line-height: var(--type-line-caption);
+}
+
+.hint.is-error {
+  color: var(--color-error);
+}
+
+/* ---------- 下拉：底色 ---------- */
+/* 写成 <label class="select"><span class="select-label">名字</span><select>…</select>箭头图标</label>。
+   自己画底色和箭头，弹出来的选项列表用系统的。宽度跟着选中的那一项。 */
+.select {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-part);
+  max-inline-size: 100%;
+  min-block-size: var(--size-control);
+  padding-inline-start: var(--space-inset);
+  border-radius: var(--radius-control);
+  background: var(--color-fill);
+  color: var(--color-ink);
+  cursor: pointer;
+}
+
+.select:hover,
+.select.is-hover {
+  background: var(--color-fill-hover);
+}
+
+.select-label {
+  flex: none;
+  color: var(--color-ink-muted);
+}
+
+.select select {
+  flex: 0 1 auto;
+  align-self: stretch;
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0 calc(var(--space-inset) + 1em + var(--space-part)) 0 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  appearance: none;
+  field-sizing: content;
+  cursor: inherit;
+}
+
+.select select:focus-visible {
+  outline: none;
+}
+
+.select:has(select:focus-visible),
+.select.is-focus {
+  outline: var(--stroke-thick) solid var(--color-focus);
+  outline-offset: var(--stroke-thick);
+}
+
+.select > .icon {
+  position: absolute;
+  inset-inline-end: var(--space-inset);
+  color: var(--color-ink-muted);
+  pointer-events: none;
+}
+
+.select:has(select:disabled),
+.select:has(select:disabled):hover {
+  background: var(--color-fill);
+  color: var(--color-ink-disabled);
+  cursor: not-allowed;
+}
+
+.select:has(select:disabled) .select-label,
+.select:has(select:disabled) > .icon {
+  color: var(--color-ink-disabled);
+}
+
+.select.small {
+  min-block-size: var(--constraint-target-web-min);
+  padding-inline-start: var(--space-near);
+  font-size: var(--type-size-caption);
+  line-height: var(--type-line-caption);
+}
+
+.select.small select {
+  padding-inline-end: calc(var(--space-near) + 1em + var(--space-part));
+}
+
+.select.small > .icon {
+  inset-inline-end: var(--space-near);
+}
+
+/* ---------- 分段选择：底色，选中的一段实心 ---------- */
+/* 写成 <div class="segmented" role="radiogroup">，每段是 <label><input type="radio">名字</label>。
+   选中的一段用实心，不用 color.selected：它和悬停是同一级，灰阶里也和旁边的段分不开。 */
+.segmented {
+  display: inline-flex;
+  flex-wrap: wrap;
+  max-inline-size: 100%;
+  padding: var(--stroke-thick); /* 外圈和选中的一段之间隔一条粗线的宽度 */
+  border-radius: var(--radius-control);
+  background: var(--color-fill);
+}
+
+.segmented > label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-block-size: calc(var(--size-control) - var(--stroke-thick) * 2);
+  padding-inline: var(--space-inset);
+  border-radius: max(0px, calc(var(--radius-control) - var(--stroke-thick)));
+  color: var(--color-ink-muted);
+  cursor: pointer;
+}
+
+.segmented > label:hover,
+.segmented > label.is-hover {
+  background: var(--color-fill-hover);
+  color: var(--color-ink);
+}
+
+.segmented input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.segmented > label:has(input:checked) {
+  background: var(--color-accent-solid);
+  color: var(--color-on-solid);
+  font-weight: var(--type-weight-strong);
+}
+
+.segmented > label:has(input:focus-visible),
+.segmented > label.is-focus {
+  outline: var(--stroke-thick) solid var(--color-focus);
+  outline-offset: var(--stroke-thick);
+}
+
+.segmented > label:has(input:disabled) {
+  color: var(--color-ink-disabled);
+  cursor: not-allowed;
+}
+
+.segmented > label:has(input:disabled):hover {
+  background: transparent;
+}
+
+.segmented > label:has(input:disabled:checked) {
+  background: var(--color-ink-disabled);
+  color: var(--color-on-solid);
+}
+
+.segmented.small > label {
+  min-block-size: calc(var(--constraint-target-web-min) - var(--stroke-thick) * 2);
+  padding-inline: var(--space-near);
+  font-size: var(--type-size-caption);
+  line-height: var(--type-line-caption);
+}
+
+/* ---------- 勾选框：框 ---------- */
+/* 写成 <label class="check"><input type="checkbox"><span>文字</span></label>，整个标签都能点。
+   文字换行时，方框对着第一行。 */
+.check {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--space-near);
+  min-block-size: var(--size-control);
+  padding-block: calc((var(--size-control) - 1lh) / 2);
+  cursor: pointer;
+}
+
+.check input {
+  display: grid;
+  flex: none;
+  place-content: center;
+  inline-size: var(--size-check);
+  block-size: var(--size-check);
+  margin: calc((1lh - var(--size-check)) / 2) 0 0;
+  border: var(--stroke-thin) solid var(--color-control);
+  /* 圆角最多是方框的四分之一，再圆就像单选了。 */
+  border-radius: min(var(--radius-control), calc(var(--size-check) / 4));
+  background: transparent;
+  appearance: none;
+  cursor: pointer;
+}
+
+/* 勾：用 color.on-solid 画在实心的方框上。 */
+.check input::before {
+  content: "";
+  inline-size: calc(var(--size-check) * 0.6);
+  block-size: calc(var(--size-check) * 0.6);
+  background: var(--color-on-solid);
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  visibility: hidden;
+}
+
+.check:hover input,
+.check.is-hover input {
+  border-color: var(--color-control-hover);
+}
+
+.check input:checked {
+  border-color: var(--color-accent-solid);
+  background: var(--color-accent-solid);
+}
+
+.check input:checked::before {
+  visibility: visible;
+}
+
+.check.is-focus input {
+  outline: var(--stroke-thick) solid var(--color-focus);
+  outline-offset: var(--stroke-thick);
+}
+
+/* 保存中：写 aria-disabled="true"，样子不变。 */
+.check input[aria-disabled="true"] {
+  cursor: progress;
+}
+
+.check:has(input:disabled) {
+  color: var(--color-ink-disabled);
+  cursor: not-allowed;
+}
+
+.check input:disabled {
+  border-color: var(--color-line);
+  cursor: not-allowed;
+}
+
+.check input:disabled:checked {
+  border-color: var(--color-ink-disabled);
+  background: var(--color-ink-disabled);
+}
+
+/* 不带文字的勾选框，比如清单里勾掉一项：能点的范围是 size.control 见方，方框和旁边的文字边缘对齐。名字写在 aria-label。 */
+.check.alone {
+  justify-content: center;
+  align-items: center;
+  inline-size: var(--size-control);
+  block-size: var(--size-control);
+  margin-inline: calc((var(--size-check) - var(--size-control)) / 2);
+  padding: 0;
+}
+
+.check.alone input {
+  margin: 0;
+}
+
+/* ---------- 提示：成功、出错、保存中、警告 ---------- */
+/* 图标、一句话、小按钮排一行；地方不够时文字自己换行，按钮跟在文字后面。 */
+.note {
+  display: grid;
+  grid-template-columns: auto minmax(0, max-content) auto;
+  justify-content: start;
+  align-items: center;
+  gap: var(--space-part) var(--space-near);
+}
+
+.note.is-success {
+  color: var(--color-success);
+}
+
+.note.is-warning {
+  color: var(--color-warning);
+}
+
+.note.is-pending {
+  color: var(--color-ink-muted);
+}
+
+.note.is-error {
+  padding: var(--space-part) var(--space-inset);
+  border-radius: var(--radius-control);
+  background: var(--color-error-subtle);
+  color: var(--color-error);
+}
+
+/* 出错底色上的小按钮用页面的底色，才分得开。 */
+.note.is-error .btn {
+  background: var(--color-surface);
+  color: var(--color-ink);
+}
+
+.note.is-error .btn:hover {
+  background: var(--color-fill);
+}
+
+/* ---------- 触屏 ---------- */
+/* space.css 已经把 size.control 换成 size.control-touch。小的控件看起来不变，能点的范围往外扩到 size.control-touch。 */
+@media (pointer: coarse) {
+  .btn.small,
+  .select.small,
+  .segmented.small > label {
+    position: relative;
+  }
+
+  .btn.small::after,
+  .select.small::after,
+  .segmented.small > label::after {
+    content: "";
+    position: absolute;
+    inset-block: calc((var(--constraint-target-web-min) - var(--size-control-touch)) / 2);
+    inset-inline: 0;
+  }
+}
+
+/* ---------- 强制颜色模式 ---------- */
+/* 系统会去掉底色：按钮、下拉和分段选择补上边框，选中的一段用系统的高亮色，勾选框交给系统画。 */
+@media (forced-colors: active) {
+  .btn,
+  .select,
+  .segmented {
+    border: var(--stroke-thin) solid ButtonText;
+  }
+
+  .btn:disabled {
+    border-color: GrayText;
+    color: GrayText;
+  }
+
+  .segmented > label:has(input:checked) {
+    background: Highlight;
+    color: HighlightText;
+    forced-color-adjust: none;
+  }
+
+  .check input {
+    appearance: auto;
+  }
+
+  .check input::before {
+    display: none;
+  }
+}

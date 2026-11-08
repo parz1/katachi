@@ -1,4 +1,4 @@
-/* 样例的外壳。颜色和间距都来自角色；控件的外观还是临时的，只为了看字，不是规范。 */
+/* 样例的外壳。颜色和间距都来自角色，控件的样子来自 ../controls/controls.css。 */
 * {
   box-sizing: border-box;
 }
@@ -65,27 +65,9 @@ section {
   border-block-start: var(--stroke-thin) solid var(--color-line);
 }
 
-label {
+label[for] {
   display: block;
   margin-block-end: var(--space-part);
-}
-
-input,
-select {
-  border: var(--stroke-thin) solid var(--color-control);
-  border-radius: var(--radius-control);
-  background: transparent;
-  color: inherit;
-}
-
-input {
-  inline-size: 100%;
-  min-block-size: var(--size-control);
-  padding-inline: var(--space-inset);
-}
-
-select {
-  min-block-size: var(--constraint-target-web-min);
 }
 
 .hint {
@@ -103,22 +85,6 @@ select {
   flex-wrap: wrap;
   gap: var(--space-near);
   margin-block-start: var(--space-3);
-}
-
-button {
-  min-block-size: var(--size-control);
-  padding-inline: var(--space-inset);
-  border: var(--stroke-thin) solid var(--color-control);
-  border-radius: var(--radius-control);
-  background: transparent;
-  color: inherit;
-}
-
-button.primary {
-  border-color: var(--color-accent-solid);
-  background: var(--color-accent-solid);
-  color: var(--color-on-solid);
-  font-weight: var(--type-weight-strong);
 }
 
 .rows {
@@ -171,7 +137,7 @@ tfoot td {
   font-weight: var(--type-weight-strong);
 }
 
-.check {
+.checksum {
   margin-block-start: var(--space-3);
   color: var(--color-ink-muted);
 }

@@ -28,25 +28,25 @@
       <p class="notice success t-ui">${icon('success')}<span>发布成功，共 12 项。</span></p>
     </section>
     <section>
-      <p class="mode t-caption">操作：主按钮靠填充，边框对比度不低于 3:1，禁用可以更淡</p>
+      <p class="mode t-caption">操作：要打字的地方有框，对比度不低于 3:1；能点的靠底色；禁用可以更淡</p>
       <label class="t-ui" for="field"><strong>仅在连接到受信任的无线网络时自动同步附件</strong></label>
-      <input class="t-ui" id="field" lang="en" aria-invalid="true" aria-describedby="field-error" value="Automatically sync attachments only when connected to a trusted wireless network">
+      <input class="input t-ui" id="field" lang="en" aria-invalid="true" aria-describedby="field-error" value="Automatically sync attachments only when connected to a trusted wireless network">
       <p class="error t-caption" id="field-error">这个设置和当前的存储方案冲突，请先修改存储方案。</p>
       <p class="hint t-caption">3 分钟前 · 2026 年 11 月 5 日 14:30</p>
       <div class="controls">
-        <button class="t-ui primary" type="button">保存修改</button>
-        <button class="t-ui" type="button">取消</button>
-        <button class="t-ui" type="button" lang="en">Settings</button>
-        <button class="t-ui" type="button" disabled>暂不可用</button>
-        <button class="t-ui danger" type="button">删除</button>
+        <button class="btn primary t-ui" type="button">保存修改</button>
+        <button class="btn t-ui" type="button">取消</button>
+        <button class="btn t-ui" type="button" lang="en">Settings</button>
+        <button class="btn t-ui" type="button" disabled>暂不可用</button>
+        <button class="btn danger t-ui" type="button">删除</button>
       </div>
       <p class="mode t-caption states-title">这些状态平时看不见，这里固定下来：悬停、按下、焦点</p>
       <div class="controls">
-        <button class="t-ui primary is-hover" type="button">主按钮悬停</button>
-        <button class="t-ui danger is-hover" type="button">删除悬停</button>
-        <button class="t-ui is-hover" type="button">按钮悬停</button>
-        <button class="t-ui is-active" type="button">按钮按下</button>
-        <button class="t-ui show-focus" type="button">焦点</button>
+        <button class="btn primary is-hover t-ui" type="button">主按钮悬停</button>
+        <button class="btn danger is-hover t-ui" type="button">删除悬停</button>
+        <button class="btn is-hover t-ui" type="button">按钮悬停</button>
+        <button class="btn is-active t-ui" type="button">按钮按下</button>
+        <button class="btn t-ui is-focus" type="button">焦点</button>
       </div>
     </section>
     <section>

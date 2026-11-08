@@ -34,7 +34,7 @@
             <h1 class="t-title-m">用 Claude 和 Codex 在 3 个 iOS 项目里复用 Design Tokens</h1>
             <p class="meta t-ui">阿依古丽·买买提艾力 · 2026 年 11 月 5 日 14:30</p>
           </div>
-          <div class="actions"><button type="button">导出</button><button type="button">分享</button></div>
+          <div class="actions"><button class="btn" type="button">导出</button><button class="btn" type="button">分享</button></div>
         </header>
 
         <section class="group" aria-labelledby="documents">
@@ -47,16 +47,16 @@
           <h2 class="t-ui" id="sync">同步设置</h2>
           <div class="field">
             <label class="t-ui" for="name">项目名称</label>
-            <input class="t-ui" id="name" type="text" value="设计资产" aria-describedby="name-hint">
+            <input class="input t-ui" id="name" type="text" value="设计资产" aria-describedby="name-hint">
             <p class="hint t-caption" id="name-hint">3 分钟前 · 2026 年 11 月 5 日 14:30</p>
           </div>
           <div class="field">
             <label class="t-ui" for="network">仅在连接到受信任的无线网络时自动同步附件</label>
-            <input class="t-ui" id="network" type="text" lang="en" aria-invalid="true" aria-describedby="network-error" value="Automatically sync attachments only when connected to a trusted wireless network">
-            <p class="error t-caption" id="network-error">这个设置和当前的存储方案冲突，请先修改存储方案。</p>
+            <input class="input t-ui" id="network" type="text" lang="en" aria-invalid="true" aria-describedby="network-error" value="Automatically sync attachments only when connected to a trusted wireless network">
+            <p class="hint is-error t-caption" id="network-error">这个设置和当前的存储方案冲突，请先修改存储方案。</p>
           </div>
           <label class="check t-ui"><input type="checkbox" checked><span>发布成功后通知项目里的所有人</span></label>
-          <div class="actions under"><button class="primary" type="button">保存修改</button><button type="button">取消</button><button type="button" disabled>暂不可用</button></div>
+          <div class="actions under"><button class="btn primary" type="button">保存修改</button><button class="btn" type="button">取消</button><button class="btn" type="button" disabled>暂不可用</button></div>
         </section>
 
         <section class="group" aria-labelledby="usage">

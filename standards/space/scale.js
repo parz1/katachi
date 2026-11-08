@@ -12,7 +12,7 @@
     ['page', '内容到窗口边缘'],
   ];
   const DENSITIES = [['compact', '紧'], ['regular', '常规'], ['loose', '松']];
-  const RADII = [['none', '直角'], ['regular', '小（默认）'], ['large', '大']];
+  const RADII = [['none', '直角'], ['small', '小'], ['regular', '大（默认）']];
 
   const main = document.createElement('main');
   main.className = 'sheet';
@@ -36,13 +36,13 @@
     <section>
       <h2 class="t-ui">控件高度</h2>
       <div class="specimens">
-        ${DENSITIES.map(([density, label]) => `<div class="specimen" data-density="${density}"><h3 class="t-caption">${label} <span data-size="--size-control"></span></h3><input class="t-ui" type="text" aria-label="${label}的输入框" value="设计资产 Settings"><div class="actions"><button class="t-ui primary" type="button">保存修改</button><button class="t-ui" type="button">取消</button></div></div>`).join('')}
+        ${DENSITIES.map(([density, label]) => `<div class="specimen" data-density="${density}"><h3 class="t-caption">${label} <span data-size="--size-control"></span></h3><input class="input t-ui" type="text" aria-label="${label}的输入框" value="设计资产 Settings"><div class="actions"><button class="btn primary t-ui" type="button">保存修改</button><button class="btn t-ui" type="button">取消</button></div></div>`).join('')}
       </div>
     </section>
     <section>
       <h2 class="t-ui">圆角</h2>
       <div class="specimens">
-        ${RADII.map(([radius, label]) => `<div class="specimen" data-radius="${radius}"><h3 class="t-caption">${label}：控件 <span data-size="--radius-control"></span>，面 <span data-size="--radius-panel"></span></h3><div class="shape-panel"><div class="actions"><button class="t-ui primary" type="button">保存修改</button><button class="t-ui" type="button">取消</button></div></div></div>`).join('')}
+        ${RADII.map(([radius, label]) => `<div class="specimen" data-radius="${radius}"><h3 class="t-caption">${label}：控件 <span data-size="--radius-control"></span>，面 <span data-size="--radius-panel"></span></h3><div class="shape-panel"><div class="actions"><button class="btn primary t-ui" type="button">保存修改</button><button class="btn t-ui" type="button">取消</button></div></div></div>`).join('')}
       </div>
     </section>
     <section>
