@@ -1,0 +1,142 @@
+/* 反馈样例的页面。控件和提示的样子来自 ../controls/controls.css，浮在底部的来自 feedback.css；这里只排就地和底部一条。 */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+h1,
+h2,
+p,
+ul {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-near) var(--space-item);
+  padding: var(--space-near) var(--space-page);
+  background: var(--color-surface-subtle);
+  color: var(--color-ink-muted);
+}
+
+.bar-note {
+  flex-basis: 100%;
+}
+
+.bar-note:empty {
+  display: none;
+}
+
+.page {
+  max-inline-size: 40rem;
+  margin-inline: auto;
+  padding: var(--space-group) var(--space-page) var(--space-section);
+}
+
+.head {
+  margin-block-end: var(--space-section);
+}
+
+.head .meta {
+  margin-block-start: var(--space-part);
+  color: var(--color-ink-muted);
+}
+
+.group {
+  display: grid;
+  gap: var(--space-near);
+}
+
+.group + .group {
+  margin-block-start: var(--space-group);
+}
+
+.group > h2 {
+  font-weight: var(--type-weight-strong);
+}
+
+.group > h2:focus-visible {
+  outline-offset: var(--stroke-thick);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-near);
+}
+
+.slot:empty {
+  display: none;
+}
+
+/* ---------- 待办 ---------- */
+.task-line {
+  display: flex;
+  align-items: center;
+  gap: var(--space-near);
+  min-block-size: var(--size-control);
+}
+
+.task-title {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+
+.task.is-done .task-title {
+  color: var(--color-ink-muted);
+  text-decoration: line-through;
+}
+
+.task-busy {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-part);
+  color: var(--color-ink-muted);
+}
+
+/* 就地：一项的提示放在这一项下面，和标题对齐。 */
+.task:not(.is-removed) > .slot {
+  padding-inline-start: calc(var(--size-check) + var(--space-near));
+  padding-block-end: var(--space-near);
+}
+
+.task.is-removed {
+  padding-block: var(--space-part);
+}
+
+/* ---------- 底部一条：占住窗口底部，不盖住内容 ---------- */
+.statusbar {
+  position: fixed;
+  inset-inline: 0;
+  inset-block-end: 0;
+  padding: var(--space-near) var(--space-page);
+  border-block-start: var(--stroke-thin) solid var(--color-line);
+  background: var(--color-surface-subtle);
+}
+
+.statusbar .note {
+  max-inline-size: 40rem;
+  margin-inline: auto;
+}
+
+/* 底部一条里，出错的底色给外面这一层。 */
+.statusbar:has(.note.is-error) {
+  background: var(--color-error-subtle);
+}
+
+.statusbar .note.is-error {
+  padding: 0;
+  background: transparent;
+}

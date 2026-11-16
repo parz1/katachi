@@ -63,7 +63,7 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-part);
-  min-inline-size: 0;
+  flex-shrink: 0;
   max-inline-size: 100%;
   min-block-size: var(--size-control);
   padding-inline: var(--space-inset);
@@ -74,6 +74,13 @@
   text-align: center;
   text-decoration: none;
   cursor: pointer;
+}
+
+/* 放进一行时不被挤窄：中文在任意两个字之间都能断开，不拦着的话旁边的字一长，「删除」会被挤成两行。
+   字太长时最宽到放它的地方那么宽，再换行。只有放了 .truncate 的才让它变窄、省略。 */
+.btn:has(.truncate) {
+  flex-shrink: 1;
+  min-inline-size: 0;
 }
 
 .btn:hover,
@@ -275,6 +282,7 @@ textarea.input {
 .select {
   position: relative;
   display: inline-flex;
+  flex-shrink: 0;
   align-items: center;
   gap: var(--space-part);
   max-inline-size: 100%;
@@ -359,6 +367,7 @@ textarea.input {
    选中的一段用实心，不用 color.selected：它和悬停是同一级，灰阶里也和旁边的段分不开。 */
 .segmented {
   display: inline-flex;
+  flex-shrink: 0;
   flex-wrap: wrap;
   max-inline-size: 100%;
   padding: var(--stroke-thick); /* 外圈和选中的一段之间隔一条粗线的宽度 */
@@ -502,6 +511,7 @@ textarea.input {
 
 /* 不带文字的勾选框，比如清单里勾掉一项：能点的范围是 size.control 见方，方框和旁边的文字边缘对齐。名字写在 aria-label。 */
 .check.alone {
+  flex: none; /* 被挤窄时，两边的负外边距会让方框压到旁边的字上 */
   justify-content: center;
   align-items: center;
   inline-size: var(--size-control);
