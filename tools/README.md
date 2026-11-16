@@ -12,7 +12,7 @@
 做界面前先读 `~/Projects/katachi/DESIGN.md`。这个产品自己的规定（如果有）写在本仓库的 `DESIGN.md`，优先于它。
 ```
 
-现在只能在本机用：这个仓库还没有远程仓库，其他机器和云端 agent 读不到。
+仓库公开在 <https://github.com/parz1/katachi>。在别的机器或云端用时，先把它克隆到 `~/Projects/katachi`，上面这一行就不用改。
 
 ## 查看
 
